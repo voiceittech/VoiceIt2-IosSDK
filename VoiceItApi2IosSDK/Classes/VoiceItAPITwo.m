@@ -464,7 +464,7 @@ NSString * const host = @"https://api.voiceit.io/";
                               encoding:NSUTF8StringEncoding];
         NSLog(@"audioVerification Called and Returned: %@", result);
         //self.audioVerificationCompleted(result);
-        self.videoVerificationCompleted(result);
+        self.audioVerificationCompleted(result);
     }];
     
     [task resume];
