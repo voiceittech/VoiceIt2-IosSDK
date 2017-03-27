@@ -1,14 +1,14 @@
 //
-//  LLSimpleCamera+Helper.h
-//  LLSimpleCameraExample
+//  SimpleCamera+Helper.h
+//  SimpleCameraExample
 //
 //  Created by Ömer Faruk Gül on 20/02/16.
 //  Copyright © 2016 Ömer Faruk Gül. All rights reserved.
 //
 
-#import "LLSimpleCamera.h"
+#import "SimpleCamera.h"
 
-@interface LLSimpleCamera (Helper)
+@interface SimpleCamera (Helper)
 
 - (CGPoint)convertToPointOfInterestFromViewCoordinates:(CGPoint)viewCoordinates
                                           previewLayer:(AVCaptureVideoPreviewLayer *)previewLayer

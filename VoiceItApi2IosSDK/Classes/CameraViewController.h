@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LLSimpleCamera.h"
+#import "SimpleCamera.h"
 
 @interface CameraViewController : UIViewController
 - (id)init:(void (^)(NSString *))callback;

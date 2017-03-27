@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18D81141C2ABCFC0CCB709978F21FEB0 /* LLSimpleCamera+Helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 394D5872751BC7DE6A7C517519E32E57 /* LLSimpleCamera+Helper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		18D81141C2ABCFC0CCB709978F21FEB0 /* SimpleCamera+Helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 394D5872751BC7DE6A7C517519E32E57 /* SimpleCamera+Helper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1907A09968FBD20E23AF76068EB568FE /* VoiceItApi2IosSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = BA1E4B29B1A4AEBF61C9F9A92260CBDD /* VoiceItApi2IosSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		19C753E03BB1542CBD37037AC73698FF /* LLSimpleCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 02D02CFF756EECA53D12AA7CCD089BE7 /* LLSimpleCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		19C753E03BB1542CBD37037AC73698FF /* SimpleCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 02D02CFF756EECA53D12AA7CCD089BE7 /* SimpleCamera.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		226B637DBE24A07A1B80235DB1A31BFB /* VoiceItApi2IosSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F3F132B83AD7AB46F1EF873F95CC5F /* VoiceItApi2IosSDK-dummy.m */; };
-		4149563C37E63D95EF0C3275E6C71142 /* LLSimpleCamera+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99E029563B81449BC65FAA6BB40C82B /* LLSimpleCamera+Helper.m */; };
+		4149563C37E63D95EF0C3275E6C71142 /* SimpleCamera+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = E99E029563B81449BC65FAA6BB40C82B /* SimpleCamera+Helper.m */; };
 		4BCD2B511EF42D243C9D0683DDADB37F /* Pods-VoiceItApi2IosSDK_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D382D38B8FD9A94A2C7AB86F3CE8BB41 /* Pods-VoiceItApi2IosSDK_Tests-dummy.m */; };
 		5A5E183F331C054228E8012087445009 /* ViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B31C64BD64969CE8E1F751E58DB71F2 /* ViewUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6FA21A49330B0E5E30C194C32317E37B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72FEE101CACF7AC0906D397660A526AB /* AVFoundation.framework */; };
@@ -24,7 +24,7 @@
 		9FAD27C311A1BD1482FC94D308D2B1B9 /* VoiceItAPITwo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0684EA9671D2C0F76E288E156D5CCF83 /* VoiceItAPITwo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A3D66492E4BDDCB0BD3E27E741F9D47B /* Pods-VoiceItApi2IosSDK_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E1EF935916B9D0C9D7CAD4205DDDC8 /* Pods-VoiceItApi2IosSDK_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACD699464DF5C32978B8D439939BCEAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1310D6EC5D51D33497F7499F9F52BB7 /* Foundation.framework */; };
-		B4DAF7DF33EB61628BC1EC5E3F925433 /* LLSimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 3863B7BDFFA54195D33F3FEEEA5F196A /* LLSimpleCamera.m */; };
+		B4DAF7DF33EB61628BC1EC5E3F925433 /* SimpleCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 3863B7BDFFA54195D33F3FEEEA5F196A /* SimpleCamera.m */; };
 		BC6322AE8A0ABBD61B51E74EBA0CB164 /* Pods-VoiceItApi2IosSDK_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B58CD3FCDD0792327E74ED716BE4FE1E /* Pods-VoiceItApi2IosSDK_Example-dummy.m */; };
 		CE0B84B9EE4437BF0A612CD9AAB9B547 /* VoiceItApi2IosSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1C18BF5247EFFB8824A3290BD5192B66 /* VoiceItApi2IosSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E554D409F40F2D8066F3CAFAB2714642 /* CameraViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 71B2039AC33462ED48CC3BD6026FD4B3 /* CameraViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -46,7 +46,7 @@
 
 /* Begin PBXFileReference section */
 		01DF7486DA9C7ACBFB36F83764720A59 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		02D02CFF756EECA53D12AA7CCD089BE7 /* LLSimpleCamera.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = LLSimpleCamera.h; sourceTree = "<group>"; };
+		02D02CFF756EECA53D12AA7CCD089BE7 /* SimpleCamera.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SimpleCamera.h; sourceTree = "<group>"; };
 		0684EA9671D2C0F76E288E156D5CCF83 /* VoiceItAPITwo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VoiceItAPITwo.h; sourceTree = "<group>"; };
 		1532B699B49948D5426EE00393E9C1DB /* CameraViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		1B6C7320B3BD4C4D0A66F99389DDD2B3 /* Pods-VoiceItApi2IosSDK_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-VoiceItApi2IosSDK_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -55,14 +55,14 @@
 		29F3F132B83AD7AB46F1EF873F95CC5F /* VoiceItApi2IosSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VoiceItApi2IosSDK-dummy.m"; sourceTree = "<group>"; };
 		2B31C64BD64969CE8E1F751E58DB71F2 /* ViewUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ViewUtils.h; sourceTree = "<group>"; };
 		3743698043FED4F46890FAB60E78E8D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3863B7BDFFA54195D33F3FEEEA5F196A /* LLSimpleCamera.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = LLSimpleCamera.m; sourceTree = "<group>"; };
-		394D5872751BC7DE6A7C517519E32E57 /* LLSimpleCamera+Helper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LLSimpleCamera+Helper.h"; sourceTree = "<group>"; };
+		3863B7BDFFA54195D33F3FEEEA5F196A /* SimpleCamera.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SimpleCamera.m; sourceTree = "<group>"; };
+		394D5872751BC7DE6A7C517519E32E57 /* SimpleCamera+Helper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SimpleCamera+Helper.h"; sourceTree = "<group>"; };
 		39575A7EF0111E59189DE433A413A282 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		3F474AEEC7D6C1F99367A464C343A5E9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4224873B2671C3EF0576BCEEF76728F9 /* VoiceItApi2IosSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VoiceItApi2IosSDK.modulemap; sourceTree = "<group>"; };
+		4224873B2671C3EF0576BCEEF76728F9 /* VoiceItApi2IosSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = VoiceItApi2IosSDK.modulemap; sourceTree = "<group>"; };
 		4393069A768768BD2A5394BE24A8AB97 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F66888EEA5C0A8F1F82251406546364 /* VoiceItApi2IosSDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VoiceItApi2IosSDK.xcconfig; sourceTree = "<group>"; };
-		5803040A941C2CFAB847193F57E62CDA /* Pods_VoiceItApi2IosSDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_VoiceItApi2IosSDK_Example.framework; path = "Pods-VoiceItApi2IosSDK_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5803040A941C2CFAB847193F57E62CDA /* Pods_VoiceItApi2IosSDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoiceItApi2IosSDK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62194F5D736BEB5852C321CD96A4473F /* Pods-VoiceItApi2IosSDK_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Example-resources.sh"; sourceTree = "<group>"; };
 		661FE964BAFA8BC951FD530FE6507E69 /* Pods-VoiceItApi2IosSDK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		71B2039AC33462ED48CC3BD6026FD4B3 /* CameraViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
@@ -71,10 +71,10 @@
 		7820E3942591DB55DE43AF3978EB04AC /* ViewUtils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = ViewUtils.m; sourceTree = "<group>"; };
 		78E1EF935916B9D0C9D7CAD4205DDDC8 /* Pods-VoiceItApi2IosSDK_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VoiceItApi2IosSDK_Tests-umbrella.h"; sourceTree = "<group>"; };
 		84BC2AA334526BF4523D6544C433B5A0 /* VoiceItApi2IosSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VoiceItApi2IosSDK-prefix.pch"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9BEA4FC4DCC49F0425D5E499471EDF5E /* Pods-VoiceItApi2IosSDK_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-VoiceItApi2IosSDK_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		A0980E9594779EC6346E47EB4DC2B304 /* Pods-VoiceItApi2IosSDK_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Tests-resources.sh"; sourceTree = "<group>"; };
-		A5C6F34873311C733A62BF30C9A31626 /* VoiceItApi2IosSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VoiceItApi2IosSDK.framework; path = VoiceItApi2IosSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5C6F34873311C733A62BF30C9A31626 /* VoiceItApi2IosSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoiceItApi2IosSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CD3FCDD0792327E74ED716BE4FE1E /* Pods-VoiceItApi2IosSDK_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VoiceItApi2IosSDK_Example-dummy.m"; sourceTree = "<group>"; };
 		B7B7BCE681FD7F867398EA74B2B61E6C /* Pods-VoiceItApi2IosSDK_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VoiceItApi2IosSDK_Example-umbrella.h"; sourceTree = "<group>"; };
 		BA1E4B29B1A4AEBF61C9F9A92260CBDD /* VoiceItApi2IosSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = VoiceItApi2IosSDK.h; sourceTree = "<group>"; };
@@ -82,13 +82,13 @@
 		C623EBCFD42A54CA62CCEB817BBFEBE4 /* Pods-VoiceItApi2IosSDK_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		CA14DD43CE194B824D1C4777C4AB4454 /* Pods-VoiceItApi2IosSDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D382D38B8FD9A94A2C7AB86F3CE8BB41 /* Pods-VoiceItApi2IosSDK_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VoiceItApi2IosSDK_Tests-dummy.m"; sourceTree = "<group>"; };
-		D621738617A176250A4ABA38F742437B /* Pods-VoiceItApi2IosSDK_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-VoiceItApi2IosSDK_Example.modulemap"; sourceTree = "<group>"; };
-		D7656F0DD1FB2E41C575B2450D5765A2 /* Pods-VoiceItApi2IosSDK_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-VoiceItApi2IosSDK_Tests.modulemap"; sourceTree = "<group>"; };
+		D621738617A176250A4ABA38F742437B /* Pods-VoiceItApi2IosSDK_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-VoiceItApi2IosSDK_Example.modulemap"; sourceTree = "<group>"; };
+		D7656F0DD1FB2E41C575B2450D5765A2 /* Pods-VoiceItApi2IosSDK_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-VoiceItApi2IosSDK_Tests.modulemap"; sourceTree = "<group>"; };
 		DE6B65573E5920E13D3F2353E08525D5 /* Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DEAB9B99B323FE7D91B9B1EA24821F76 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
-		DECA1CEC805170554744B93775D122DA /* Pods_VoiceItApi2IosSDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_VoiceItApi2IosSDK_Tests.framework; path = "Pods-VoiceItApi2IosSDK_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DECA1CEC805170554744B93775D122DA /* Pods_VoiceItApi2IosSDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoiceItApi2IosSDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0B7086F52D74CE317C478BB337D6E37 /* Pods-VoiceItApi2IosSDK_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-VoiceItApi2IosSDK_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		E99E029563B81449BC65FAA6BB40C82B /* LLSimpleCamera+Helper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "LLSimpleCamera+Helper.m"; sourceTree = "<group>"; };
+		E99E029563B81449BC65FAA6BB40C82B /* SimpleCamera+Helper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SimpleCamera+Helper.m"; sourceTree = "<group>"; };
 		EA82160CF2B4D6F01AF3F6161219F86B /* VoiceItAPITwo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VoiceItAPITwo.m; sourceTree = "<group>"; };
 		EB65EBC65C7F6630F071FD4EB464F74C /* VoiceItApi2IosSDK.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VoiceItApi2IosSDK.m; sourceTree = "<group>"; };
 		FAFD70526824E3149E858A355E869164 /* Pods-VoiceItApi2IosSDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Example-frameworks.sh"; sourceTree = "<group>"; };
@@ -173,10 +173,10 @@
 			children = (
 				71B2039AC33462ED48CC3BD6026FD4B3 /* CameraViewController.h */,
 				1532B699B49948D5426EE00393E9C1DB /* CameraViewController.m */,
-				02D02CFF756EECA53D12AA7CCD089BE7 /* LLSimpleCamera.h */,
-				3863B7BDFFA54195D33F3FEEEA5F196A /* LLSimpleCamera.m */,
-				394D5872751BC7DE6A7C517519E32E57 /* LLSimpleCamera+Helper.h */,
-				E99E029563B81449BC65FAA6BB40C82B /* LLSimpleCamera+Helper.m */,
+				02D02CFF756EECA53D12AA7CCD089BE7 /* SimpleCamera.h */,
+				3863B7BDFFA54195D33F3FEEEA5F196A /* SimpleCamera.m */,
+				394D5872751BC7DE6A7C517519E32E57 /* SimpleCamera+Helper.h */,
+				E99E029563B81449BC65FAA6BB40C82B /* SimpleCamera+Helper.m */,
 				DEAB9B99B323FE7D91B9B1EA24821F76 /* UIImage+FixOrientation.h */,
 				39575A7EF0111E59189DE433A413A282 /* UIImage+FixOrientation.m */,
 				2B31C64BD64969CE8E1F751E58DB71F2 /* ViewUtils.h */,
@@ -186,7 +186,6 @@
 				0684EA9671D2C0F76E288E156D5CCF83 /* VoiceItAPITwo.h */,
 				EA82160CF2B4D6F01AF3F6161219F86B /* VoiceItAPITwo.m */,
 			);
-			name = Classes;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -253,7 +252,6 @@
 			children = (
 				33AA6A7EA792D59305113F670A50F2CD /* Classes */,
 			);
-			name = VoiceItApi2IosSDK;
 			path = VoiceItApi2IosSDK;
 			sourceTree = "<group>";
 		};
@@ -279,8 +277,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E554D409F40F2D8066F3CAFAB2714642 /* CameraViewController.h in Headers */,
-				18D81141C2ABCFC0CCB709978F21FEB0 /* LLSimpleCamera+Helper.h in Headers */,
-				19C753E03BB1542CBD37037AC73698FF /* LLSimpleCamera.h in Headers */,
+				18D81141C2ABCFC0CCB709978F21FEB0 /* SimpleCamera+Helper.h in Headers */,
+				19C753E03BB1542CBD37037AC73698FF /* SimpleCamera.h in Headers */,
 				ED59C75CE9F15E1D433BD8038207435D /* UIImage+FixOrientation.h in Headers */,
 				5A5E183F331C054228E8012087445009 /* ViewUtils.h in Headers */,
 				CE0B84B9EE4437BF0A612CD9AAB9B547 /* VoiceItApi2IosSDK-umbrella.h in Headers */,
@@ -402,8 +400,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				95FBB851B44423C269F8BCBD99B4D3A4 /* CameraViewController.m in Sources */,
-				4149563C37E63D95EF0C3275E6C71142 /* LLSimpleCamera+Helper.m in Sources */,
-				B4DAF7DF33EB61628BC1EC5E3F925433 /* LLSimpleCamera.m in Sources */,
+				4149563C37E63D95EF0C3275E6C71142 /* SimpleCamera+Helper.m in Sources */,
+				B4DAF7DF33EB61628BC1EC5E3F925433 /* SimpleCamera.m in Sources */,
 				7598D7032E6A3D1AE83C6733B7897FCC /* UIImage+FixOrientation.m in Sources */,
 				FE7EB7E43CDB31A03D6583232EA6113E /* ViewUtils.m in Sources */,
 				226B637DBE24A07A1B80235DB1A31BFB /* VoiceItApi2IosSDK-dummy.m in Sources */,

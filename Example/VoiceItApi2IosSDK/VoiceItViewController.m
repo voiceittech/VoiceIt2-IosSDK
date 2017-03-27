@@ -25,6 +25,8 @@ NSString * const API_TOKEN = @"tok_c910f4047d1d425980c856bb3ca8fa5b";
 //    
     [_myVoiceIt createVideoEnrollment:@"usr_e3482389fbb84f07bf9abee278d7ae96" contentLanguage:@"en-US" callback:^(NSString * result){
         NSLog(@"Enrollment done and result is &%@",result);
+    } recordingFinished:^(void){
+        
     }];
 }
 

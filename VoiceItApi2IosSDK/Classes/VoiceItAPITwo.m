@@ -321,11 +321,13 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)createAudioEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
               callback:(void (^)(NSString *))callback
+ recordingFinished:(void (^)(NSString *))recordingFinished
 {
     _uniqueId = userId;
     _contentLanguage = contentLanguage;
      _recType = enrollment;
     _audioEnrollmentCompleted = callback;
+    _recordingCompleted = recordingFinished;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self recordAudio];
     });
@@ -364,15 +366,17 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)createVideoEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                      callback:(void (^)(NSString *))callback
+ recordingFinished:(void (^)(void))recordingFinished
 {
     _uniqueId = userId;
     _contentLanguage = contentLanguage;
     _recType = enrollment;
     _videoEnrollmentCompleted = callback;
+    _recordingCompleted = recordingFinished;
     dispatch_async(dispatch_get_main_queue(), ^{
         CameraViewController * vc = [[CameraViewController alloc] init:^(NSString * filePath){
             NSLog(@"File Path is %@", filePath);
-            
+            self.recordingCompleted();
             NSString *fileName = @"RecordedFile"; // Changed it So It Keeps Replacing File
             _recordingFilePath = [NSTemporaryDirectory()
                                   stringByAppendingPathComponent:[NSString
@@ -431,11 +435,13 @@ NSString * const host = @"https://api.voiceit.io/";
 
 - (void)audioVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage callback:(void (^)(NSString *))callback
+ recordingFinished:(void (^)(void))recordingFinished
 {
     _uniqueId = userId;
     _contentLanguage = contentLanguage;
     _recType = verification;
     _audioVerificationCompleted = callback;
+    _recordingCompleted = recordingFinished;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self recordAudio];
     });
@@ -472,13 +478,16 @@ NSString * const host = @"https://api.voiceit.io/";
 
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage callback:(void (^)(NSString *))callback
+ recordingFinished:(void (^)(void))recordingFinished
 {
     _uniqueId = userId;
     _contentLanguage = contentLanguage;
     _recType = verification;
     _videoVerificationCompleted = callback;
+    _recordingCompleted = recordingFinished;
     dispatch_async(dispatch_get_main_queue(), ^{
         CameraViewController * vc = [[CameraViewController alloc] init:^(NSString * filePath){
+            self.recordingCompleted();
             NSLog(@"File Path is %@", filePath);
             NSString *fileName = @"RecordedFile"; // Changed it So It Keeps Replacing File
             _recordingFilePath = [NSTemporaryDirectory()
@@ -533,11 +542,14 @@ NSString * const host = @"https://api.voiceit.io/";
 
 #pragma mark - Identification API Calls
 - (void)audioIdentification:(NSString *)groupId
-            contentLanguage:(NSString*)contentLanguage callback:(void (^)(NSString *))callback{
+            contentLanguage:(NSString*)contentLanguage callback:(void (^)(NSString *))callback
+ recordingFinished:(void (^)(void))recordingFinished
+    {
     _uniqueId = groupId;
     _contentLanguage = contentLanguage;
     _recType = identification;
     _audioIdentificationCompleted = callback;
+    _recordingCompleted = recordingFinished;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self recordAudio];
     });
@@ -572,16 +584,33 @@ NSString * const host = @"https://api.voiceit.io/";
 }
 
 - (void)videoIdentification:(NSString *)groupId
-            contentLanguage:(NSString*)contentLanguage callback:(void (^)(NSString *))callback{
+            contentLanguage:(NSString*)contentLanguage callback:(void (^)(NSString *))callback
+ recordingFinished:(void (^)(void))recordingFinished
+    {
     _uniqueId = groupId;
     _contentLanguage = contentLanguage;
     _recType = identification;
     _videoIdentificationCompleted = callback;
+    _recordingCompleted = recordingFinished;
+        
     dispatch_async(dispatch_get_main_queue(), ^{
         CameraViewController * vc = [[CameraViewController alloc] init:^(NSString * filePath){
+            self.recordingCompleted();
             NSLog(@"File Path is %@", filePath);
-            _recordingFilePath = filePath;
-            [self videoIdentification];
+            NSString *fileName = @"RecordedFile"; // Changed it So It Keeps Replacing File
+            _recordingFilePath = [NSTemporaryDirectory()
+                                  stringByAppendingPathComponent:[NSString
+                                                                  stringWithFormat:@"%@.wav", fileName]];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:_recordingFilePath])
+            {
+                [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath
+                                                           error:nil];
+            }
+            _photoData = [self imageFromVideo:filePath atTime:1.2];
+            [self getAudioFromVideo:filePath dstPath:_recordingFilePath callback:^(NSString * dstPath){
+                [self videoIdentification];
+            }];
+            
         }];
         
         [self.masterViewController presentViewController:vc animated:true completion:^{
@@ -604,7 +633,8 @@ NSString * const host = @"https://api.voiceit.io/";
     NSMutableData *body = [NSMutableData data];
     
     [self addParamsToBody:body parameters:params];
-    [self addFileToBody:body filePath:_recordingFilePath fieldName:@"video"];
+    [self addFileToBody:body filePath:_recordingFilePath fieldName:@"audio"];
+    [self addImageToBody:body imageData:_photoData fieldName:@"photo"];
     [self endBody:body];
     
     NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -862,6 +892,8 @@ NSString * const host = @"https://api.voiceit.io/";
     if(!audioData) {
         NSLog(@"audio data: %@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
     }
+    
+    self.recordingCompleted();
     
     switch (_recType) {
         case enrollment:

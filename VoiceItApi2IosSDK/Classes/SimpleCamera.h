@@ -1,9 +1,6 @@
 //
 //  CameraViewController.h
-//  LLSimpleCamera
-//
-//  Created by Ömer Faruk Gül on 24/10/14.
-//  Copyright (c) 2014 Ömer Farul Gül. All rights reserved.
+//  SimpleCamera
 //
 
 #import <UIKit/UIKit.h>
@@ -28,30 +25,30 @@ typedef enum : NSUInteger {
     LLCameraMirrorAuto
 } LLCameraMirror;
 
-extern NSString *const LLSimpleCameraErrorDomain;
+extern NSString *const SimpleCameraErrorDomain;
 typedef enum : NSUInteger {
-    LLSimpleCameraErrorCodeCameraPermission = 10,
-    LLSimpleCameraErrorCodeMicrophonePermission = 11,
-    LLSimpleCameraErrorCodeSession = 12,
-    LLSimpleCameraErrorCodeVideoNotEnabled = 13
-} LLSimpleCameraErrorCode;
+    SimpleCameraErrorCodeCameraPermission = 10,
+    SimpleCameraErrorCodeMicrophonePermission = 11,
+    SimpleCameraErrorCodeSession = 12,
+    SimpleCameraErrorCodeVideoNotEnabled = 13
+} SimpleCameraErrorCode;
 
-@interface LLSimpleCamera : UIViewController
+@interface SimpleCamera : UIViewController
 
 /**
  * Triggered on device change.
  */
-@property (nonatomic, copy) void (^onDeviceChange)(LLSimpleCamera *camera, AVCaptureDevice *device);
+@property (nonatomic, copy) void (^onDeviceChange)(SimpleCamera *camera, AVCaptureDevice *device);
 
 /**
  * Triggered on any kind of error.
  */
-@property (nonatomic, copy) void (^onError)(LLSimpleCamera *camera, NSError *error);
+@property (nonatomic, copy) void (^onError)(SimpleCamera *camera, NSError *error);
 
 /**
  * Triggered when camera starts recording
  */
-@property (nonatomic, copy) void (^onStartRecording)(LLSimpleCamera* camera);
+@property (nonatomic, copy) void (^onStartRecording)(SimpleCamera* camera);
 
 /**
  * Camera quality, set a constants prefixed with AVCaptureSessionPreset.
@@ -117,23 +114,23 @@ typedef enum : NSUInteger {
 @property (nonatomic) BOOL useDeviceOrientation;
 
 /**
- * Use this method to request camera permission before initalizing LLSimpleCamera.
+ * Use this method to request camera permission before initalizing SimpleCamera.
  */
 + (void)requestCameraPermission:(void (^)(BOOL granted))completionBlock;
 
 /**
- * Use this method to request microphone permission before initalizing LLSimpleCamera.
+ * Use this method to request microphone permission before initalizing SimpleCamera.
  */
 + (void)requestMicrophonePermission:(void (^)(BOOL granted))completionBlock;
 
 /**
- * Returns an instance of LLSimpleCamera with the given quality.
+ * Returns an instance of SimpleCamera with the given quality.
  * Quality parameter could be any variable starting with AVCaptureSessionPreset.
  */
 - (instancetype)initWithQuality:(NSString *)quality position:(LLCameraPosition)position videoEnabled:(BOOL)videoEnabled;
 
 /**
- * Returns an instance of LLSimpleCamera with quality "AVCaptureSessionPresetHigh" and position "CameraPositionBack".
+ * Returns an instance of SimpleCamera with quality "AVCaptureSessionPresetHigh" and position "CameraPositionBack".
  * @param videEnabled: Set to YES to enable video recording.
  */
 - (instancetype)initWithVideoEnabled:(BOOL)videoEnabled;
@@ -155,25 +152,25 @@ typedef enum : NSUInteger {
  * @param exactSeenImage If set YES, then the image is cropped to the exact size as the preview. So you get exactly what you see.
  * @param animationBlock you can create your own animation by playing with preview layer.
  */
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage animationBlock:(void (^)(AVCaptureVideoPreviewLayer *))animationBlock;
+-(void)capture:(void (^)(SimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage animationBlock:(void (^)(AVCaptureVideoPreviewLayer *))animationBlock;
 
 /**
  * Capture an image.
  * @param onCapture a block triggered after the capturing the photo.
  * @param exactSeenImage If set YES, then the image is cropped to the exact size as the preview. So you get exactly what you see.
  */
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage;
+-(void)capture:(void (^)(SimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage;
 
 /**
  * Capture an image.
  * @param onCapture a block triggered after the capturing the photo.
  */
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture;
+-(void)capture:(void (^)(SimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture;
 
 /*
  * Start recording a video with a completion block. Video is saved to the given url.
  */
-- (void)startRecordingWithOutputUrl:(NSURL *)url didRecord:(void (^)(LLSimpleCamera *camera, NSURL *outputFileUrl, NSError *error))completionBlock;
+- (void)startRecordingWithOutputUrl:(NSURL *)url didRecord:(void (^)(SimpleCamera *camera, NSURL *outputFileUrl, NSError *error))completionBlock;
 
 /**
  * Stop recording video.
@@ -181,7 +178,7 @@ typedef enum : NSUInteger {
 - (void)stopRecording;
 
 /**
- * Attaches the LLSimpleCamera to another view controller with a frame. It basically adds the LLSimpleCamera as a
+ * Attaches the SimpleCamera to another view controller with a frame. It basically adds the SimpleCamera as a
  * child vc to the given vc.
  * @param vc A view controller.
  * @param frame The frame of the camera.

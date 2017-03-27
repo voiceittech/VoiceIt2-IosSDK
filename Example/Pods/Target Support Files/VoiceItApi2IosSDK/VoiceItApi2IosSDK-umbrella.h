@@ -11,8 +11,8 @@
 #endif
 
 #import "CameraViewController.h"
-#import "LLSimpleCamera+Helper.h"
-#import "LLSimpleCamera.h"
+#import "SimpleCamera+Helper.h"
+#import "SimpleCamera.h"
 #import "UIImage+FixOrientation.h"
 #import "ViewUtils.h"
 #import "VoiceItApi2IosSDK.h"

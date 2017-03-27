@@ -1,17 +1,14 @@
 //
 //  CameraViewController.m
-//  LLSimpleCamera
-//
-//  Created by Ömer Faruk Gül on 24/10/14.
-//  Copyright (c) 2014 Ömer Faruk Gül. All rights reserved.
+//  SimpleCamera
 //
 
-#import "LLSimpleCamera.h"
+#import "SimpleCamera.h"
 #import <ImageIO/CGImageProperties.h>
 #import "UIImage+FixOrientation.h"
-#import "LLSimpleCamera+Helper.h"
+#import "SimpleCamera+Helper.h"
 
-@interface LLSimpleCamera () <AVCaptureFileOutputRecordingDelegate, UIGestureRecognizerDelegate>
+@interface SimpleCamera () <AVCaptureFileOutputRecordingDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) UIView *preview;
 @property (strong, nonatomic) AVCaptureStillImageOutput *stillImageOutput;
 @property (strong, nonatomic) AVCaptureSession *session;
@@ -27,12 +24,12 @@
 @property (strong, nonatomic) UIPinchGestureRecognizer *pinchGesture;
 @property (nonatomic, assign) CGFloat beginGestureScale;
 @property (nonatomic, assign) CGFloat effectiveScale;
-@property (nonatomic, copy) void (^didRecordCompletionBlock)(LLSimpleCamera *camera, NSURL *outputFileUrl, NSError *error);
+@property (nonatomic, copy) void (^didRecordCompletionBlock)(SimpleCamera *camera, NSURL *outputFileUrl, NSError *error);
 @end
 
-NSString *const LLSimpleCameraErrorDomain = @"LLSimpleCameraErrorDomain";
+NSString *const SimpleCameraErrorDomain = @"SimpleCameraErrorDomain";
 
-@implementation LLSimpleCamera
+@implementation SimpleCamera
 
 #pragma mark - Initialize
 
@@ -162,17 +159,17 @@ NSString *const LLSimpleCameraErrorDomain = @"LLSimpleCameraErrorDomain";
 
 - (void)start
 {
-    [LLSimpleCamera requestCameraPermission:^(BOOL granted) {
+    [SimpleCamera requestCameraPermission:^(BOOL granted) {
         if(granted) {
             // request microphone permission if video is enabled
             if(self.videoEnabled) {
-                [LLSimpleCamera requestMicrophonePermission:^(BOOL granted) {
+                [SimpleCamera requestMicrophonePermission:^(BOOL granted) {
                     if(granted) {
                         [self initialize];
                     }
                     else {
-                        NSError *error = [NSError errorWithDomain:LLSimpleCameraErrorDomain
-                                                             code:LLSimpleCameraErrorCodeMicrophonePermission
+                        NSError *error = [NSError errorWithDomain:SimpleCameraErrorDomain
+                                                             code:SimpleCameraErrorCodeMicrophonePermission
                                                          userInfo:nil];
                         [self passError:error];
                     }
@@ -183,8 +180,8 @@ NSString *const LLSimpleCameraErrorDomain = @"LLSimpleCameraErrorDomain";
             }
         }
         else {
-            NSError *error = [NSError errorWithDomain:LLSimpleCameraErrorDomain
-                                                 code:LLSimpleCameraErrorCodeCameraPermission
+            NSError *error = [NSError errorWithDomain:SimpleCameraErrorDomain
+                                                 code:SimpleCameraErrorCodeCameraPermission
                                              userInfo:nil];
             [self passError:error];
         }
@@ -293,11 +290,11 @@ NSString *const LLSimpleCameraErrorDomain = @"LLSimpleCameraErrorDomain";
 
 #pragma mark - Image Capture
 
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage animationBlock:(void (^)(AVCaptureVideoPreviewLayer *))animationBlock
+-(void)capture:(void (^)(SimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage animationBlock:(void (^)(AVCaptureVideoPreviewLayer *))animationBlock
 {
     if(!self.session) {
-        NSError *error = [NSError errorWithDomain:LLSimpleCameraErrorDomain
-                                    code:LLSimpleCameraErrorCodeSession
+        NSError *error = [NSError errorWithDomain:SimpleCameraErrorDomain
+                                    code:SimpleCameraErrorCodeSession
                                 userInfo:nil];
         onCapture(self, nil, nil, error);
         return;
@@ -345,7 +342,7 @@ NSString *const LLSimpleCameraErrorDomain = @"LLSimpleCameraErrorDomain";
      }];
 }
 
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage {
+-(void)capture:(void (^)(SimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture exactSeenImage:(BOOL)exactSeenImage {
     
     [self capture:onCapture exactSeenImage:exactSeenImage animationBlock:^(AVCaptureVideoPreviewLayer *layer) {
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
@@ -360,19 +357,19 @@ NSString *const LLSimpleCameraErrorDomain = @"LLSimpleCameraErrorDomain";
     }];
 }
 
--(void)capture:(void (^)(LLSimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture
+-(void)capture:(void (^)(SimpleCamera *camera, UIImage *image, NSDictionary *metadata, NSError *error))onCapture
 {
     [self capture:onCapture exactSeenImage:NO];
 }
 
 #pragma mark - Video Capture
 
-- (void)startRecordingWithOutputUrl:(NSURL *)url didRecord:(void (^)(LLSimpleCamera *camera, NSURL *outputFileUrl, NSError *error))completionBlock
+- (void)startRecordingWithOutputUrl:(NSURL *)url didRecord:(void (^)(SimpleCamera *camera, NSURL *outputFileUrl, NSError *error))completionBlock
 {
     // check if video is enabled
     if(!self.videoEnabled) {
-        NSError *error = [NSError errorWithDomain:LLSimpleCameraErrorDomain
-                                             code:LLSimpleCameraErrorCodeVideoNotEnabled
+        NSError *error = [NSError errorWithDomain:SimpleCameraErrorDomain
+                                             code:SimpleCameraErrorCodeVideoNotEnabled
                                          userInfo:nil];
         [self passError:error];
         return;

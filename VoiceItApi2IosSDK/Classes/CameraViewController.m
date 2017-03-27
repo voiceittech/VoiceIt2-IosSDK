@@ -10,7 +10,7 @@
 #import "ViewUtils.h"
 
 @interface CameraViewController ()
-@property (strong, nonatomic) LLSimpleCamera *camera;
+@property (strong, nonatomic) SimpleCamera *camera;
 @property (strong, nonatomic) UILabel *errorLabel;
 @property (strong, nonatomic) UIButton *snapButton;
 @end
@@ -34,7 +34,7 @@
     // ----- initialize camera -------- //
     
     // create camera vc
-    self.camera = [[LLSimpleCamera alloc] initWithQuality:AVCaptureSessionPresetHigh
+    self.camera = [[SimpleCamera alloc] initWithQuality:AVCaptureSessionPresetHigh
                                                  position:LLCameraPositionFront
                                              videoEnabled:YES];
     
@@ -47,17 +47,17 @@
     
     // take the required actions on a device change
     __weak typeof(self) weakSelf = self;
-    [self.camera setOnDeviceChange:^(LLSimpleCamera *camera, AVCaptureDevice * device) {
+    [self.camera setOnDeviceChange:^(SimpleCamera *camera, AVCaptureDevice * device) {
         
         NSLog(@"Device changed.");
     }];
     
-    [self.camera setOnError:^(LLSimpleCamera *camera, NSError *error) {
+    [self.camera setOnError:^(SimpleCamera *camera, NSError *error) {
         NSLog(@"Camera error: %@", error);
         
-        if([error.domain isEqualToString:LLSimpleCameraErrorDomain]) {
-            if(error.code == LLSimpleCameraErrorCodeCameraPermission ||
-               error.code == LLSimpleCameraErrorCodeMicrophonePermission) {
+        if([error.domain isEqualToString:SimpleCameraErrorDomain]) {
+            if(error.code == SimpleCameraErrorCodeCameraPermission ||
+               error.code == SimpleCameraErrorCodeMicrophonePermission) {
                 
                 if(weakSelf.errorLabel) {
                     [weakSelf.errorLabel removeFromSuperview];
@@ -99,7 +99,7 @@
     // start recording
     NSURL *outputURL = [[[self applicationDocumentsDirectory]
                          URLByAppendingPathComponent:@"test1"] URLByAppendingPathExtension:@"mov"];
-    [self.camera startRecordingWithOutputUrl:outputURL didRecord:^(LLSimpleCamera *camera, NSURL *outputFileUrl, NSError *error) {
+    [self.camera startRecordingWithOutputUrl:outputURL didRecord:^(SimpleCamera *camera, NSURL *outputFileUrl, NSError *error) {
         NSLog(@"Video Finished Recording and the path is %@", outputURL.path);
         self.videoRecordingCompleted(outputURL.path);
         [self dismissViewControllerAnimated:true completion:nil];
