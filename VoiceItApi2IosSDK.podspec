@@ -21,7 +21,7 @@ s.description      = 'A pod that lets you add voice and face verification and id
 s.homepage         = 'https://github.com/voiceittech/VoiceItApi2IosSDK'
 s.license          = { :type => 'MIT', :file => 'LICENSE' }
 s.author           = { 'armaanbindra' => 'armaan.bindra@voiceit-tech.com' }
-s.source           = { :git => 'https://github.com/armaanbindra/VoiceItApi2IosSDK.git', :tag => s.version.to_s }
+s.source           = { :git => 'https://github.com/voiceittech/VoiceItApi2IosSDK.git', :tag => s.version.to_s }
 
 s.ios.deployment_target = '8.0'
 
