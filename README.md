@@ -1,3 +1,4 @@
+<img src="Screenshots/VoiceItHeaderImage.png"/>
 # VoiceIt API 2.0 iOS SDK
 
 [![Version](https://img.shields.io/cocoapods/v/VoiceItApi2IosSDK.svg?style=flat)](http://cocoapods.org/pods/VoiceItApi2IosSDK)
@@ -140,7 +141,7 @@ myVoiceIt?.createUser({
     print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
-#### *Objective-C*
+##### *Objective-C*
 ```objc
 [_myVoiceIt createUser:^(NSString * jsonResult){
     NSLog(@"JSONResponse: %@", jsonResult);
@@ -157,7 +158,7 @@ myVoiceIt?.getUser("USER_ID_HERE", callback: {
     print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
-#### *Objective-C*
+##### *Objective-C*
 ```objc
 [_myVoiceIt getUser:@"USER_ID_HERE" callback:^(NSString * jsonResult){
     NSLog(@"JSONResponse: %@", jsonResult);
@@ -169,12 +170,12 @@ myVoiceIt?.getUser("USER_ID_HERE", callback: {
 Get a list of groups that the user with given userId(begins with 'usr_') is a part of
 ##### *Swift*
 ```swift
-myVoiceIt?.createUser({
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
+myVoiceIt?.getGroupsForUser("USER_ID_HERE", callback: {
+                jsonResponse in
+                print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
-#### *Objective-C*
+##### *Objective-C*
 ```objc
 [_myVoiceIt getGroupsForUser:@"USER_ID_HERE" callback:^(NSString * jsonResult){
     NSLog(@"JSONResponse: %@", jsonResult);
