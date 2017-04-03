@@ -1,6 +1,6 @@
 {
   "name": "VoiceItApi2IosSDK",
-  "version": "0.1.0",
+  "version": "0.1",
   "summary": "A pod that lets you add voice and face verification and identification to your iOS apps, brought to you by VoiceIt",
   "description": "A pod that lets you add voice and face verification and identification to your iOS apps, brought to you by VoiceIt. Please visit https://voiceit.tech to learn more and sign up for an account.",
   "homepage": "https://github.com/voiceittech/VoiceItApi2IosSDK",
@@ -12,8 +12,8 @@
     "armaanbindra": "armaan.bindra@voiceit-tech.com"
   },
   "source": {
-    "git": "https://github.com/armaanbindra/VoiceItApi2IosSDK.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/voiceittech/VoiceItApi2IosSDK.git",
+    "tag": "0.1"
   },
   "platforms": {
     "ios": "8.0"

@@ -43,6 +43,7 @@ typedef enum { enrollment, verification, identification } RecordingType;
 - (void)getAllUsers:(void (^)(NSString *))callback;
 - (void)createUser:(void (^)(NSString *))callback;
 - (void)getUser:(NSString *)userId callback:(void (^)(NSString *))callback;
+- (void)getGroupsForUser:(NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteUser: (NSString *)userId callback:(void (^)(NSString *))callback;
 
 #pragma mark - Group API Calls

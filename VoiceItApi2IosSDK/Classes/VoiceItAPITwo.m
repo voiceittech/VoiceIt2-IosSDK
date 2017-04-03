@@ -81,6 +81,36 @@ NSString * const host = @"https://api.voiceit.io/";
     [task resume];
 }
 
+- (void)getGroupsForUser:(NSString *)userId callback:(void (^)(NSString *))callback{
+    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
+        @throw [NSException exceptionWithName:@"Cannot Call Get Groups for User"
+                                       reason:@"Invalid userId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"users/groups"], userId]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"GET"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionDataTask *task =
+    [session dataTaskWithRequest:request
+               completionHandler:^(NSData *data, NSURLResponse *response,
+                                   NSError *error) {
+                   
+                   NSString *result =
+                   [[NSString alloc] initWithData:data
+                                         encoding:NSUTF8StringEncoding];
+                   NSLog(@"getGroupsForUser Called and Returned: %@", result);
+                   callback(result);
+               }];
+    [task resume];
+}
+
 - (void)createUser:(void (^)(NSString *))callback
 {
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]

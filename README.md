@@ -13,6 +13,7 @@ A library that gives you access to the VoiceIt's New VoiceIt API 2.0 featuring V
   * [User API Calls](#user-api-calls)
       * [Get All Users](#get-all-users)
       * [Create User](#create-user)
+      * [Get User](#create-user)
       * [Get Groups for User](#get-groups-for-user)
       * [Delete User](#delete-user)
   * [Group API Calls](#group-api-calls)
@@ -119,12 +120,63 @@ Get all the users associated with the apiKey
 ```swift
 myVoiceIt?.getAllUsers({
     jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse)")
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 #### *Objective-C*
 ```objc
 [_myVoiceIt getAllUsers:^(NSString * jsonResult){
+    NSLog(@"JSONResponse: %@", jsonResult);
+}];
+```
+
+#### Create User
+
+Create a new user
+##### *Swift*
+```swift
+myVoiceIt?.createUser({
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+#### *Objective-C*
+```objc
+[_myVoiceIt createUser:^(NSString * jsonResult){
+    NSLog(@"JSONResponse: %@", jsonResult);
+}];
+```
+
+#### Get User
+
+Check whether a user exists for the given userId(begins with 'usr_')
+##### *Swift*
+```swift
+myVoiceIt?.getUser("USER_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+#### *Objective-C*
+```objc
+[_myVoiceIt getUser:@"USER_ID_HERE" callback:^(NSString * jsonResult){
+    NSLog(@"JSONResponse: %@", jsonResult);
+}];
+```
+
+#### Get Groups for User
+
+Get a list of groups that the user with given userId(begins with 'usr_') is a part of
+##### *Swift*
+```swift
+myVoiceIt?.createUser({
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+#### *Objective-C*
+```objc
+[_myVoiceIt getGroupsForUser:@"USER_ID_HERE" callback:^(NSString * jsonResult){
     NSLog(@"JSONResponse: %@", jsonResult);
 }];
 ```
