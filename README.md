@@ -15,7 +15,7 @@ A library that gives you access to the VoiceIt's New VoiceIt API 2.0 featuring V
   * [User API Calls](#user-api-calls)
       * [Get All Users](#get-all-users)
       * [Create User](#create-user)
-      * [Get User](#create-user)
+      * [Get User](#get-user)
       * [Get Groups for User](#get-groups-for-user)
       * [Delete User](#delete-user)
   * [Group API Calls](#group-api-calls)
@@ -23,7 +23,7 @@ A library that gives you access to the VoiceIt's New VoiceIt API 2.0 featuring V
       * [Create Group](#create-group)
       * [Get Group](#get-group)
       * [Delete Group](#delete-group)
-      * [Check Group exists](#check-group-exists)
+      * [Group exists](#group-exists)
       * [Add User to Group](#add-user-to-group)
       * [Remove User from Group](#remove-user-from-group)      
   * [Enrollment API Calls](#enrollment-api-calls)
@@ -40,7 +40,7 @@ A library that gives you access to the VoiceIt's New VoiceIt API 2.0 featuring V
 
 ## Getting Started
 
-Get a Developer Account at <a href="https://siv.voiceprintportal.com/getDeveloperIDTile.jsp" target="_blank">VoiceIt</a> and activate API 2.0 from the settings page, you should now be able view the API Key and Token (as shown below). Also review the HTTP Documentation at <a href="https://api.voiceit.io" target="_blank">api.voiceit.io</a>
+Get a Developer Account at <a href="https://siv.voiceprintportal.com/getDeveloperIDTile.jsp" target="_blank">VoiceIt</a> and activate API 2.0 from the settings page, you should now be able view the API Key and Token (as shown below). Also review the HTTP Documentation at <a href="https://api.voiceit.io" target="_blank">api.voiceit.io</a>. All the documentation shows code snippets in both Swift 3 and Objective-C.
 
 <img src="Graphics/Screenshot1.png" alt="API Key and Token" width="400px" />
 
@@ -65,6 +65,7 @@ Also add the following permission keys to your <b>info.plist</b> file like shown
 * NSMicrophoneUsageDescription - Needed for Voice Biometrics
 
 <img src="Graphics/Screenshot2.png" alt="API Key and Token" width="400px" style="margin:auto;display:block"/>
+
 
 ## API Calls
 
