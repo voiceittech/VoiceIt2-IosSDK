@@ -363,8 +363,7 @@ Create audio enrollment for user with given userId(begins with 'usr_') and conte
 ```swift
 myVoiceIt?.createAudioEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", recordingFinished: {
     print("Audio Enrollment Recording Finished, now waiting for API Call to respond")
-},
-callback: {
+}, callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -372,12 +371,11 @@ callback: {
 
 ##### *Objective-C*
 ```objc
-myVoiceIt?.createAudioEnrollment("USER_ID_HERE", contentLanguage: "en-US", recordingFinished: {
-    print("Audio Enrollment Recording Finished, now waiting for API Call to respond")
-}, callback: {
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
-})
+[_myVoiceIt createAudioEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" recordingFinished:^(void){
+    NSLog(@"Audio Enrollment Recording Finished, now waiting for API Call to respond");
+} callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+} ];
 ```
 
 #### Create Video Enrollment
