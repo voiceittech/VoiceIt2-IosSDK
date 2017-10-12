@@ -18,3 +18,4 @@
 @property (nonatomic, copy) void (^userEnrollmentsCancelled)(void);
 @property (nonatomic, copy) void (^userEnrollmentsPassed)(void);
 @end
+

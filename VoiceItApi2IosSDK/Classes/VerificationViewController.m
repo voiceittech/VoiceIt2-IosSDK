@@ -7,6 +7,7 @@
 //
 
 #import "VerificationViewController.h"
+#import "Styles.h"
 
 @interface VerificationViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
@@ -30,6 +31,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
 -(void)setMessage:(NSString *) newMessage {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.messageLabel setText: newMessage];
+        [self.messageLabel setAdjustsFontSizeToFitWidth:YES];
     });
 }
 
@@ -43,7 +45,6 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
     _lookingIntoCamCounter = 0;
     _failCounter = 0;
     // Do any additional setup after loading the view.
-    
     [_progressView setHidden:YES];
 }
 
@@ -71,7 +72,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
     }
     [[_verificationBox layer] setCornerRadius:10.0];
     [self setBottomCornersForCancelButton];
-
+    [self.progressView startAnimation];
     [self setup_captureSession];
     [self setupCameraCircle];
     [_messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM"]];
@@ -91,7 +92,6 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
 -(void)setupCameraCircle{
     _previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: _captureSession];
     [_previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
     // Setup Movie File Output
     //ADD MOVIE FILE OUTPUT
     _movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
@@ -149,7 +149,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
     // Setup Rectangle Around Face
     _faceRectangleLayer = [[CALayer alloc] init];
     _faceRectangleLayer.zPosition = 1;
-    _faceRectangleLayer.borderColor = [Utilities cgColorFromHexString:@"#FBC132"];
+    _faceRectangleLayer.borderColor = [Styles getMainCGColor];
     _faceRectangleLayer.borderWidth  = 4.0;
     _faceRectangleLayer.opacity = 0.7;
     [_faceRectangleLayer setHidden:YES];
@@ -164,7 +164,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
 
 -(void)animateProgressCircle {
     dispatch_async(dispatch_get_main_queue(), ^{
-        _progressCircle.strokeColor = [Utilities cgColorFromHexString:@"#FBC132"];
+        _progressCircle.strokeColor = [Styles getMainCGColor];
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
         animation.duration = 5;
         animation.removedOnCompletion = YES;//NO;
@@ -207,15 +207,6 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
         NSLog(@"%@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
     }
     
-    NSDictionary *recordSettings = [[NSDictionary alloc]
-                                    initWithObjectsAndKeys:
-                                    [NSNumber numberWithFloat:11025.0], AVSampleRateKey,
-                                    [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
-                                    [NSNumber numberWithInt:8], AVLinearPCMBitDepthKey,
-                                    [NSNumber numberWithInt:1], AVNumberOfChannelsKey,
-                                    [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
-                                    [NSNumber numberWithBool:NO], AVLinearPCMIsFloatKey, nil];
-    
     // Unique recording URL
     NSString *fileName = @"OriginalFile"; // Changed it So It Keeps Replacing File
     _audioPath = [NSTemporaryDirectory()
@@ -229,7 +220,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
     
     NSURL *url = [NSURL fileURLWithPath:_audioPath];
     err = nil;
-    _audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:recordSettings error:&err];
+    _audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:[Utilities getRecordingSettings] error:&err];
     if(!_audioRecorder){
         NSLog(@"recorder: %@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
         return;
@@ -287,7 +278,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
     [CaptureConnection preferredVideoStabilizationMode];
 }
 
-    // Code to Capture Face Rectangle and other cool metadata stuff
+// Code to Capture Face Rectangle and other cool metadata stuff
 -(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     BOOL faceFound = NO;
     for(AVMetadataObject *metadataObject in metadataObjects) {
@@ -346,20 +337,18 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
     }
 }
 
+-(void)setAudioSessionInactive{
+    [self.audioRecorder stop];
+    NSError * err;
+    [_audioSession setActive:NO error:&err];
+}
+
 #pragma mark - AVAudioRecorderDelegate Methods
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     NSLog(@"AUDIO RECORDED FINISHED SUCCESS = %d", flag);
+    [self setAudioSessionInactive];
     [self recordingStopped];
-    
-    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    NSError *err;
-    [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&err];
-    if(err){
-        NSLog(@"Setting Category Error:%@", err.localizedDescription);
-    }
-    
-    [audioSession setActive:NO error:&err];
     
     if([_faceTimes count] > 0){
         [self showLoading];
@@ -393,7 +382,7 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
                         [self setMessage:[ResponseManager getMessage: responseCode]];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                             [self dismissViewControllerAnimated: YES completion:^{
-                                 [self userVerificationFailed](0.0, 0.0, jsonResponse);
+                                [self userVerificationFailed](0.0, 0.0, jsonResponse);
                             }];
                         });
                     }else{
@@ -426,14 +415,14 @@ int TIME_TO_WAIT_TILL_FACE_FOUND = 30;
 -(void)showLoading{
     dispatch_async(dispatch_get_main_queue(), ^{
         [_progressView setHidden:NO];
-        [_progressView startAnimation];
+        //        [_progressView startAnimation];
         [self setMessage:@""];
     });
 }
 
 -(void)removeLoading{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [_progressView endAnimation];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //        [_progressView endAnimation];
         [_progressView setHidden:YES];
     });
 }

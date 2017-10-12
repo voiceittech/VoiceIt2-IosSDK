@@ -14,7 +14,7 @@
     NSURL * bundleURL = [[podBundle resourceURL] URLByAppendingPathComponent:@"VoiceItApi2IosSDK.bundle"];
     NSBundle  * bundle = [[NSBundle alloc] initWithURL:bundleURL];
     NSString *finalString = NSLocalizedStringFromTableInBundle(name, @"Prompts", bundle, nil);
-//    NSString *finalString = NSLocalizedString(name, nil);
+    //    NSString *finalString = NSLocalizedString(name, nil);
     return finalString;
 }
 

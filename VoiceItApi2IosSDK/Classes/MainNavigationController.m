@@ -7,7 +7,7 @@
 //
 
 #import "MainNavigationController.h"
-
+#import "Styles.h"
 @interface MainNavigationController ()
 
 @end
@@ -16,9 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationBar] setBarTintColor:[Utilities uiColorFromHexString:@"#FFFFFF"]];
-    [[self navigationBar] setBarStyle:UIBarStyleBlackTranslucent];
-     // Do any additional setup after loading the view.
+    [[self navigationBar] setBarTintColor:[Styles getMainUIColor]];
+    [[self navigationBar] setBackgroundColor:[Styles getMainUIColor]];
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,13 +30,13 @@
     return UIStatusBarStyleDefault;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

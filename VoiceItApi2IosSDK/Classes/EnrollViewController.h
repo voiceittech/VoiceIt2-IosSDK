@@ -13,13 +13,14 @@
 #import "SpinningView.h"
 #import "EnrollFinishViewController.h"
 #import "MainNavigationController.h"
+#import "Styles.h"
 
 @interface EnrollViewController : UIViewController </*AVCapturePhotoCaptureDelegate,*/AVCaptureFileOutputRecordingDelegate, AVCaptureMetadataOutputObjectsDelegate,AVAudioRecorderDelegate>
 
 #pragma mark - Audio Recording Stuff
 @property (nonatomic, strong) AVAudioRecorder * audioRecorder;
 @property (nonatomic, strong) NSString *audioPath;
-
+@property(nonatomic, strong) AVAudioSession *audioSession;
 #pragma mark -  Graphics/UI/Constraints/Animations
 @property CGFloat originalMessageLeftConstraintContstant;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageleftConstraint;
@@ -57,3 +58,4 @@
 @property (strong, nonatomic)  VoiceItAPITwo * myVoiceIt;
 @property (strong, nonatomic)  MainNavigationController * myNavController;
 @end
+

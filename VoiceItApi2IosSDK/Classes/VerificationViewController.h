@@ -16,6 +16,7 @@
 #pragma mark - Audio Recording Stuff
 @property (nonatomic, strong) AVAudioRecorder * audioRecorder;
 @property (nonatomic, strong) NSString *audioPath;
+@property(nonatomic, strong) AVAudioSession *audioSession;
 
 #pragma mark -  Graphics/UI/Constraints/Animations
 @property CGFloat originalMessageLeftConstraintContstant;
@@ -60,5 +61,3 @@
 @property (nonatomic, copy) void (^userVerificationSuccessful)(float, float, NSString *);
 @property (nonatomic, copy) void (^userVerificationFailed)(float, float, NSString *);
 @end
-
-

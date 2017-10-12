@@ -39,13 +39,14 @@ typedef enum { enrollment, verification, identification } RecordingType;
 
 #pragma mark - Constructor
 - (id)init:(UIViewController *)masterViewController apiKey:(NSString *)apiKey apiToken:(NSString *) apiToken;
+- (id)init:(UIViewController *)masterViewController apiKey:(NSString *)apiKey apiToken:(NSString *) apiToken styles:(NSMutableDictionary *) styles;
 
 #pragma mark - Brand New Awesome Fully Encapsulated Methods
 - (void)encapsulatedVideoEnrollUser:(NSString *)userId
-                     contentLanguage:(NSString*)contentLanguage
-                    voicePrintPhrase:(NSString*)voicePrintPhrase
-            userEnrollmentsCancelled:(void (^)(void))userEnrollmentsCancelled
-               userEnrollmentsPassed:(void (^)(void))userEnrollmentsPassed;
+                    contentLanguage:(NSString*)contentLanguage
+                   voicePrintPhrase:(NSString*)voicePrintPhrase
+           userEnrollmentsCancelled:(void (^)(void))userEnrollmentsCancelled
+              userEnrollmentsPassed:(void (^)(void))userEnrollmentsPassed;
 
 - (void)encapsulatedVideoVerification:(NSString *)userId
                       contentLanguage:(NSString*)contentLanguage
@@ -76,11 +77,10 @@ typedef enum { enrollment, verification, identification } RecordingType;
 - (void)deleteEnrollmentForUser:(NSString *)userId enrollmentId:(NSString *)enrollmentId callback:(void (^)(NSString *))callback;
 - (void)deleteAllUserEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)createAudioEnrollment:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;
-- (void)createVideoEnrollment:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;
 - (void)createVideoEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     imageData:(NSData*)imageData
-                audioPath:(NSString*)audioPath
+                    audioPath:(NSString*)audioPath
                      callback:(void (^)(NSString *))callback;
 #pragma mark - Verification API Calls
 - (void)audioVerification:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;

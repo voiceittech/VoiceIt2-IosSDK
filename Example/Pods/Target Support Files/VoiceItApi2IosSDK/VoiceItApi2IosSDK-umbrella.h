@@ -16,6 +16,7 @@
 #import "MainNavigationController.h"
 #import "ResponseManager.h"
 #import "SpinningView.h"
+#import "Styles.h"
 #import "Utilities.h"
 #import "VerificationViewController.h"
 #import "VoiceItApi2IosSDK.h"

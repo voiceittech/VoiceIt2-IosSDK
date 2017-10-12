@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SpinningView : UIView
+@interface SpinningView : UIView <CAAnimationDelegate>
+@property (nonatomic, strong) CAShapeLayer * circleLayer;
 -(void)startAnimation;
 -(void)endAnimation;
 @end

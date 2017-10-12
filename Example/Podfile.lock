@@ -1,5 +1,5 @@
 PODS:
-  - VoiceItApi2IosSDK (0.6)
+  - VoiceItApi2IosSDK (0.7)
 
 DEPENDENCIES:
   - VoiceItApi2IosSDK (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  VoiceItApi2IosSDK: b8b33fcff5c89449b1dedb572f6d61f9d2a1abc1
+  VoiceItApi2IosSDK: bde62a42c2099376a4d21c629f64b0b779e93e34
 
 PODFILE CHECKSUM: b61dd789d864a60442acb7fc08a3cf52d6cfee86
 

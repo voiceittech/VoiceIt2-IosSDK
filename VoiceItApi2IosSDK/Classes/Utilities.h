@@ -17,4 +17,7 @@
 +(BOOL)isStrSame:(NSString *)firstString secondString:(NSString *) secondString;
 //+(void)savePhotoToPhotos:(UIImage *)thePhoto;
 +(NSData *)imageFromVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time;
++(NSDictionary *)getRecordingSettings;
++(UIStoryboard *)getVoiceItStoryBoard;
+
 @end

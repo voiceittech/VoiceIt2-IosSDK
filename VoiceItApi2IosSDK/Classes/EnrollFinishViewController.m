@@ -7,8 +7,9 @@
 //
 
 #import "EnrollFinishViewController.h"
-
+#import "Styles.h"
 @interface EnrollFinishViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @end
 
@@ -23,8 +24,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     _myNavController = (MainNavigationController*) [self navigationController];
+    [_doneButton setBackgroundColor:[Styles getMainUIColor]];
+    _myNavController = (MainNavigationController*) [self navigationController];
     [self.navigationItem setHidesBackButton: YES];
+    _doneButton.layer.cornerRadius = 10.0;
     // Setup Cancel Button on top left of navigation controller
     // Do any additional setup after loading the view.
 }

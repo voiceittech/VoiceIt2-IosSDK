@@ -28,17 +28,15 @@
                     [self launchEnrollmentProcess];
                 }
             }];
-            }];
+        }];
     }
 }
 
 -(void)launchEnrollmentProcess {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSBundle * podBundle = [NSBundle bundleForClass: self.classForCoder];
-        NSURL * bundleURL = [[podBundle resourceURL] URLByAppendingPathComponent:@"VoiceItApi2IosSDK.bundle"];
-        NSBundle  * bundle = [[NSBundle alloc] initWithURL:bundleURL];
-        UIStoryboard *voiceItStoryboard = [UIStoryboard storyboardWithName:@"VoiceIt" bundle: bundle];
-        EnrollViewController * enrollVC = [voiceItStoryboard instantiateViewControllerWithIdentifier:@"enrollVC"];
+        EnrollViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"enrollVC"];
+        //TODO: Skip to final View to test the UI
+        //EnrollFinishViewController * enrollVC = [voiceItStoryboard instantiateViewControllerWithIdentifier:@"enrollFinishedVC"];
         [[self navigationController] pushViewController:enrollVC animated: YES];
     });
 }
@@ -69,7 +67,7 @@
     [[self navigationController] dismissViewControllerAnimated:YES completion: ^{
         [[self myNavController] userEnrollmentsCancelled]();
     }];
-
+    
 }
 
 -(void)checkMicrophonePermission {
@@ -94,13 +92,13 @@
             _cameraPermissionGranted = YES;
             break;
         case AVAuthorizationStatusDenied:
-           _cameraPermissionGranted = NO;
+            _cameraPermissionGranted = NO;
             break;
         case AVAuthorizationStatusRestricted:
             _cameraPermissionGranted = NO;
             break;
         case  AVAuthorizationStatusNotDetermined:
-           _cameraPermissionGranted = NO;
+            _cameraPermissionGranted = NO;
             break;
         default:
             break;
@@ -111,6 +109,7 @@
     [super viewDidLoad];
     _myNavController = (MainNavigationController*) [self navigationController];
     self.continueButton.layer.cornerRadius = 10.0;
+    [_continueButton setBackgroundColor:[Styles getMainUIColor]];
     // Do any additional setup after loading the view.
 }
 
@@ -120,12 +119,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 @end
+

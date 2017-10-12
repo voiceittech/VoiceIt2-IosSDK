@@ -18,6 +18,27 @@
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
++(UIStoryboard *)getVoiceItStoryBoard{
+    NSBundle * podBundle = [NSBundle bundleForClass: self.classForCoder];
+    NSURL * bundleURL = [[podBundle resourceURL] URLByAppendingPathComponent:@"VoiceItApi2IosSDK.bundle"];
+    NSBundle  * bundle = [[NSBundle alloc] initWithURL:bundleURL];
+    UIStoryboard *voiceItStoryboard = [UIStoryboard storyboardWithName:@"VoiceIt" bundle: bundle];
+    return voiceItStoryboard;
+}
+
++(NSDictionary *)getRecordingSettings {
+    NSDictionary *recordSettings = [[NSDictionary alloc]
+                                    initWithObjectsAndKeys:
+                                    [NSNumber numberWithFloat:44100.0], AVSampleRateKey,
+                                    [NSNumber numberWithInt:kAudioFormatLinearPCM], AVFormatIDKey,
+                                    [NSNumber numberWithInt:16], AVLinearPCMBitDepthKey,
+                                    [NSNumber numberWithInt:2], AVNumberOfChannelsKey,
+                                    [NSNumber numberWithBool:NO], AVLinearPCMIsBigEndianKey,
+                                    [NSNumber numberWithBool:NO], AVLinearPCMIsFloatKey,
+                                    nil];
+    return recordSettings;
+}
+
 +(CGColorRef)cgColorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
@@ -99,4 +120,3 @@
 //    }];
 //}
 @end
-
