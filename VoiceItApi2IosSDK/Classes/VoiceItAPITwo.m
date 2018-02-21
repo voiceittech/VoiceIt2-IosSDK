@@ -987,6 +987,7 @@ NSString * const host = @"https://api.voiceit.io/";
     }
     [_recorder setDelegate:self];
     [_recorder prepareToRecord];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     [_recorder recordForDuration:5.0];
 }
 

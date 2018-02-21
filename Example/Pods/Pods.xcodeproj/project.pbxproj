@@ -7,44 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		014B00D6E47F7926A2E5455870D26522 /* VerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5CA2FF12AB5641F4265E154641BAD5 /* VerificationViewController.m */; };
+		014B00D6E47F7926A2E5455870D26522 /* VerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A14E23819545D5782EDE8A11F7F71EC /* VerificationViewController.m */; };
 		0E93CDE243F9573BE43B87827474FD7C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD3A287BB87F4D3C474EC576926A0F89 /* AVFoundation.framework */; };
-		12E338D625DA2C751B866122A6898725 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 8B8C300331572486336A11718DAF5E9F /* Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DABDCC9C2D3C57A85414BD6AA6A7603 /* VoiceItApi2IosSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA4C3A1BA316A177A729733523D4192 /* VoiceItApi2IosSDK.m */; };
-		23D4AAC2F2CF3EBCC0B108BA0B63AD09 /* VoiceItAPITwo.h in Headers */ = {isa = PBXBuildFile; fileRef = FF6B21EF283A9B40B4B90A5C8EC6C500 /* VoiceItAPITwo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		362C5ED0B33AEB1448443EA868DA8F7F /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 35383B6B875FDB7F7ED6F57F250ADAE3 /* Prompts.strings */; };
-		3ACCE463C2AD9FC520EC3577AF0581C4 /* Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D5CF2430A5568ED1D0DDD72D9B92C /* Styles.m */; };
-		3AFA29B3786208B243E5F60C27B390FE /* VoiceItApi2IosSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C04DF7734F44D88A446AED5F88DB9E9A /* VoiceItApi2IosSDK.bundle */; };
-		3C4D8C234DD32E4DB19166A33B9C150A /* EnrollFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529B3136F00711132C8D2599F99DE0EF /* EnrollFinishViewController.m */; };
+		12E338D625DA2C751B866122A6898725 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C2936490BAA7F6B7E8D45E76F16F249 /* Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DABDCC9C2D3C57A85414BD6AA6A7603 /* VoiceItApi2IosSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB5F27DDBF31FE1561D91704F2A933 /* VoiceItApi2IosSDK.m */; };
+		23D4AAC2F2CF3EBCC0B108BA0B63AD09 /* VoiceItAPITwo.h in Headers */ = {isa = PBXBuildFile; fileRef = F023B7334BCF7895CC1694C92373BEA7 /* VoiceItAPITwo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		362C5ED0B33AEB1448443EA868DA8F7F /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABFCE156E606EAAD9C88E0FEB677190C /* Prompts.strings */; };
+		3ACCE463C2AD9FC520EC3577AF0581C4 /* Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2BDC50C3B4048E1150864042E61E64 /* Styles.m */; };
+		3C4D8C234DD32E4DB19166A33B9C150A /* EnrollFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FA98854EDE3576C73C015E4FE81B417 /* EnrollFinishViewController.m */; };
+		445C7BA580464A991BC3BF84831C3913 /* VoiceItApi2IosSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B3863FC105E892DD3713B1B092C282F3 /* VoiceItApi2IosSDK.bundle */; };
 		4BCD2B511EF42D243C9D0683DDADB37F /* Pods-VoiceItApi2IosSDK_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D382D38B8FD9A94A2C7AB86F3CE8BB41 /* Pods-VoiceItApi2IosSDK_Tests-dummy.m */; };
 		4CDF0C37EB11D5535D311FCA08A14895 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB87367D9B5B48A3CBB2B5DFD7573959 /* Foundation.framework */; };
-		565414D95F3FA712B9D3A15F3918C889 /* SpinningView.h in Headers */ = {isa = PBXBuildFile; fileRef = 98208987E201F8B8AD392C18CDD1858E /* SpinningView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6145B31D8885395057B9EC5FB51C754D /* ResponseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F758A7D42E2B5A0A59F9D45AB9A09A /* ResponseManager.m */; };
-		62F58F1508D51AF86ED6E9D1A2C96A81 /* EnrollSetupViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AE6234A3FA4B9CDA092D384D56281291 /* EnrollSetupViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		64B1FDE9E8571307C6959CD566FF8026 /* VerificationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D2E6729F0DB62A0AA184ADCF898E3BC /* VerificationViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		565414D95F3FA712B9D3A15F3918C889 /* SpinningView.h in Headers */ = {isa = PBXBuildFile; fileRef = 16ABED98A6A93D87F267409BA844748B /* SpinningView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6145B31D8885395057B9EC5FB51C754D /* ResponseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A34B37D25E17A0F0C5DB913535B929B7 /* ResponseManager.m */; };
+		62F58F1508D51AF86ED6E9D1A2C96A81 /* EnrollSetupViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E1A71B2D7FCEEEA062532E288FDB674 /* EnrollSetupViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		64B1FDE9E8571307C6959CD566FF8026 /* VerificationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = DC6EA5143EF10C1225E5F6065929FE43 /* VerificationViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6647002AD880F9D2CD76646749A07F17 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB87367D9B5B48A3CBB2B5DFD7573959 /* Foundation.framework */; };
-		6EBBA460BBB7CA3126140172D49C0E11 /* VoiceItLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = D526480CB78ED73D8F0FEE42EA59756A /* VoiceItLogo.m */; };
-		772C8308F5967E7FD2C2F6B1EBB063E0 /* MainNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 573751B02E3B0AB01B8A3E64987C2471 /* MainNavigationController.m */; };
-		847CDFCACA291B8A12F2E4ABC412209D /* EnrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 642E229E150ABE53392F4E697A39DFEE /* EnrollViewController.m */; };
-		9495B671727673402C1D75EDBA7D0D1C /* VoiceItAPITwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F33A51A744DA1FD738DE756AA25FFF9 /* VoiceItAPITwo.m */; };
+		6EBBA460BBB7CA3126140172D49C0E11 /* VoiceItLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = 29792EFABDB7064B57C615B6A6AD7648 /* VoiceItLogo.m */; };
+		772C8308F5967E7FD2C2F6B1EBB063E0 /* MainNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B4C421A2EAA0438760BDF7DBD8E80D /* MainNavigationController.m */; };
+		847CDFCACA291B8A12F2E4ABC412209D /* EnrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F118298AB5A80F6DA6AABE3EDF3DC7 /* EnrollViewController.m */; };
+		9495B671727673402C1D75EDBA7D0D1C /* VoiceItAPITwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 48F84DD217036FDBE3D2EFDFC2AC757D /* VoiceItAPITwo.m */; };
 		A3D66492E4BDDCB0BD3E27E741F9D47B /* Pods-VoiceItApi2IosSDK_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E1EF935916B9D0C9D7CAD4205DDDC8 /* Pods-VoiceItApi2IosSDK_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA9B09A627843FF0B0C3F58054522CF8 /* EnrollFinishViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A32B6B0878905FD42C3F61C244FC7F7 /* EnrollFinishViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB48C41BE327EFEC7979EAE3F26FA5E8 /* MainNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = FAC39589935E7E37DE3DE413A44BAF42 /* MainNavigationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ACCD8CFE6F893BF9C87C22341D1A189F /* VoiceItApi2IosSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 076BAD60E8113C37C0F730BADABB3445 /* VoiceItApi2IosSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AF46EA7EA042A556ABF39A70D85B8BA2 /* VoiceIt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D680668E7B178A955A0567954516C97 /* VoiceIt.storyboard */; };
-		AFBAC4C2F645E2B1CA8920DDFBC144A5 /* ResponseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 95E9694018E1211B7FD280FA8475A87C /* ResponseManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA9B09A627843FF0B0C3F58054522CF8 /* EnrollFinishViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 006D4CC265E020A684139F4C2992AC7F /* EnrollFinishViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB48C41BE327EFEC7979EAE3F26FA5E8 /* MainNavigationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C949BAFD1975FFCEFBFFE703E13D6CBA /* MainNavigationController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACCD8CFE6F893BF9C87C22341D1A189F /* VoiceItApi2IosSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 652CF4945E42BF8C34AC9D7549D3E995 /* VoiceItApi2IosSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AF46EA7EA042A556ABF39A70D85B8BA2 /* VoiceIt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24C0AF0C04A094E662C47D1A0A2DD6CE /* VoiceIt.storyboard */; };
+		AFBAC4C2F645E2B1CA8920DDFBC144A5 /* ResponseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = BF4EC654BC761ED6BF22687BF972A7ED /* ResponseManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B0E9681F253A7741429776168ACB987C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C4BD65EEF247D4C8A723C0F18B326C /* UIKit.framework */; };
 		BC6322AE8A0ABBD61B51E74EBA0CB164 /* Pods-VoiceItApi2IosSDK_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B58CD3FCDD0792327E74ED716BE4FE1E /* Pods-VoiceItApi2IosSDK_Example-dummy.m */; };
-		C23BC99CF79B3258D49E539E13046496 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A388855639BA523315EDA0D24053BB /* Utilities.m */; };
-		C880C6144E12BB0F1121C50BF7F66F80 /* Styles.h in Headers */ = {isa = PBXBuildFile; fileRef = C0686F2AC6CC783F357ECA0E5FE3E732 /* Styles.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D9B97DA8CB5496EC3C9A0623E7D257D6 /* VoiceItApi2IosSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E181D0B5EA095748512712E80F92D4 /* VoiceItApi2IosSDK-dummy.m */; };
+		C23BC99CF79B3258D49E539E13046496 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B6F6AE955A0981F8372A727A290F44BE /* Utilities.m */; };
+		C880C6144E12BB0F1121C50BF7F66F80 /* Styles.h in Headers */ = {isa = PBXBuildFile; fileRef = 699F3D5BC47FB1E0E2BA233278D04EB1 /* Styles.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9B97DA8CB5496EC3C9A0623E7D257D6 /* VoiceItApi2IosSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE77B53F31898C98A62B8646131FAD06 /* VoiceItApi2IosSDK-dummy.m */; };
 		DC199A8E0232BB713350FE42A5F778C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB87367D9B5B48A3CBB2B5DFD7573959 /* Foundation.framework */; };
-		E95CF699C7A74C9F963EC2CE19918348 /* VoiceItApi2IosSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ECA314C3DFCF6ADC08E7672C6984B486 /* VoiceItApi2IosSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED0D60F376CBEE70DE0C96CC2C0214D0 /* SpinningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7359B3DA04092292E76134B54987C609 /* SpinningView.m */; };
+		E95CF699C7A74C9F963EC2CE19918348 /* VoiceItApi2IosSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6965827727F8AAFDF4B1784589C2AC34 /* VoiceItApi2IosSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ED0D60F376CBEE70DE0C96CC2C0214D0 /* SpinningView.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5F5A594E71195627E0D8A64DD7CEE2 /* SpinningView.m */; };
 		EDEFA941A8A287526AA030BE6B341BEE /* Pods-VoiceItApi2IosSDK_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B7B7BCE681FD7F867398EA74B2B61E6C /* Pods-VoiceItApi2IosSDK_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EEBBAED4453FDE3D4523B1DB20ECEB54 /* VoiceItLogo.h in Headers */ = {isa = PBXBuildFile; fileRef = C0ABA11437BA05834B4955C51EC0E0E4 /* VoiceItLogo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F3735D72C4766B747C16481E24702928 /* EnrollSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B403955A7EEEB471182909352863EB01 /* EnrollSetupViewController.m */; };
-		FB1804AE4B0AC21A5A8BD2D13A18A26C /* EnrollViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = AFBBE7273DCBFFC79027B7D5D52E5919 /* EnrollViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EEBBAED4453FDE3D4523B1DB20ECEB54 /* VoiceItLogo.h in Headers */ = {isa = PBXBuildFile; fileRef = DB40F9D0C854D23F3CA4290CF09523D7 /* VoiceItLogo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3735D72C4766B747C16481E24702928 /* EnrollSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C7347612055247B44F087C7D994E2A33 /* EnrollSetupViewController.m */; };
+		FB1804AE4B0AC21A5A8BD2D13A18A26C /* EnrollViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = DE8460C77D1DEE98E5D923D47F2C38A5 /* EnrollViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,67 +65,70 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		076BAD60E8113C37C0F730BADABB3445 /* VoiceItApi2IosSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoiceItApi2IosSDK.h; path = VoiceItApi2IosSDK/Classes/VoiceItApi2IosSDK.h; sourceTree = "<group>"; };
-		0A32B6B0878905FD42C3F61C244FC7F7 /* EnrollFinishViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EnrollFinishViewController.h; path = VoiceItApi2IosSDK/Classes/EnrollFinishViewController.h; sourceTree = "<group>"; };
-		18CE2BD333DB2074B6E04FE6AF7341AB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B5CA2FF12AB5641F4265E154641BAD5 /* VerificationViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VerificationViewController.m; path = VoiceItApi2IosSDK/Classes/VerificationViewController.m; sourceTree = "<group>"; };
+		006D4CC265E020A684139F4C2992AC7F /* EnrollFinishViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EnrollFinishViewController.h; path = VoiceItApi2IosSDK/Classes/EnrollFinishViewController.h; sourceTree = "<group>"; };
+		0E9234E1A4B1BE6C802ACC09D7624AA0 /* VoiceItApi2IosSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VoiceItApi2IosSDK.modulemap; sourceTree = "<group>"; };
+		16ABED98A6A93D87F267409BA844748B /* SpinningView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SpinningView.h; path = VoiceItApi2IosSDK/Classes/SpinningView.h; sourceTree = "<group>"; };
 		1B6C7320B3BD4C4D0A66F99389DDD2B3 /* Pods-VoiceItApi2IosSDK_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-VoiceItApi2IosSDK_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		1FA98854EDE3576C73C015E4FE81B417 /* EnrollFinishViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EnrollFinishViewController.m; path = VoiceItApi2IosSDK/Classes/EnrollFinishViewController.m; sourceTree = "<group>"; };
+		21054B10F9D5D974A4DF362A10EB15C0 /* VoiceItApi2IosSDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VoiceItApi2IosSDK.xcconfig; sourceTree = "<group>"; };
 		24793BA1A3E30E42043D179AA612B6DD /* Pods-VoiceItApi2IosSDK_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-VoiceItApi2IosSDK_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		31E93257F1FA0EC7024DA8E11043A7CD /* VoiceItApi2IosSDK.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VoiceItApi2IosSDK.xcconfig; sourceTree = "<group>"; };
-		35383B6B875FDB7F7ED6F57F250ADAE3 /* Prompts.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Prompts.strings; path = VoiceItApi2IosSDK/Classes/Base.lproj/Prompts.strings; sourceTree = "<group>"; };
-		36595AF66E067445D32615E4C4CFD220 /* ResourceBundle-VoiceItApi2IosSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-VoiceItApi2IosSDK-Info.plist"; sourceTree = "<group>"; };
+		24C0AF0C04A094E662C47D1A0A2DD6CE /* VoiceIt.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = VoiceIt.storyboard; path = VoiceItApi2IosSDK/Classes/Base.lproj/VoiceIt.storyboard; sourceTree = "<group>"; };
+		29792EFABDB7064B57C615B6A6AD7648 /* VoiceItLogo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VoiceItLogo.m; path = VoiceItApi2IosSDK/Classes/VoiceItLogo.m; sourceTree = "<group>"; };
+		2A14E23819545D5782EDE8A11F7F71EC /* VerificationViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VerificationViewController.m; path = VoiceItApi2IosSDK/Classes/VerificationViewController.m; sourceTree = "<group>"; };
+		2D3254CBD46EB0B717CA308C9D926A68 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3743698043FED4F46890FAB60E78E8D3 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D337FBE3B730660728B09C39EE017A0 /* ResourceBundle-VoiceItApi2IosSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-VoiceItApi2IosSDK-Info.plist"; sourceTree = "<group>"; };
 		3F474AEEC7D6C1F99367A464C343A5E9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		439D56BA22A0ED31BCEC37ABD25FD578 /* VoiceItApi2IosSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VoiceItApi2IosSDK.framework; path = VoiceItApi2IosSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		529B3136F00711132C8D2599F99DE0EF /* EnrollFinishViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EnrollFinishViewController.m; path = VoiceItApi2IosSDK/Classes/EnrollFinishViewController.m; sourceTree = "<group>"; };
-		573751B02E3B0AB01B8A3E64987C2471 /* MainNavigationController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MainNavigationController.m; path = VoiceItApi2IosSDK/Classes/MainNavigationController.m; sourceTree = "<group>"; };
+		48F84DD217036FDBE3D2EFDFC2AC757D /* VoiceItAPITwo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VoiceItAPITwo.m; path = VoiceItApi2IosSDK/Classes/VoiceItAPITwo.m; sourceTree = "<group>"; };
+		60B4C421A2EAA0438760BDF7DBD8E80D /* MainNavigationController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MainNavigationController.m; path = VoiceItApi2IosSDK/Classes/MainNavigationController.m; sourceTree = "<group>"; };
 		62194F5D736BEB5852C321CD96A4473F /* Pods-VoiceItApi2IosSDK_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Example-resources.sh"; sourceTree = "<group>"; };
-		63317B87D5900B0D086B87B9E5CE9970 /* Pods_VoiceItApi2IosSDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_VoiceItApi2IosSDK_Example.framework; path = "Pods-VoiceItApi2IosSDK_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C4BD65EEF247D4C8A723C0F18B326C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		63ECD0B9E494CC98FD49D2AC860DAC2E /* VoiceItApi2IosSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VoiceItApi2IosSDK-prefix.pch"; sourceTree = "<group>"; };
-		642E229E150ABE53392F4E697A39DFEE /* EnrollViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EnrollViewController.m; path = VoiceItApi2IosSDK/Classes/EnrollViewController.m; sourceTree = "<group>"; };
+		652CF4945E42BF8C34AC9D7549D3E995 /* VoiceItApi2IosSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoiceItApi2IosSDK.h; path = VoiceItApi2IosSDK/Classes/VoiceItApi2IosSDK.h; sourceTree = "<group>"; };
 		661FE964BAFA8BC951FD530FE6507E69 /* Pods-VoiceItApi2IosSDK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		6D2E6729F0DB62A0AA184ADCF898E3BC /* VerificationViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VerificationViewController.h; path = VoiceItApi2IosSDK/Classes/VerificationViewController.h; sourceTree = "<group>"; };
-		7359B3DA04092292E76134B54987C609 /* SpinningView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SpinningView.m; path = VoiceItApi2IosSDK/Classes/SpinningView.m; sourceTree = "<group>"; };
+		6965827727F8AAFDF4B1784589C2AC34 /* VoiceItApi2IosSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VoiceItApi2IosSDK-umbrella.h"; sourceTree = "<group>"; };
+		699F3D5BC47FB1E0E2BA233278D04EB1 /* Styles.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Styles.h; path = VoiceItApi2IosSDK/Classes/Styles.h; sourceTree = "<group>"; };
 		76CD3488043C26014487CE919CB2D4C0 /* Pods-VoiceItApi2IosSDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Example.release.xcconfig"; sourceTree = "<group>"; };
 		78E1EF935916B9D0C9D7CAD4205DDDC8 /* Pods-VoiceItApi2IosSDK_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VoiceItApi2IosSDK_Tests-umbrella.h"; sourceTree = "<group>"; };
-		7D680668E7B178A955A0567954516C97 /* VoiceIt.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = VoiceIt.storyboard; path = VoiceItApi2IosSDK/Classes/Base.lproj/VoiceIt.storyboard; sourceTree = "<group>"; };
-		7F33A51A744DA1FD738DE756AA25FFF9 /* VoiceItAPITwo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VoiceItAPITwo.m; path = VoiceItApi2IosSDK/Classes/VoiceItAPITwo.m; sourceTree = "<group>"; };
-		83F758A7D42E2B5A0A59F9D45AB9A09A /* ResponseManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ResponseManager.m; path = VoiceItApi2IosSDK/Classes/ResponseManager.m; sourceTree = "<group>"; };
-		8B8C300331572486336A11718DAF5E9F /* Utilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = VoiceItApi2IosSDK/Classes/Utilities.h; sourceTree = "<group>"; };
+		7E1A71B2D7FCEEEA062532E288FDB674 /* EnrollSetupViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EnrollSetupViewController.h; path = VoiceItApi2IosSDK/Classes/EnrollSetupViewController.h; sourceTree = "<group>"; };
+		7F2BDC50C3B4048E1150864042E61E64 /* Styles.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Styles.m; path = VoiceItApi2IosSDK/Classes/Styles.m; sourceTree = "<group>"; };
+		8951FC499C8C9C954BA0BE55ABA82DDB /* VoiceItApi2IosSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = VoiceItApi2IosSDK.framework; path = VoiceItApi2IosSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C2936490BAA7F6B7E8D45E76F16F249 /* Utilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = VoiceItApi2IosSDK/Classes/Utilities.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		95E9694018E1211B7FD280FA8475A87C /* ResponseManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ResponseManager.h; path = VoiceItApi2IosSDK/Classes/ResponseManager.h; sourceTree = "<group>"; };
-		98208987E201F8B8AD392C18CDD1858E /* SpinningView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SpinningView.h; path = VoiceItApi2IosSDK/Classes/SpinningView.h; sourceTree = "<group>"; };
 		9BEA4FC4DCC49F0425D5E499471EDF5E /* Pods-VoiceItApi2IosSDK_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-VoiceItApi2IosSDK_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		9C6D5CF2430A5568ED1D0DDD72D9B92C /* Styles.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Styles.m; path = VoiceItApi2IosSDK/Classes/Styles.m; sourceTree = "<group>"; };
+		9CF5B7AAAC1799D8F7D061F6F587D6B7 /* Pods_VoiceItApi2IosSDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_VoiceItApi2IosSDK_Tests.framework; path = "Pods-VoiceItApi2IosSDK_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DFB5F27DDBF31FE1561D91704F2A933 /* VoiceItApi2IosSDK.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VoiceItApi2IosSDK.m; path = VoiceItApi2IosSDK/Classes/VoiceItApi2IosSDK.m; sourceTree = "<group>"; };
 		A0980E9594779EC6346E47EB4DC2B304 /* Pods-VoiceItApi2IosSDK_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Tests-resources.sh"; sourceTree = "<group>"; };
-		AE6234A3FA4B9CDA092D384D56281291 /* EnrollSetupViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EnrollSetupViewController.h; path = VoiceItApi2IosSDK/Classes/EnrollSetupViewController.h; sourceTree = "<group>"; };
-		AFBBE7273DCBFFC79027B7D5D52E5919 /* EnrollViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EnrollViewController.h; path = VoiceItApi2IosSDK/Classes/EnrollViewController.h; sourceTree = "<group>"; };
-		B403955A7EEEB471182909352863EB01 /* EnrollSetupViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EnrollSetupViewController.m; path = VoiceItApi2IosSDK/Classes/EnrollSetupViewController.m; sourceTree = "<group>"; };
+		A34B37D25E17A0F0C5DB913535B929B7 /* ResponseManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ResponseManager.m; path = VoiceItApi2IosSDK/Classes/ResponseManager.m; sourceTree = "<group>"; };
+		A369128CF18A838C34689F32AC84492B /* VoiceItApi2IosSDK.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = VoiceItApi2IosSDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		ABFCE156E606EAAD9C88E0FEB677190C /* Prompts.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Prompts.strings; path = VoiceItApi2IosSDK/Classes/Base.lproj/Prompts.strings; sourceTree = "<group>"; };
+		AC1F35ED5CBD1F711557372E3F800B24 /* VoiceItApi2IosSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VoiceItApi2IosSDK-prefix.pch"; sourceTree = "<group>"; };
+		AD5F5A594E71195627E0D8A64DD7CEE2 /* SpinningView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SpinningView.m; path = VoiceItApi2IosSDK/Classes/SpinningView.m; sourceTree = "<group>"; };
+		B3863FC105E892DD3713B1B092C282F3 /* VoiceItApi2IosSDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = VoiceItApi2IosSDK.bundle; path = "VoiceItApi2IosSDK-VoiceItApi2IosSDK.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CD3FCDD0792327E74ED716BE4FE1E /* Pods-VoiceItApi2IosSDK_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VoiceItApi2IosSDK_Example-dummy.m"; sourceTree = "<group>"; };
+		B6F6AE955A0981F8372A727A290F44BE /* Utilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = VoiceItApi2IosSDK/Classes/Utilities.m; sourceTree = "<group>"; };
 		B7B7BCE681FD7F867398EA74B2B61E6C /* Pods-VoiceItApi2IosSDK_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-VoiceItApi2IosSDK_Example-umbrella.h"; sourceTree = "<group>"; };
-		C04DF7734F44D88A446AED5F88DB9E9A /* VoiceItApi2IosSDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = VoiceItApi2IosSDK.bundle; path = VoiceItApi2IosSDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		C0686F2AC6CC783F357ECA0E5FE3E732 /* Styles.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Styles.h; path = VoiceItApi2IosSDK/Classes/Styles.h; sourceTree = "<group>"; };
-		C0ABA11437BA05834B4955C51EC0E0E4 /* VoiceItLogo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoiceItLogo.h; path = VoiceItApi2IosSDK/Classes/VoiceItLogo.h; sourceTree = "<group>"; };
-		C2E181D0B5EA095748512712E80F92D4 /* VoiceItApi2IosSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VoiceItApi2IosSDK-dummy.m"; sourceTree = "<group>"; };
+		B7F118298AB5A80F6DA6AABE3EDF3DC7 /* EnrollViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EnrollViewController.m; path = VoiceItApi2IosSDK/Classes/EnrollViewController.m; sourceTree = "<group>"; };
+		BF27D9E3DB76974E75081AE066A42241 /* Pods_VoiceItApi2IosSDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_VoiceItApi2IosSDK_Example.framework; path = "Pods-VoiceItApi2IosSDK_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF4EC654BC761ED6BF22687BF972A7ED /* ResponseManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ResponseManager.h; path = VoiceItApi2IosSDK/Classes/ResponseManager.h; sourceTree = "<group>"; };
 		C623EBCFD42A54CA62CCEB817BBFEBE4 /* Pods-VoiceItApi2IosSDK_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Tests-frameworks.sh"; sourceTree = "<group>"; };
+		C7347612055247B44F087C7D994E2A33 /* EnrollSetupViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = EnrollSetupViewController.m; path = VoiceItApi2IosSDK/Classes/EnrollSetupViewController.m; sourceTree = "<group>"; };
+		C949BAFD1975FFCEFBFFE703E13D6CBA /* MainNavigationController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MainNavigationController.h; path = VoiceItApi2IosSDK/Classes/MainNavigationController.h; sourceTree = "<group>"; };
 		CA14DD43CE194B824D1C4777C4AB4454 /* Pods-VoiceItApi2IosSDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		CB87367D9B5B48A3CBB2B5DFD7573959 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		CDA4C3A1BA316A177A729733523D4192 /* VoiceItApi2IosSDK.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VoiceItApi2IosSDK.m; path = VoiceItApi2IosSDK/Classes/VoiceItApi2IosSDK.m; sourceTree = "<group>"; };
 		D382D38B8FD9A94A2C7AB86F3CE8BB41 /* Pods-VoiceItApi2IosSDK_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-VoiceItApi2IosSDK_Tests-dummy.m"; sourceTree = "<group>"; };
-		D526480CB78ED73D8F0FEE42EA59756A /* VoiceItLogo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VoiceItLogo.m; path = VoiceItApi2IosSDK/Classes/VoiceItLogo.m; sourceTree = "<group>"; };
 		D621738617A176250A4ABA38F742437B /* Pods-VoiceItApi2IosSDK_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-VoiceItApi2IosSDK_Example.modulemap"; sourceTree = "<group>"; };
 		D7656F0DD1FB2E41C575B2450D5765A2 /* Pods-VoiceItApi2IosSDK_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-VoiceItApi2IosSDK_Tests.modulemap"; sourceTree = "<group>"; };
-		DAFD3B40D47451358AC0E8C1813D7D70 /* Pods_VoiceItApi2IosSDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_VoiceItApi2IosSDK_Tests.framework; path = "Pods-VoiceItApi2IosSDK_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB40F9D0C854D23F3CA4290CF09523D7 /* VoiceItLogo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoiceItLogo.h; path = VoiceItApi2IosSDK/Classes/VoiceItLogo.h; sourceTree = "<group>"; };
+		DC4F2E2C7925EE758F236961E79502F8 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		DC6EA5143EF10C1225E5F6065929FE43 /* VerificationViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VerificationViewController.h; path = VoiceItApi2IosSDK/Classes/VerificationViewController.h; sourceTree = "<group>"; };
+		DD68C563AA5B2C8CB1A8AD0245B83BC7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		DE6B65573E5920E13D3F2353E08525D5 /* Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE77B53F31898C98A62B8646131FAD06 /* VoiceItApi2IosSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VoiceItApi2IosSDK-dummy.m"; sourceTree = "<group>"; };
+		DE8460C77D1DEE98E5D923D47F2C38A5 /* EnrollViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EnrollViewController.h; path = VoiceItApi2IosSDK/Classes/EnrollViewController.h; sourceTree = "<group>"; };
 		E0B7086F52D74CE317C478BB337D6E37 /* Pods-VoiceItApi2IosSDK_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-VoiceItApi2IosSDK_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		ECA314C3DFCF6ADC08E7672C6984B486 /* VoiceItApi2IosSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VoiceItApi2IosSDK-umbrella.h"; sourceTree = "<group>"; };
-		F4A388855639BA523315EDA0D24053BB /* Utilities.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = VoiceItApi2IosSDK/Classes/Utilities.m; sourceTree = "<group>"; };
-		FAC39589935E7E37DE3DE413A44BAF42 /* MainNavigationController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MainNavigationController.h; path = VoiceItApi2IosSDK/Classes/MainNavigationController.h; sourceTree = "<group>"; };
+		F023B7334BCF7895CC1694C92373BEA7 /* VoiceItAPITwo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoiceItAPITwo.h; path = VoiceItApi2IosSDK/Classes/VoiceItAPITwo.h; sourceTree = "<group>"; };
 		FAFD70526824E3149E858A355E869164 /* Pods-VoiceItApi2IosSDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-VoiceItApi2IosSDK_Example-frameworks.sh"; sourceTree = "<group>"; };
-		FD21C4F8452A7AA734793E614F123575 /* VoiceItApi2IosSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = VoiceItApi2IosSDK.modulemap; sourceTree = "<group>"; };
 		FD3A287BB87F4D3C474EC576926A0F89 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		FF6B21EF283A9B40B4B90A5C8EC6C500 /* VoiceItAPITwo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VoiceItAPITwo.h; path = VoiceItApi2IosSDK/Classes/VoiceItAPITwo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +168,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E38A027B1AE9CC25448889089A0C162 /* VoiceItApi2IosSDK */ = {
+			isa = PBXGroup;
+			children = (
+				006D4CC265E020A684139F4C2992AC7F /* EnrollFinishViewController.h */,
+				1FA98854EDE3576C73C015E4FE81B417 /* EnrollFinishViewController.m */,
+				7E1A71B2D7FCEEEA062532E288FDB674 /* EnrollSetupViewController.h */,
+				C7347612055247B44F087C7D994E2A33 /* EnrollSetupViewController.m */,
+				DE8460C77D1DEE98E5D923D47F2C38A5 /* EnrollViewController.h */,
+				B7F118298AB5A80F6DA6AABE3EDF3DC7 /* EnrollViewController.m */,
+				C949BAFD1975FFCEFBFFE703E13D6CBA /* MainNavigationController.h */,
+				60B4C421A2EAA0438760BDF7DBD8E80D /* MainNavigationController.m */,
+				BF4EC654BC761ED6BF22687BF972A7ED /* ResponseManager.h */,
+				A34B37D25E17A0F0C5DB913535B929B7 /* ResponseManager.m */,
+				16ABED98A6A93D87F267409BA844748B /* SpinningView.h */,
+				AD5F5A594E71195627E0D8A64DD7CEE2 /* SpinningView.m */,
+				699F3D5BC47FB1E0E2BA233278D04EB1 /* Styles.h */,
+				7F2BDC50C3B4048E1150864042E61E64 /* Styles.m */,
+				8C2936490BAA7F6B7E8D45E76F16F249 /* Utilities.h */,
+				B6F6AE955A0981F8372A727A290F44BE /* Utilities.m */,
+				DC6EA5143EF10C1225E5F6065929FE43 /* VerificationViewController.h */,
+				2A14E23819545D5782EDE8A11F7F71EC /* VerificationViewController.m */,
+				652CF4945E42BF8C34AC9D7549D3E995 /* VoiceItApi2IosSDK.h */,
+				9DFB5F27DDBF31FE1561D91704F2A933 /* VoiceItApi2IosSDK.m */,
+				F023B7334BCF7895CC1694C92373BEA7 /* VoiceItAPITwo.h */,
+				48F84DD217036FDBE3D2EFDFC2AC757D /* VoiceItAPITwo.m */,
+				DB40F9D0C854D23F3CA4290CF09523D7 /* VoiceItLogo.h */,
+				29792EFABDB7064B57C615B6A6AD7648 /* VoiceItLogo.m */,
+				125B2196C7C9C6323ED23A6D60964A5C /* Pod */,
+				C732A2E2303A9A4C444638F2FFB1F95F /* Resources */,
+				7BF913CF998BC30CA1E5991D4F480A70 /* Support Files */,
+			);
+			name = VoiceItApi2IosSDK;
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,12 +211,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		14A41126AC9B0ADCC4BE2C6FEC5CADF4 /* Development Pods */ = {
+		125B2196C7C9C6323ED23A6D60964A5C /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				DD7B18BD63E1A98000A310E1F179C58C /* VoiceItApi2IosSDK */,
+				DC4F2E2C7925EE758F236961E79502F8 /* LICENSE */,
+				DD68C563AA5B2C8CB1A8AD0245B83BC7 /* README.md */,
+				A369128CF18A838C34689F32AC84492B /* VoiceItApi2IosSDK.podspec */,
 			);
-			name = "Development Pods";
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		1A4CC9F350133F0C12B8BBFAA467B295 /* Pods-VoiceItApi2IosSDK_Example */ = {
@@ -199,6 +239,14 @@
 			path = "Target Support Files/Pods-VoiceItApi2IosSDK_Example";
 			sourceTree = "<group>";
 		};
+		38A7225C6DAF4FF58917875F752EECCD /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0E38A027B1AE9CC25448889089A0C162 /* VoiceItApi2IosSDK */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
 		5307BF38FEFB9D5FAB26008E1A77FC4B /* Pods-VoiceItApi2IosSDK_Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,17 +263,6 @@
 			);
 			name = "Pods-VoiceItApi2IosSDK_Tests";
 			path = "Target Support Files/Pods-VoiceItApi2IosSDK_Tests";
-			sourceTree = "<group>";
-		};
-		5BD05A76C2F0790F22D427B06AC4EE2F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				63317B87D5900B0D086B87B9E5CE9970 /* Pods_VoiceItApi2IosSDK_Example.framework */,
-				DAFD3B40D47451358AC0E8C1813D7D70 /* Pods_VoiceItApi2IosSDK_Tests.framework */,
-				C04DF7734F44D88A446AED5F88DB9E9A /* VoiceItApi2IosSDK.bundle */,
-				439D56BA22A0ED31BCEC37ABD25FD578 /* VoiceItApi2IosSDK.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		5C28F7C37DA92C3D9113E359617F84AD /* Targets Support Files */ = {
@@ -247,71 +284,48 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		7DB346D0F39D3F0E887471402A8071AB = {
+		7BF913CF998BC30CA1E5991D4F480A70 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				14A41126AC9B0ADCC4BE2C6FEC5CADF4 /* Development Pods */,
-				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
-				5BD05A76C2F0790F22D427B06AC4EE2F /* Products */,
-				5C28F7C37DA92C3D9113E359617F84AD /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		DD7B18BD63E1A98000A310E1F179C58C /* VoiceItApi2IosSDK */ = {
-			isa = PBXGroup;
-			children = (
-				0A32B6B0878905FD42C3F61C244FC7F7 /* EnrollFinishViewController.h */,
-				529B3136F00711132C8D2599F99DE0EF /* EnrollFinishViewController.m */,
-				AE6234A3FA4B9CDA092D384D56281291 /* EnrollSetupViewController.h */,
-				B403955A7EEEB471182909352863EB01 /* EnrollSetupViewController.m */,
-				AFBBE7273DCBFFC79027B7D5D52E5919 /* EnrollViewController.h */,
-				642E229E150ABE53392F4E697A39DFEE /* EnrollViewController.m */,
-				FAC39589935E7E37DE3DE413A44BAF42 /* MainNavigationController.h */,
-				573751B02E3B0AB01B8A3E64987C2471 /* MainNavigationController.m */,
-				95E9694018E1211B7FD280FA8475A87C /* ResponseManager.h */,
-				83F758A7D42E2B5A0A59F9D45AB9A09A /* ResponseManager.m */,
-				98208987E201F8B8AD392C18CDD1858E /* SpinningView.h */,
-				7359B3DA04092292E76134B54987C609 /* SpinningView.m */,
-				C0686F2AC6CC783F357ECA0E5FE3E732 /* Styles.h */,
-				9C6D5CF2430A5568ED1D0DDD72D9B92C /* Styles.m */,
-				8B8C300331572486336A11718DAF5E9F /* Utilities.h */,
-				F4A388855639BA523315EDA0D24053BB /* Utilities.m */,
-				6D2E6729F0DB62A0AA184ADCF898E3BC /* VerificationViewController.h */,
-				1B5CA2FF12AB5641F4265E154641BAD5 /* VerificationViewController.m */,
-				076BAD60E8113C37C0F730BADABB3445 /* VoiceItApi2IosSDK.h */,
-				CDA4C3A1BA316A177A729733523D4192 /* VoiceItApi2IosSDK.m */,
-				FF6B21EF283A9B40B4B90A5C8EC6C500 /* VoiceItAPITwo.h */,
-				7F33A51A744DA1FD738DE756AA25FFF9 /* VoiceItAPITwo.m */,
-				C0ABA11437BA05834B4955C51EC0E0E4 /* VoiceItLogo.h */,
-				D526480CB78ED73D8F0FEE42EA59756A /* VoiceItLogo.m */,
-				F60975BCA8097223632E7363DDB5B71F /* Resources */,
-				E6ED8FA1713DBB4ED4DE59FBEF28B35C /* Support Files */,
-			);
-			name = VoiceItApi2IosSDK;
-			path = ../..;
-			sourceTree = "<group>";
-		};
-		E6ED8FA1713DBB4ED4DE59FBEF28B35C /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				18CE2BD333DB2074B6E04FE6AF7341AB /* Info.plist */,
-				36595AF66E067445D32615E4C4CFD220 /* ResourceBundle-VoiceItApi2IosSDK-Info.plist */,
-				FD21C4F8452A7AA734793E614F123575 /* VoiceItApi2IosSDK.modulemap */,
-				31E93257F1FA0EC7024DA8E11043A7CD /* VoiceItApi2IosSDK.xcconfig */,
-				C2E181D0B5EA095748512712E80F92D4 /* VoiceItApi2IosSDK-dummy.m */,
-				63ECD0B9E494CC98FD49D2AC860DAC2E /* VoiceItApi2IosSDK-prefix.pch */,
-				ECA314C3DFCF6ADC08E7672C6984B486 /* VoiceItApi2IosSDK-umbrella.h */,
+				2D3254CBD46EB0B717CA308C9D926A68 /* Info.plist */,
+				3D337FBE3B730660728B09C39EE017A0 /* ResourceBundle-VoiceItApi2IosSDK-Info.plist */,
+				0E9234E1A4B1BE6C802ACC09D7624AA0 /* VoiceItApi2IosSDK.modulemap */,
+				21054B10F9D5D974A4DF362A10EB15C0 /* VoiceItApi2IosSDK.xcconfig */,
+				DE77B53F31898C98A62B8646131FAD06 /* VoiceItApi2IosSDK-dummy.m */,
+				AC1F35ED5CBD1F711557372E3F800B24 /* VoiceItApi2IosSDK-prefix.pch */,
+				6965827727F8AAFDF4B1784589C2AC34 /* VoiceItApi2IosSDK-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/VoiceItApi2IosSDK";
 			sourceTree = "<group>";
 		};
-		F60975BCA8097223632E7363DDB5B71F /* Resources */ = {
+		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
-				35383B6B875FDB7F7ED6F57F250ADAE3 /* Prompts.strings */,
-				7D680668E7B178A955A0567954516C97 /* VoiceIt.storyboard */,
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				38A7225C6DAF4FF58917875F752EECCD /* Development Pods */,
+				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
+				B786279506C65A3E137AB56B32062437 /* Products */,
+				5C28F7C37DA92C3D9113E359617F84AD /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		B786279506C65A3E137AB56B32062437 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BF27D9E3DB76974E75081AE066A42241 /* Pods_VoiceItApi2IosSDK_Example.framework */,
+				9CF5B7AAAC1799D8F7D061F6F587D6B7 /* Pods_VoiceItApi2IosSDK_Tests.framework */,
+				B3863FC105E892DD3713B1B092C282F3 /* VoiceItApi2IosSDK.bundle */,
+				8951FC499C8C9C954BA0BE55ABA82DDB /* VoiceItApi2IosSDK.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C732A2E2303A9A4C444638F2FFB1F95F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABFCE156E606EAAD9C88E0FEB677190C /* Prompts.strings */,
+				24C0AF0C04A094E662C47D1A0A2DD6CE /* VoiceIt.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -372,7 +386,7 @@
 			);
 			name = "VoiceItApi2IosSDK-VoiceItApi2IosSDK";
 			productName = "VoiceItApi2IosSDK-VoiceItApi2IosSDK";
-			productReference = C04DF7734F44D88A446AED5F88DB9E9A /* VoiceItApi2IosSDK.bundle */;
+			productReference = B3863FC105E892DD3713B1B092C282F3 /* VoiceItApi2IosSDK.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		10F14D9B514FE4967439AD7E1DE794C0 /* VoiceItApi2IosSDK */ = {
@@ -391,7 +405,7 @@
 			);
 			name = VoiceItApi2IosSDK;
 			productName = VoiceItApi2IosSDK;
-			productReference = 439D56BA22A0ED31BCEC37ABD25FD578 /* VoiceItApi2IosSDK.framework */;
+			productReference = 8951FC499C8C9C954BA0BE55ABA82DDB /* VoiceItApi2IosSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		30AC86D7FDABE2AC7CBCD81A281011A4 /* Pods-VoiceItApi2IosSDK_Example */ = {
@@ -409,7 +423,7 @@
 			);
 			name = "Pods-VoiceItApi2IosSDK_Example";
 			productName = "Pods-VoiceItApi2IosSDK_Example";
-			productReference = 63317B87D5900B0D086B87B9E5CE9970 /* Pods_VoiceItApi2IosSDK_Example.framework */;
+			productReference = BF27D9E3DB76974E75081AE066A42241 /* Pods_VoiceItApi2IosSDK_Example.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		3597DC7EE42C4F12905C4B679BC819C0 /* Pods-VoiceItApi2IosSDK_Tests */ = {
@@ -426,7 +440,7 @@
 			);
 			name = "Pods-VoiceItApi2IosSDK_Tests";
 			productName = "Pods-VoiceItApi2IosSDK_Tests";
-			productReference = DAFD3B40D47451358AC0E8C1813D7D70 /* Pods_VoiceItApi2IosSDK_Tests.framework */;
+			productReference = 9CF5B7AAAC1799D8F7D061F6F587D6B7 /* Pods_VoiceItApi2IosSDK_Tests.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -446,7 +460,7 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 5BD05A76C2F0790F22D427B06AC4EE2F /* Products */;
+			productRefGroup = B786279506C65A3E137AB56B32062437 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -463,7 +477,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AFA29B3786208B243E5F60C27B390FE /* VoiceItApi2IosSDK.bundle in Resources */,
+				445C7BA580464A991BC3BF84831C3913 /* VoiceItApi2IosSDK.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,7 +643,7 @@
 		};
 		4333FF5FF44D93CCEDABF9E7EB5AA57F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31E93257F1FA0EC7024DA8E11043A7CD /* VoiceItApi2IosSDK.xcconfig */;
+			baseConfigurationReference = 21054B10F9D5D974A4DF362A10EB15C0 /* VoiceItApi2IosSDK.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/VoiceItApi2IosSDK";
@@ -738,7 +752,7 @@
 		};
 		974CC00AA319A74A1C2309C5B6118300 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31E93257F1FA0EC7024DA8E11043A7CD /* VoiceItApi2IosSDK.xcconfig */;
+			baseConfigurationReference = 21054B10F9D5D974A4DF362A10EB15C0 /* VoiceItApi2IosSDK.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/VoiceItApi2IosSDK";
@@ -754,7 +768,7 @@
 		};
 		AD68402CFE297C77C83ECEEB6C25A564 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31E93257F1FA0EC7024DA8E11043A7CD /* VoiceItApi2IosSDK.xcconfig */;
+			baseConfigurationReference = 21054B10F9D5D974A4DF362A10EB15C0 /* VoiceItApi2IosSDK.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -783,7 +797,7 @@
 		};
 		C37296147BB07701753178F320114521 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31E93257F1FA0EC7024DA8E11043A7CD /* VoiceItApi2IosSDK.xcconfig */;
+			baseConfigurationReference = 21054B10F9D5D974A4DF362A10EB15C0 /* VoiceItApi2IosSDK.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
