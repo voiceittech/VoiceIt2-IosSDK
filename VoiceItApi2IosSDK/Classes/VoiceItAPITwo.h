@@ -12,6 +12,7 @@
 #import "Utilities.h"
 #import "MainNavigationController.h"
 #import "VerificationViewController.h"
+#import "FaceVerificationViewController.h"
 
 @import MobileCoreServices;
 
@@ -32,6 +33,7 @@ typedef enum { enrollment, verification, identification } RecordingType;
 @property (nonatomic, copy) void (^videoEnrollmentCompleted)(NSString * result);
 @property (nonatomic, copy) void (^voiceVerificationCompleted)(NSString * result);
 @property (nonatomic, copy) void (^videoVerificationCompleted)(NSString * result);
+@property (nonatomic, copy) void (^faceVerificationCompleted)(NSString * result);
 @property (nonatomic, copy) void (^voiceIdentificationCompleted)(NSString * result);
 @property (nonatomic, copy) void (^recordingCompleted)(void);
 @property RecordingType recType;
@@ -53,6 +55,11 @@ typedef enum { enrollment, verification, identification } RecordingType;
             userVerificationCancelled:(void (^)(void))userVerificationCancelled
            userVerificationSuccessful:(void (^)(float, float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed;
+
+- (void)encapsulatedFaceVerification:(NSString *)userId
+           userVerificationCancelled:(void (^)(void))userVerificationCancelled
+           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
+               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
 
 #pragma mark - User API Calls
 - (void)getAllUsers:(void (^)(NSString *))callback;
@@ -83,7 +90,9 @@ typedef enum { enrollment, verification, identification } RecordingType;
                      callback:(void (^)(NSString *))callback;
 #pragma mark - Verification API Calls
 - (void)voiceVerification:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;
-- (void)videoVerification:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;
+- (void)faceVerification:(NSString *)userId
+               videoPath:(NSString*)videoPath
+                callback:(void (^)(NSString *))callback;
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 imageData:(NSData*)imageData

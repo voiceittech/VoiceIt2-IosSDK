@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -316,6 +316,77 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aRf-Ho-48f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="649" y="116"/>
+        </scene>
+        <!--Face Verification View Controller-->
+        <scene sceneID="Ty5-ug-gO1">
+            <objects>
+                <viewController storyboardIdentifier="faceVerificationVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mcQ-T2-swO" customClass="FaceVerificationViewController" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="GgZ-S2-wTE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N60-0d-Z5L">
+                                <rect key="frame" x="37.5" y="133.5" width="300" height="400"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please look into the camera" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPv-gV-dSx">
+                                        <rect key="frame" x="8" y="228" width="284" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="9Fx-na-o0V"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3m-zQ-noz">
+                                        <rect key="frame" x="0.0" y="356" width="300" height="44"/>
+                                        <color key="backgroundColor" name="controlLightHighlightColor" catalog="System" colorSpace="catalog"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="ZXf-1F-aVi"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelClicked:" destination="mcQ-T2-swO" eventType="touchUpInside" id="B8k-hR-RXu"/>
+                                        </connections>
+                                    </button>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WmN-46-yLM" customClass="SpinningView">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="WmN-46-yLM" firstAttribute="leading" secondItem="N60-0d-Z5L" secondAttribute="leading" id="0lx-ZW-Xxx"/>
+                                    <constraint firstItem="b3m-zQ-noz" firstAttribute="top" secondItem="dPv-gV-dSx" secondAttribute="bottom" constant="8" id="4aB-bP-jJ7"/>
+                                    <constraint firstAttribute="bottom" secondItem="b3m-zQ-noz" secondAttribute="bottom" id="5rA-Z4-GXl"/>
+                                    <constraint firstAttribute="width" constant="300" id="998-b1-ijj"/>
+                                    <constraint firstItem="dPv-gV-dSx" firstAttribute="leading" secondItem="N60-0d-Z5L" secondAttribute="leading" constant="8" id="MpY-az-1dQ"/>
+                                    <constraint firstItem="WmN-46-yLM" firstAttribute="top" secondItem="N60-0d-Z5L" secondAttribute="top" id="Vwo-tD-uIg"/>
+                                    <constraint firstAttribute="bottom" secondItem="WmN-46-yLM" secondAttribute="bottom" id="W7u-Yd-23g"/>
+                                    <constraint firstItem="b3m-zQ-noz" firstAttribute="leading" secondItem="N60-0d-Z5L" secondAttribute="leading" id="aYA-3q-302"/>
+                                    <constraint firstAttribute="trailing" secondItem="b3m-zQ-noz" secondAttribute="trailing" id="hkR-xa-wgx"/>
+                                    <constraint firstAttribute="height" constant="400" id="r2O-Fu-2uq"/>
+                                    <constraint firstAttribute="trailing" secondItem="dPv-gV-dSx" secondAttribute="trailing" constant="8" id="t8C-n2-udL"/>
+                                    <constraint firstAttribute="trailing" secondItem="WmN-46-yLM" secondAttribute="trailing" id="wyR-Xe-0hn"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="N60-0d-Z5L" firstAttribute="centerY" secondItem="GgZ-S2-wTE" secondAttribute="centerY" id="Z6J-ju-pR7"/>
+                            <constraint firstItem="N60-0d-Z5L" firstAttribute="centerX" secondItem="GgZ-S2-wTE" secondAttribute="centerX" id="yfb-I9-19s"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iIR-fv-pMF"/>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="b3m-zQ-noz" id="NEG-Pf-5y3"/>
+                        <outlet property="messageLabel" destination="dPv-gV-dSx" id="P7C-eo-u3T"/>
+                        <outlet property="progressView" destination="WmN-46-yLM" id="H9S-QW-QcF"/>
+                        <outlet property="verificationBox" destination="N60-0d-Z5L" id="xMa-aO-8Gr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MdD-Qm-Me7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1396" y="922.48875562218893"/>
         </scene>
     </scenes>
 </document>

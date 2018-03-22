@@ -11,4 +11,7 @@
 
 @interface VoiceItViewController : UIViewController
 @property VoiceItAPITwo * myVoiceIt;
+@property NSString * API_KEY;
+@property NSString * API_TOKEN;
+@property NSString * TEST_USER_ID;
 @end

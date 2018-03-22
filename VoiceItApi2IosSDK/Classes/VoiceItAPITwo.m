@@ -592,6 +592,30 @@ NSString * const host = @"https://api.voiceit.io/";
     [[self masterViewController] presentViewController: verifyVC animated:YES completion:nil];
 }
 
+- (void)encapsulatedFaceVerification:(NSString *)userId
+           userVerificationCancelled:(void (^)(void))userVerificationCancelled
+           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
+               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
+{
+    
+    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
+        @throw [NSException exceptionWithName:@"Cannot Do Face Verification"
+                                       reason:@"Invalid userId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    FaceVerificationViewController *faceVerificationVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceVerificationVC"];
+    faceVerificationVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    faceVerificationVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    faceVerificationVC.userToVerifyUserId = userId;
+    faceVerificationVC.userVerificationCancelled = userVerificationCancelled;
+    faceVerificationVC.userVerificationSuccessful = userVerificationSuccessful;
+    faceVerificationVC.userVerificationFailed = userVerificationFailed;
+    faceVerificationVC.voiceItMaster = self;
+    [[self masterViewController] presentViewController: faceVerificationVC animated:YES completion:nil];
+}
+
 - (void)createVideoEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     imageData:(NSData*)imageData
@@ -701,49 +725,50 @@ NSString * const host = @"https://api.voiceit.io/";
     [task resume];
 }
 
-- (void)videoVerification:(NSString *)userId
-          contentLanguage:(NSString*)contentLanguage
-        recordingFinished:(void (^)(void))recordingFinished
-                 callback:(void (^)(NSString *))callback
+- (void)faceVerification:(NSString *)userId
+               videoPath:(NSString*)videoPath
+                callback:(void (^)(NSString *))callback
 {
+    
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Call Video Verification"
+        @throw [NSException exceptionWithName:@"Cannot Call Face Verification"
                                        reason:@"Invalid userId passed"
                                      userInfo:nil];
         return;
     }
     
     _uniqueId = userId;
-    _contentLanguage = contentLanguage;
-    _recType = verification;
-    _videoVerificationCompleted = callback;
-    _recordingCompleted = recordingFinished;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //        CameraViewController * vc = [[CameraViewController alloc] init:^(NSString * filePath){
-        //
-        //            if(self.recordingCompleted){
-        //                self.recordingCompleted();
-        //            }
-        //
-        //            NSString *fileName = @"RecordedFile"; // Changed it So It Keeps Replacing File
-        //            _recordingFilePath = [NSTemporaryDirectory()
-        //                                  stringByAppendingPathComponent:[NSString
-        //                                                                  stringWithFormat:@"%@.wav", fileName]];
-        //            if ([[NSFileManager defaultManager] fileExistsAtPath:_recordingFilePath])
-        //            {
-        //                [[NSFileManager defaultManager] removeItemAtPath:_recordingFilePath
-        //                                                           error:nil];
-        //            }
-        //            _photoData = [self imageFromVideo:filePath atTime:1.2];
-        //            [self getAudioFromVideo:filePath dstPath:_recordingFilePath callback:^(NSString * dstPath){
-        //                [self videoVerification];
-        //            }];
-        //
-        //        }];
-        //
-        //        [self.masterViewController presentViewController:vc animated:true completion:^{
-        //        }];
-    });
+    _faceVerificationCompleted = callback;
+    _recordingFilePath = videoPath;
+    [self faceVerification];
+}
+
+-(void)faceVerification{
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", _boundary];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"verification/face"]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary *params = @{@"userId": _uniqueId, @"doBlinkDetection" : @false};
+    NSMutableData *body = [NSMutableData data];
+    [self addParamsToBody:body parameters:params];
+    [self addFileToBody:body filePath:_recordingFilePath fieldName:@"video"];
+    [self endBody:body];
+    
+    NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *result =
+        [[NSString alloc] initWithData:data
+                              encoding:NSUTF8StringEncoding];
+        if(self.faceVerificationCompleted){
+            self.faceVerificationCompleted(result);
+        }
+    }];
+    
+    [task resume];
 }
 
 - (void)videoVerification:(NSString *)userId

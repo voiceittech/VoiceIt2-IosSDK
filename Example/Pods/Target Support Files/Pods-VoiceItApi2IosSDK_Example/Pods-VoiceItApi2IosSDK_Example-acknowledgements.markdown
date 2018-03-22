@@ -1,6 +1,26 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## GoogleInterchangeUtilities
+
+Copyright 2016 Google
+
+## GoogleMobileVision
+
+Copyright 2016 Google
+
+## GoogleNetworkingUtilities
+
+Copyright 2016 Google
+
+## GoogleSymbolUtilities
+
+Copyright 2016 Google
+
+## GoogleUtilities
+
+Copyright 2016 Google
+
 ## VoiceItApi2IosSDK
 
 Copyright (c) 2017 armaanbindra <armaan.bindra@voiceit-tech.com>

@@ -13,6 +13,7 @@
 #import "EnrollFinishViewController.h"
 #import "EnrollSetupViewController.h"
 #import "EnrollViewController.h"
+#import "FaceVerificationViewController.h"
 #import "MainNavigationController.h"
 #import "ResponseManager.h"
 #import "SpinningView.h"

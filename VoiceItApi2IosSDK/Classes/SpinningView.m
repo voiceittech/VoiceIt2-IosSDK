@@ -46,6 +46,27 @@
     }
 }
 
+-(void)drawRightCircle {
+    CGFloat radius = 100;
+    
+    CGFloat starttime = M_PI/6; //1 pm = 1/6 rad
+    CGFloat endtime = M_PI;  //6 pm = 1 rad
+    
+    //draw arc
+    CGPoint center = CGPointMake(radius,radius);
+    UIBezierPath *arc = [UIBezierPath bezierPath]; //empty path
+    [arc moveToPoint:center];
+    CGPoint next;
+    next.x = center.x + radius * cos(starttime);
+    next.y = center.y + radius * sin(starttime);
+    [arc addLineToPoint:next]; //go one end of arc
+    [arc addArcWithCenter:center radius:radius startAngle:starttime endAngle:endtime clockwise:YES]; //add the arc
+    [arc addLineToPoint:center]; //back to center
+    
+    [[UIColor yellowColor] set];
+    [arc fill];
+}
+
 -(void)startAnimation{
     CABasicAnimation * inAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     [inAnimation setFromValue: [NSNumber numberWithFloat:0.0]];

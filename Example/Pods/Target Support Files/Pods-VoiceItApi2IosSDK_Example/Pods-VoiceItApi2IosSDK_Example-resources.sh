@@ -83,6 +83,24 @@ EOM
       ;;
   esac
 }
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLjoy_100.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLlefteyeclosed_200.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLrighteyeclosed_200.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/LMprec_600.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/MFTprec_202.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/PFFprec_702.emd"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/VoiceItApi2IosSDK/VoiceItApi2IosSDK.bundle"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLjoy_100.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLlefteyeclosed_200.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLrighteyeclosed_200.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/LMprec_600.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/MFTprec_202.emd"
+  install_resource "${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/PFFprec_702.emd"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/VoiceItApi2IosSDK/VoiceItApi2IosSDK.bundle"
+fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

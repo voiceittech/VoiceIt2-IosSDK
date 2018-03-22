@@ -18,6 +18,12 @@
   "platforms": {
     "ios": "10.0"
   },
+  "static_framework": true,
+  "dependencies": {
+    "GoogleMobileVision/FaceDetector": [
+
+    ]
+  },
   "source_files": "VoiceItApi2IosSDK/Classes/**/*.{h,m}",
   "resource_bundles": {
     "VoiceItApi2IosSDK": [
