@@ -504,7 +504,7 @@ Verify user with given userId(begins with 'usr_'). Note: Immediately upon callin
 
 ##### *Swift*
 ```swift
-myVoiceIt?.encapsulatedFaceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", userVerificationCancelled: {
+myVoiceIt?.encapsulatedFaceVerification("USER_ID_HERE", userVerificationCancelled: {
 print("User Cancelled Verification");
 }, userVerificationSuccessful: {(faceConfidence, jsonResponse) in
 print("User Verication Successful faceConfidence is \(faceConfidence)")
