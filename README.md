@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/VoiceItApi2IosSDK.svg?style=flat)](http://cocoapods.org/pods/VoiceItApi2IosSDK)
 <!-- [![Build Status](https://travis-ci.org/voiceittech/VoiceItApi2IosSDK.svg?branch=master)](https://travis-ci.org/voiceittech/VoiceItApi2IosSDK) -->
 
-A fully comprehensive SDK that gives you access to the VoiceIt's API 2.0 featuring Voice + Face Verification and Identification right from your iOS app. Now with client - side basic liveness detection.
+A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring Voice + Face Verification and Identification right from your iOS app. Now with client - side basic liveness detection.
 
 * [Getting Started](#getting-started)
 * [Installation](#installation)
