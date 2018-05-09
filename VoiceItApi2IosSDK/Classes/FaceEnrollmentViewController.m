@@ -1,17 +1,20 @@
 //
-//  EnrollViewController.m
-//  Pods-VoiceItApi2IosSDK_Example
+//  FaceEnrollmentViewController.m
+//  VoiceItApi2IosSDK
 //
-//  Created by Armaan Bindra on 10/1/17.
+//  Created by Armaan Bindra on 5/7/18.
 //
 
-#import "EnrollViewController.h"
-#import "Liveness.h"
+#import "FaceEnrollmentViewController.h"
 
-@interface EnrollViewController ()
+@interface FaceEnrollmentViewController ()
+@property(nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
+@property(nonatomic, strong)  AVAssetWriter *assetWriterMyData;
+@property(nonatomic, strong)  NSString *videoPath;
+@property(nonatomic, strong)  AVAssetWriterInput *assetWriterInput;
 @end
 
-@implementation EnrollViewController
+@implementation FaceEnrollmentViewController
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -22,56 +25,6 @@
     return self;
 }
 
--(void)cancelClicked{
-    [self setAudioSessionInactive];
-    [self cleanupCaptureSession];
-    self.captureSession = nil;
-    self.continueRunning = NO;
-    [_myVoiceIt deleteAllUserEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
-        [[self navigationController] dismissViewControllerAnimated:YES completion:^{
-            [[self myNavController] userEnrollmentsCancelled];
-        }];
-    }];
-}
-
-- (void)cleanupCaptureSession {
-    [self.captureSession stopRunning];
-    [self cleanupVideoProcessing];
-    self.captureSession = nil;
-    [self.previewLayer removeFromSuperlayer];
-}
-
-- (void)cleanupVideoProcessing {
-    if (self.videoDataOutput) {
-        [self.captureSession removeOutput:self.videoDataOutput];
-    }
-    self.videoDataOutput = nil;
-}
-
-- (void)setupVideoProcessing {
-    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
-    NSDictionary *rgbOutputSettings = @{
-                                        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
-                                        };
-    [self.videoDataOutput setVideoSettings:rgbOutputSettings];
-    
-    if (![self.captureSession canAddOutput:self.videoDataOutput]) {
-        [self cleanupVideoProcessing];
-        NSLog(@"Failed to setup video output");
-        return;
-    }
-    [self.videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
-    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoDataOutputQueue];
-    [self.captureSession addOutput:self.videoDataOutput];
-}
-
--(void)setNavigationTitle:(int) enrollNumber {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString * newTitle = [[NSString alloc] initWithFormat:@"%d of 3", enrollNumber];
-        [[self navigationItem] setTitle: newTitle];
-    });
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.messageLabel.textColor  = [Utilities uiColorFromHexString:@"#FFFFFF"];
@@ -79,8 +32,6 @@
     self.myNavController = (MainNavigationController*) [self navigationController];
     self.myVoiceIt = (VoiceItAPITwo *) _myNavController.myVoiceIt;
     //TODO: Make all these come dynamically when triggering enrollment process
-    self.thePhrase =  _myNavController.voicePrintPhrase;
-    self.contentLanguage =  _myNavController.contentLanguage;
     self.userToEnrollUserId = _myNavController.uniqueId;
     // Setup Cancel Button on top left of navigation controller
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelClicked)];
@@ -89,20 +40,38 @@
     
     // Initialize Boolean and All
     self.lookingIntoCam = NO;
+    self.enoughRecordingTimePassed = NO;
     self.enrollmentStarted = NO;
     self.continueRunning  = YES;
-    self.imageNotSaved = YES;
     self.lookingIntoCamCounter = 0;
-    self.enrollmentDoneCounter = 0;
-    [self setNavigationTitle:self.enrollmentDoneCounter + 1];
+    [self setNavigationTitle:@"Enrolling Face"];
+    // Set up the AVCapture Session
     [self setupCaptureSession];
-    [self setupCameraCircle];
     [self setupVideoProcessing];
     // Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [self setupCameraCircle];
     self.originalMessageLeftConstraintContstant = self.messageleftConstraint.constant;
+}
+
+-(void)cancelClicked{
+    [self.captureSession stopRunning];
+    self.captureSession = nil;
+    self.continueRunning = NO;
+    [self cleanupCaptureSession];
+    [_myVoiceIt deleteAllUserEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+        [[self navigationController] dismissViewControllerAnimated:YES completion:^{
+            [[self myNavController] userEnrollmentsCancelled];
+        }];
+    }];
+}
+
+-(void)setNavigationTitle:(NSString *) titleText {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[self navigationItem] setTitle: titleText];
+    });
 }
 
 -(void)setupCaptureSession{
@@ -180,7 +149,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         self.progressCircle.strokeColor = [Styles getMainCGColor];
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        animation.duration = 5;
+        animation.duration = 3.0;
         animation.removedOnCompletion = YES;//NO;
         animation.fromValue = @(0);
         animation.toValue = @(1);
@@ -194,7 +163,7 @@
     NSLog(@"Starting Delayed RECORDING with delayTime %f ", delayTime);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if(self.continueRunning){
-            [self makeLabelFlyIn:[ResponseManager getMessage:[[NSString alloc] initWithFormat:@"ENROLL_%d", self.enrollmentDoneCounter] variable:self.thePhrase]];
+            [self makeLabelFlyIn:[ResponseManager getMessage:@"FACE_ENROLL"]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 if(self.continueRunning){
                     [self startRecording];
@@ -207,83 +176,113 @@
 -(void)startRecording {
     NSLog(@"Starting RECORDING");
     self.isRecording = YES;
-    self.imageNotSaved = YES;
+    [self startWritingToVideoFile];
     self.cameraBorderLayer.backgroundColor = [UIColor clearColor].CGColor;
-    self.audioSession = [AVAudioSession sharedInstance];
-    NSError *err;
-    [self.audioSession setCategory:AVAudioSessionCategoryRecord error:&err];
-    if (err)
-    {
-        NSLog(@"%@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
-    }
-    err = nil;
-    
-    // Unique recording URL
-    NSString *fileName = @"OriginalFile"; // Changed it So It Keeps Replacing File
-    self.audioPath = [NSTemporaryDirectory()
-                  stringByAppendingPathComponent:[NSString
-                                                  stringWithFormat:@"%@.wav", fileName]];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:self.audioPath])
-    {
-        [[NSFileManager defaultManager] removeItemAtPath:self.audioPath
-                                                   error:nil];
-    }
-    
-    NSURL *url = [NSURL fileURLWithPath:self.audioPath];
-    err = nil;
-    self.audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:[Utilities getRecordingSettings] error:&err];
-    if(!self.audioRecorder){
-        NSLog(@"recorder: %@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
-        return;
-    }
-    [self.audioRecorder setDelegate:self];
-    [self.audioRecorder prepareToRecord];
-    [self.audioRecorder recordForDuration:4.8];
-    
+    // Initialize Face Variables
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        if(self.continueRunning){
+            [self setEnoughRecordingTimePassed:YES];
+            [self stopRecording];
+        }
+    });
     // Start Progress Circle Around Face Animation
     [self animateProgressCircle];
 }
 
--(void)recordingStopped{
+-(void)stopRecording{
     self.isRecording = NO;
-    self.progressCircle.strokeColor = [UIColor clearColor].CGColor;
+    [self setEnoughRecordingTimePassed:NO];
+    [self stopWritingToVideoFile];
 }
 
-// Code to Capture Face Rectangle and other cool metadata stuff
--(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
-    BOOL faceFound = NO;
-    for(AVMetadataObject *metadataObject in metadataObjects) {
-        if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
-            [self.faceRectangleLayer setHidden:NO];
-            faceFound = YES;
-            AVMetadataObject * face = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
-            CGFloat padding = 10.0;
-            CGFloat halfPadding = padding/2;
-            CGRect newFaceCircle = CGRectMake(face.bounds.origin.x - halfPadding, face.bounds.origin.y - halfPadding, face.bounds.size.width + padding, face.bounds.size.height + padding);
-            self.faceRectangleLayer.frame = newFaceCircle;
-            self.faceRectangleLayer.cornerRadius = 10.0;
-        }
+- (void)cleanupCaptureSession {
+    [self.captureSession stopRunning];
+    [self cleanupVideoProcessing];
+    self.captureSession = nil;
+    [self.previewLayer removeFromSuperlayer];
+}
+
+- (void)cleanupVideoProcessing {
+    if (self.videoDataOutput) {
+        [self.captureSession removeOutput:self.videoDataOutput];
+    }
+    self.videoDataOutput = nil;
+}
+
+- (void)setupVideoProcessing {
+    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    NSDictionary *rgbOutputSettings = @{
+                                        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
+                                        };
+    [self.videoDataOutput setVideoSettings:rgbOutputSettings];
+    
+    if (![self.captureSession canAddOutput:self.videoDataOutput]) {
+        [self cleanupVideoProcessing];
+        NSLog(@"Failed to setup video output");
+        return;
+    }
+    [self.videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
+    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoDataOutputQueue];
+    [self.captureSession addOutput:self.videoDataOutput];
+}
+
+-(void)startWritingToVideoFile{
+    NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:640], AVVideoWidthKey, [NSNumber numberWithInt:480], AVVideoHeightKey, AVVideoCodecH264, AVVideoCodecKey,nil];
+    self.assetWriterInput = [AVAssetWriterInput  assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:outputSettings];
+    [self.assetWriterInput setTransform: CGAffineTransformMakeRotation( ( 90 * M_PI ) / 180 )];
+    self.pixelBufferAdaptor =
+    [[AVAssetWriterInputPixelBufferAdaptor alloc]
+     initWithAssetWriterInput:self.assetWriterInput
+     sourcePixelBufferAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [NSNumber numberWithInt:kCVPixelFormatType_32BGRA],
+      kCVPixelBufferPixelFormatTypeKey,
+      nil]];
+    
+    // Unique video URL
+    NSString *fileName = @"OriginalFile"; // Changed it So It Keeps Replacing File
+    self.videoPath  = [NSTemporaryDirectory()
+                       stringByAppendingPathComponent:[NSString
+                                                       stringWithFormat:@"%@.mp4", fileName]];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:self.videoPath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:self.videoPath
+                                                   error:nil];
     }
     
-    if(faceFound) {
-        if (self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND && !self.lookingIntoCam && !self.enrollmentStarted) {
-            self.lookingIntoCam = YES;
-            self.enrollmentStarted = YES;
-            [self startEnrollmentProcess];
-        }
-        self.lookingIntoCamCounter += 1;
-    } else if (!self.enrollmentStarted){
-        [self makeLabelFlyIn:[ResponseManager getMessage:@"LOOK_INTO_CAM"]];
-        self.lookingIntoCam = NO;
-        self.lookingIntoCamCounter = 0;
-        [self.faceRectangleLayer setHidden:YES];
-    } else {
-        self.lookingIntoCam = NO;
-        self.lookingIntoCamCounter = 0;
-        [self.faceRectangleLayer setHidden:YES];
-    }
+    NSURL *videoURL = [NSURL fileURLWithPath:self.videoPath];
+    
+    /* Asset writer with MPEG4 format*/
+    self.assetWriterMyData = [[AVAssetWriter alloc]
+                              initWithURL: videoURL
+                              fileType:AVFileTypeMPEG4
+                              error:nil];
+    [self.assetWriterMyData addInput:self.assetWriterInput];
+    self.assetWriterInput.expectsMediaDataInRealTime = YES;
+    [self.assetWriterMyData startWriting];
+    [self.assetWriterMyData startSessionAtSourceTime:kCMTimeZero];
 }
 
+-(void)stopWritingToVideoFile {
+    [self.assetWriterMyData finishWritingWithCompletionHandler:^{
+        [self showLoading];
+        [self.myVoiceIt createFaceEnrollment:self.userToEnrollUserId videoPath:self.videoPath callback:^(NSString * jsonResponse){
+            [self removeLoading];
+            NSLog(@"Face Enrollment JSON Response : %@", jsonResponse);
+            NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
+            NSLog(@"Response Code is %@ and message is : %@", [jsonObj objectForKey:@"responseCode"], [jsonObj objectForKey:@"message"]);
+            NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
+            if([responseCode isEqualToString:@"SUCC"]){
+             [self takeToFinishedView];
+            } else {
+                [self startDelayedRecording:3.0];
+                [self makeLabelFlyIn:[ResponseManager getMessage:responseCode]];
+            }
+        }];
+
+    }];
+}
 
 -(void)startEnrollmentProcess {
     [self.myVoiceIt getAllEnrollmentsForUser:self.userToEnrollUserId callback:^(NSString * getEnrollmentsJSONResponse){
@@ -330,6 +329,41 @@
     });
 }
 
+// Code to Capture Face Rectangle and other cool metadata stuff
+-(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
+    BOOL faceFound = NO;
+    for(AVMetadataObject *metadataObject in metadataObjects) {
+        if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
+            [self.faceRectangleLayer setHidden:NO];
+            faceFound = YES;
+            AVMetadataObject * face = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
+            CGFloat padding = 10.0;
+            CGFloat halfPadding = padding/2;
+            CGRect newFaceCircle = CGRectMake(face.bounds.origin.x - halfPadding, face.bounds.origin.y - halfPadding, face.bounds.size.width + padding, face.bounds.size.height + padding);
+            self.faceRectangleLayer.frame = newFaceCircle;
+            self.faceRectangleLayer.cornerRadius = 10.0;
+        }
+    }
+    
+    if(faceFound) {
+        if (self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND && !self.lookingIntoCam && !self.enrollmentStarted) {
+            self.lookingIntoCam = YES;
+            self.enrollmentStarted = YES;
+            [self startEnrollmentProcess];
+        }
+        self.lookingIntoCamCounter += 1;
+    } else if (!self.enrollmentStarted){
+        [self makeLabelFlyIn:[ResponseManager getMessage:@"LOOK_INTO_CAM"]];
+        self.lookingIntoCam = NO;
+        self.lookingIntoCamCounter = 0;
+        [self.faceRectangleLayer setHidden:YES];
+    } else {
+        self.lookingIntoCam = NO;
+        self.lookingIntoCamCounter = 0;
+        [self.faceRectangleLayer setHidden:YES];
+    }
+}
+
 -(void)viewWillDisappear:(BOOL)animated{
     [self.captureSession stopRunning];
 }
@@ -337,6 +371,31 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput
+didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
+fromConnection:(AVCaptureConnection *)connection {
+    
+    if(self.isRecording && !self.enoughRecordingTimePassed){
+        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        // a very dense way to keep track of the time at which this frame
+        // occurs relative to the output stream, but it's just an example!
+        static int64_t frameNumber = 0;
+        if(self.assetWriterInput.readyForMoreMediaData){
+            if(self.pixelBufferAdaptor != nil){
+                [self.pixelBufferAdaptor appendPixelBuffer:imageBuffer
+                                      withPresentationTime:CMTimeMake(frameNumber, 25)];
+                frameNumber++;
+            }
+        }
+    }
+    
+    // Don't do any analysis when not looking into the camera
+    if(!self.lookingIntoCam){
+        return;
+    }
+    
 }
 
 -(void)showLoading{
@@ -353,82 +412,6 @@
     });
 }
 
-#pragma mark - AVAudioRecorderDelegate Methods
-
--(void)setAudioSessionInactive{
-    [self.audioRecorder stop];
-    NSError * err;
-    [self.audioSession setActive:NO error:&err];
-}
-
-- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
-    NSLog(@"AUDIO RECORDED FINISHED SUCCESS = %d", flag);
-    [self setAudioSessionInactive];
-    [self recordingStopped];
-    if(self.imageNotSaved){
-        [self startDelayedRecording:3.0];
-        [self makeLabelFlyIn: [ResponseManager getMessage:@"FNFD"]];
-    } else {
-        [self showLoading];
-        [self.myVoiceIt createVideoEnrollment:self.userToEnrollUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath callback:^(NSString * jsonResponse){
-            [self removeLoading];
-            self.imageNotSaved = YES;
-            NSLog(@"Video Enrollment JSON Response : %@", jsonResponse);
-            NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
-            NSLog(@"Response Code is %@ and message is : %@", [jsonObj objectForKey:@"responseCode"], [jsonObj objectForKey:@"message"]);
-            NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
-            if([responseCode isEqualToString:@"SUCC"]){
-                NSString * enrollmentId =  [jsonObj objectForKey:@"id"];
-                NSString * enrollmentText = [jsonObj objectForKey:@"text"];
-                if([Utilities isStrSame:enrollmentText secondString:self.thePhrase]){
-                    self.enrollmentDoneCounter += 1;
-                    if( self.enrollmentDoneCounter < 3){
-                        [self setNavigationTitle:self.enrollmentDoneCounter + 1];
-                        [self startDelayedRecording:1];
-                    } else {
-                        [self takeToFinishedView];
-                    }
-                } else {
-                    //If Successfully did enrollment with wrong phrase, then extract enrollmentId and delete this wrong enrollment
-                    [self.myVoiceIt deleteEnrollmentForUser:self.userToEnrollUserId enrollmentId:enrollmentId callback:^(NSString * deleteEnrollmentJsonResponse){
-                        [self startDelayedRecording:2.5];
-                        [self makeLabelFlyIn:[ResponseManager getMessage: @"STTF" variable:self.thePhrase]];
-                    }];
-                }
-            } else {
-                [self startDelayedRecording:3.0];
-                if([Utilities isStrSame:responseCode secondString:@"STTF"]){
-                    [self makeLabelFlyIn:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
-                } else {
-                    [self makeLabelFlyIn:[ResponseManager getMessage:responseCode]];
-                }
-            }
-        }];
-    }
-}
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput
-didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
-       fromConnection:(AVCaptureConnection *)connection {
-    
-    // Don't do any analysis when not looking into the camera
-    if(!self.lookingIntoCam){
-        return;
-    }
-    
-    if(self.lookingIntoCamCounter > 5 && self.imageNotSaved){
-            [self saveImageData:[GMVUtility sampleBufferTo32RGBA:sampleBuffer]];
-    }
-    
-}
-
--(void)saveImageData:(UIImage *)image{
-    if ( image != nil){
-        self.finalCapturedPhotoData  = UIImageJPEGRepresentation(image, 0.8);
-        self.imageNotSaved = NO;
-    }
-}
-
 -(void)takeToFinishedView{
     NSLog(@"Take to finished view");
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -437,8 +420,4 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     });
 }
 
--(void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
-{
-    NSLog(@"fail because %@", error.localizedDescription);
-}
 @end

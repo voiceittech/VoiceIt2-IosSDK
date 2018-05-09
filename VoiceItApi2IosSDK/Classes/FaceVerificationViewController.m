@@ -23,7 +23,6 @@
 @end
 
 @implementation FaceVerificationViewController
-int FACE_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -118,7 +117,7 @@ int FACE_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
     NSString *fileName = @"OriginalFile"; // Changed it So It Keeps Replacing File
     self.videoPath  = [NSTemporaryDirectory()
                   stringByAppendingPathComponent:[NSString
-                                                  stringWithFormat:@"%@.wav", fileName]];
+                                                  stringWithFormat:@"%@.mp4", fileName]];
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.videoPath])
     {
         [[NSFileManager defaultManager] removeItemAtPath:self.videoPath
@@ -338,6 +337,7 @@ int FACE_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
 
 -(void)stopRecording{
     self.isRecording = NO;
+    [self setEnoughRecordingTimePassed:NO];
     [self stopWritingToVideoFile];
 }
 
@@ -355,7 +355,7 @@ int FACE_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
     }
     
     if(faceFound) {
-        if (self.lookingIntoCamCounter > FACE_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND && !self.lookingIntoCam) {
+        if (self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND && !self.lookingIntoCam) {
             self.lookingIntoCam = YES;
             [self startRecording];
             if(self.doLivenessDetection){

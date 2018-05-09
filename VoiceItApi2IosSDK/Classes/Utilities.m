@@ -9,6 +9,7 @@
 #import "Utilities.h"
 
 @implementation Utilities
+
 /* Utility Methods */
 +(UIColor *)uiColorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;

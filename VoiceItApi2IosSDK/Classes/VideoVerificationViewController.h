@@ -42,6 +42,7 @@
 @property BOOL isRecording;
 @property BOOL continueRunning;
 @property BOOL doLivenessDetection;
+@property BOOL imageNotSaved;
 
 #pragma mark -  Counters to keep track of stuff
 @property int lookingIntoCamCounter;

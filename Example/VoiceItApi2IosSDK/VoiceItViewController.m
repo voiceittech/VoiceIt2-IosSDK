@@ -19,7 +19,7 @@
     self.API_KEY = @"API_KEY_HERE";
     self.API_TOKEN = @"API_TOKEN_HERE";
     self.TEST_USER_ID = @"USER_ID_HERE";
-    
+
     NSMutableDictionary * styles = [[NSMutableDictionary alloc] init];
     [styles setObject:@"#FBC132" forKey:@"kThemeColor"];
     [styles setObject:@"default" forKey:@"kIconStyle"];
@@ -34,6 +34,22 @@
 
 - (IBAction)startEnrollmentClicked:(id)sender {
     [_myVoiceIt encapsulatedVideoEnrollUser: self.TEST_USER_ID contentLanguage:@"en-US" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
+        NSLog(@"User Enrollments Cancelled");
+    } userEnrollmentsPassed:^{
+        NSLog(@"User Enrollments Completed");
+    }];
+}
+
+- (IBAction)voiceEnrollmentClicked:(id)sender {
+    [_myVoiceIt encapsulatedVoiceEnrollUser: self.TEST_USER_ID contentLanguage:@"en-US" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
+        NSLog(@"User Enrollments Cancelled");
+    } userEnrollmentsPassed:^{
+        NSLog(@"User Enrollments Completed");
+    }];
+}
+
+- (IBAction)faceEnrollmentClicked:(id)sender {
+    [_myVoiceIt encapsulatedFaceEnrollUser: self.TEST_USER_ID userEnrollmentsCancelled:^{
         NSLog(@"User Enrollments Cancelled");
     } userEnrollmentsPassed:^{
         NSLog(@"User Enrollments Completed");

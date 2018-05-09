@@ -16,6 +16,7 @@
 "ENROLL_0"= "Say \"%@\" into the iPhone";
 "ENROLL_1"= "Say \"%@\" again";
 "ENROLL_2"= "Say \"%@\" one more time";
+"FACE_ENROLL"= "Please wait ⏰ for your face to be enrolled";
 "WAITING"= "Please wait ⏰";
 "FNFD" = "Sorry, I couldn't quite see your face.\nPlease try again.";
 "DDNE" = "Sorry, something went wrong.\nPlease try again.";

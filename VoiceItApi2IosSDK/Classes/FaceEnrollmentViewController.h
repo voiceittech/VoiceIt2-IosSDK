@@ -1,8 +1,8 @@
 //
-//  EnrollViewController.h
-//  Pods-VoiceItApi2IosSDK_Example
+//  FaceEnrollmentViewController.h
+//  VoiceItApi2IosSDK
 //
-//  Created by Armaan Bindra on 10/1/17.
+//  Created by Armaan Bindra on 5/7/18.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,12 +15,8 @@
 #import "MainNavigationController.h"
 #import "Styles.h"
 
-@interface EnrollViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate,AVAudioRecorderDelegate>
+@interface FaceEnrollmentViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 
-#pragma mark - Audio Recording Stuff
-@property (nonatomic, strong) AVAudioRecorder * audioRecorder;
-@property (nonatomic, strong) NSString *audioPath;
-@property(nonatomic, strong) AVAudioSession *audioSession;
 #pragma mark -  Graphics/UI/Constraints/Animations
 @property CGFloat originalMessageLeftConstraintContstant;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageleftConstraint;
@@ -32,7 +28,7 @@
 @property CALayer * faceRectangleLayer;
 
 #pragma mark -  Camera Related Stuff
-@property  AVCaptureSession * captureSession;
+@property AVCaptureSession * captureSession;
 @property AVCaptureDevice * videoDevice;
 @property AVCaptureVideoPreviewLayer *previewLayer;
 @property (nonatomic, strong) NSData *finalCapturedPhotoData;
@@ -44,16 +40,15 @@
 @property BOOL enrollmentStarted;
 @property BOOL isRecording;
 @property BOOL continueRunning;
-@property BOOL imageNotSaved;
+@property BOOL enoughRecordingTimePassed;
+@property BOOL enrollmentComplete;
 
 #pragma mark -  Counters to keep track of stuff
-@property int enrollmentDoneCounter;
+
 @property int lookingIntoCamCounter;
 
 #pragma mark -  Developer Passed Options
 @property (strong, nonatomic)  NSString * userToEnrollUserId;
-@property (strong, nonatomic)  NSString * thePhrase;
-@property (strong, nonatomic)  NSString * contentLanguage;
 @property (strong, nonatomic)  VoiceItAPITwo * myVoiceIt;
 @property (strong, nonatomic)  MainNavigationController * myNavController;
 @end

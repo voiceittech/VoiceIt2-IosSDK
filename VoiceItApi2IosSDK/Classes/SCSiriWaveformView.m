@@ -9,7 +9,7 @@
 #import "SCSiriWaveformView.h"
 
 static const CGFloat kDefaultFrequency          = 6.0f;
-static const CGFloat kDefaultAmplitude          = 1.5f;
+static const CGFloat kDefaultAmplitude          = 0.5f;
 static const CGFloat kDefaultIdleAmplitude      = 0.00f;
 static const CGFloat kDefaultNumberOfWaves      = 2.0f;
 static const CGFloat kDefaultPhaseShift         = -0.15f;

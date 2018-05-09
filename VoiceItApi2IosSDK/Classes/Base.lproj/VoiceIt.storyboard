@@ -54,6 +54,51 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UYX-Kc-pB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="3809" y="922"/>
+        </scene>
+        <!--Face Enrollment View Controller-->
+        <scene sceneID="bLR-rn-oAL">
+            <objects>
+                <viewController storyboardIdentifier="faceEnrollVC" id="o3F-GO-Kdw" customClass="FaceEnrollmentViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fwD-B4-1Ky">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please look into the camera" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGK-nt-1W0">
+                                <rect key="frame" x="16" y="387" width="343" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="14i-fc-UFR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="32"/>
+                                <color key="textColor" red="1" green="1" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sjt-gK-8Lo" customClass="SpinningView">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="fGK-nt-1W0" firstAttribute="leading" secondItem="Px2-QR-qLV" secondAttribute="leading" constant="16" id="39w-Md-UWB"/>
+                            <constraint firstItem="Px2-QR-qLV" firstAttribute="bottom" secondItem="fGK-nt-1W0" secondAttribute="bottom" constant="80" id="G8k-hc-0C4"/>
+                            <constraint firstItem="Px2-QR-qLV" firstAttribute="trailing" secondItem="fGK-nt-1W0" secondAttribute="trailing" constant="16" id="IDy-pH-6YC"/>
+                            <constraint firstItem="sjt-gK-8Lo" firstAttribute="leading" secondItem="Px2-QR-qLV" secondAttribute="leading" id="hbs-A9-hHW"/>
+                            <constraint firstItem="sjt-gK-8Lo" firstAttribute="top" secondItem="Px2-QR-qLV" secondAttribute="top" id="rSi-hd-C6i"/>
+                            <constraint firstItem="sjt-gK-8Lo" firstAttribute="bottom" secondItem="Px2-QR-qLV" secondAttribute="bottom" id="slQ-Cu-3v8"/>
+                            <constraint firstItem="sjt-gK-8Lo" firstAttribute="trailing" secondItem="Px2-QR-qLV" secondAttribute="trailing" id="xMy-pT-sHc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Px2-QR-qLV"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="fGK-nt-1W0" id="fF6-4C-LqO"/>
+                        <outlet property="messageleftConstraint" destination="39w-Md-UWB" id="dJT-dD-mGS"/>
+                        <outlet property="progressView" destination="sjt-gK-8Lo" id="lqg-Aq-Bq4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eFX-Lc-qvC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="2796" y="922"/>
         </scene>
         <!--Enroll Finish View Controller-->
@@ -105,7 +150,7 @@
                                     <constraint firstItem="tca-f1-pN8" firstAttribute="centerX" secondItem="Zsn-8a-Xqw" secondAttribute="centerX" id="g0o-3T-QEY"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="You can now use your face and voice instead of a password to securely login anytime." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="IQI-Ph-E5u">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="You can now use your face and voice instead of a password to securely log in anytime." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="IQI-Ph-E5u">
                                 <rect key="frame" x="16" y="378" width="343" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -132,6 +177,8 @@
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="bTd-aK-eTP" id="NSP-CJ-nc6"/>
+                        <outlet property="enrollmentFinishSubtitleLabel" destination="IQI-Ph-E5u" id="nnY-DO-aWk"/>
+                        <outlet property="enrollmentFinishTitleLabel" destination="oXm-JX-qIG" id="Taw-zH-f89"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="slf-3V-ZSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -340,7 +387,7 @@
                                     <action selector="continueClicked:" destination="3Ya-cA-d4v" eventType="touchUpInside" id="sfV-sx-pTb"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This lets you use you login by verifying your face and voice" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="grO-3t-kIf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This lets you use you log in by verifying your face and voice" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="grO-3t-kIf">
                                 <rect key="frame" x="16" y="402" width="343" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -393,6 +440,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="continueButton" destination="uLS-Cd-kCr" id="UDL-pd-KhV"/>
+                        <outlet property="enrollmentSetupSubtitleLabel" destination="grO-3t-kIf" id="D9e-Ze-r7e"/>
+                        <outlet property="enrollmentSetupTitleLabel" destination="pDU-zF-w7c" id="lwg-RR-TZc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DmT-B6-NcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -489,6 +538,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MdD-Qm-Me7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2044" y="922"/>
+        </scene>
+        <!--Voice Enrollment View Controller-->
+        <scene sceneID="uQI-Sf-BVf">
+            <objects>
+                <viewController storyboardIdentifier="voiceEnrollVC" id="pPK-kV-Gpf" customClass="VoiceEnrollmentViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zBH-7U-kBd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WE5-Sx-X7B" customClass="SpinningView">
+                                <rect key="frame" x="0.0" y="10" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avF-MD-mta" customClass="SCSiriWaveformView">
+                                <rect key="frame" x="16" y="36" width="343" height="331"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Say &quot;My face and voice identify me&quot;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSB-Z2-JOK">
+                                <rect key="frame" x="16" y="387" width="343" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="3p0-01-MBQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="32"/>
+                                <color key="textColor" red="1" green="1" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="gSB-Z2-JOK" firstAttribute="leading" secondItem="fBA-w3-HAq" secondAttribute="leading" constant="16" id="67I-EX-hH8"/>
+                            <constraint firstItem="WE5-Sx-X7B" firstAttribute="top" secondItem="zBH-7U-kBd" secondAttribute="top" constant="10" id="6Jc-d7-Tor"/>
+                            <constraint firstItem="fBA-w3-HAq" firstAttribute="bottom" secondItem="WE5-Sx-X7B" secondAttribute="bottom" constant="10" id="9hw-yE-uPt"/>
+                            <constraint firstItem="fBA-w3-HAq" firstAttribute="trailing" secondItem="gSB-Z2-JOK" secondAttribute="trailing" constant="16" id="DsM-E4-z0J"/>
+                            <constraint firstItem="fBA-w3-HAq" firstAttribute="trailing" secondItem="avF-MD-mta" secondAttribute="trailing" constant="16" id="Gqz-QM-SsV"/>
+                            <constraint firstItem="WE5-Sx-X7B" firstAttribute="trailing" secondItem="fBA-w3-HAq" secondAttribute="trailing" id="Lpn-4Z-4pp"/>
+                            <constraint firstItem="avF-MD-mta" firstAttribute="leading" secondItem="fBA-w3-HAq" secondAttribute="leading" constant="16" id="Myu-kS-leT"/>
+                            <constraint firstItem="avF-MD-mta" firstAttribute="top" secondItem="fBA-w3-HAq" secondAttribute="top" constant="16" id="QT6-2K-sJq"/>
+                            <constraint firstItem="gSB-Z2-JOK" firstAttribute="top" secondItem="avF-MD-mta" secondAttribute="bottom" constant="20" id="REO-5M-DTr"/>
+                            <constraint firstItem="fBA-w3-HAq" firstAttribute="bottom" secondItem="gSB-Z2-JOK" secondAttribute="bottom" constant="80" id="dFG-Qo-HUH"/>
+                            <constraint firstItem="avF-MD-mta" firstAttribute="centerX" secondItem="zBH-7U-kBd" secondAttribute="centerX" id="dhc-ef-zB7"/>
+                            <constraint firstItem="WE5-Sx-X7B" firstAttribute="leading" secondItem="fBA-w3-HAq" secondAttribute="leading" id="uaH-Mx-e7D"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fBA-w3-HAq"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="gSB-Z2-JOK" id="Bgo-nR-qnV"/>
+                        <outlet property="messageleftConstraint" destination="67I-EX-hH8" id="0RM-Oe-vhf"/>
+                        <outlet property="progressView" destination="WE5-Sx-X7B" id="TSC-a7-bf5"/>
+                        <outlet property="waveformView" destination="avF-MD-mta" id="V39-5N-K9S"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cfa-RJ-C4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3808.8000000000002" y="921.58920539730138"/>
         </scene>
     </scenes>
 </document>

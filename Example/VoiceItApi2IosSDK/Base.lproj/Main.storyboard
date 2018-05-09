@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="whP-gf-Uak">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="whP-gf-Uak">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -26,6 +26,16 @@
                                 <state key="normal" title="Video Enrollment"/>
                                 <connections>
                                     <action selector="startEnrollmentClicked:" destination="whP-gf-Uak" eventType="touchUpInside" id="CJZ-mh-yzi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbc-xY-4c8">
+                                <rect key="frame" x="152" y="505" width="110" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="110" id="Mh1-Cn-Vfq"/>
+                                </constraints>
+                                <state key="normal" title="Face Enrollment"/>
+                                <connections>
+                                    <action selector="faceEnrollmentClicked:" destination="whP-gf-Uak" eventType="touchUpInside" id="Vlj-y5-wR8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsW-Co-a3P">
@@ -49,17 +59,31 @@
                                     <action selector="voiceVerificationClicked:" destination="whP-gf-Uak" eventType="touchUpInside" id="zjl-8e-Wde"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbU-eX-1KH">
+                                <rect key="frame" x="150" y="543" width="115" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="115" id="oxw-pT-xkk"/>
+                                </constraints>
+                                <state key="normal" title="Voice Enrollment"/>
+                                <connections>
+                                    <action selector="voiceEnrollmentClicked:" destination="whP-gf-Uak" eventType="touchUpInside" id="Wy2-pI-hWJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="tbU-eX-1KH" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="3gO-MO-pru"/>
                             <constraint firstItem="uLa-7O-kV6" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="CoS-3v-sKB"/>
                             <constraint firstItem="hsW-Co-a3P" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="EVk-vg-VV8"/>
                             <constraint firstItem="uLa-7O-kV6" firstAttribute="top" secondItem="hsW-Co-a3P" secondAttribute="bottom" constant="8" id="Ilp-yl-zl9"/>
                             <constraint firstItem="hsW-Co-a3P" firstAttribute="top" secondItem="dRg-oG-HjD" secondAttribute="bottom" constant="8" id="JMb-fp-NJ2"/>
                             <constraint firstItem="C7d-MH-rgQ" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="L1t-d8-8cE"/>
                             <constraint firstItem="dRg-oG-HjD" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="Lxe-ro-ZgA"/>
+                            <constraint firstItem="zbc-xY-4c8" firstAttribute="centerX" secondItem="TpU-gO-2f1" secondAttribute="centerX" id="Nnr-SZ-qze"/>
                             <constraint firstItem="dRg-oG-HjD" firstAttribute="centerY" secondItem="TpU-gO-2f1" secondAttribute="centerY" id="Vsh-0U-B7u"/>
                             <constraint firstItem="C7d-MH-rgQ" firstAttribute="top" secondItem="uLa-7O-kV6" secondAttribute="bottom" constant="8" id="dg6-3q-s3u"/>
+                            <constraint firstItem="tbU-eX-1KH" firstAttribute="top" secondItem="zbc-xY-4c8" secondAttribute="bottom" constant="8" id="hGd-nn-Dkk"/>
+                            <constraint firstItem="zbc-xY-4c8" firstAttribute="top" secondItem="C7d-MH-rgQ" secondAttribute="bottom" constant="8" id="pTZ-Vz-igF"/>
                         </constraints>
                     </view>
                 </viewController>

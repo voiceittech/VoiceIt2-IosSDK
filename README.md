@@ -28,17 +28,18 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
   * [Enrollment API Calls](#enrollment-api-calls)
       * [Get All Enrollments for User](#get-all-enrollments-for-user)
       * [Delete Enrollment for User](#delete-enrollment-for-user)
-      * [Create Audio Enrollment](#create-audio-enrollment)
+      * [Create Voice Enrollment](#create-voice-enrollment)
       * [Create Video Enrollment](#create-video-enrollment)
+      * [Encapsulated Voice Enrollment](#encapsulated-voice-enrollment)
       * [Encapsulated Video Enrollment](#encapsulated-video-enrollment)
   * [Verification API Calls](#verification-api-calls)
-      * [Audio Verification](#audio-verification)
+      * [Voice Verification](#voice-verification)
       * [Video Verification](#video-verification)
       * [Encapsulated Video Verification](#encapsulated-video-verification)
       * [Encapsulated Face Verification](#encapsulated-face-verification)
       * [Encapsulated Voice Verification](#encapsulated-voice-verification)
   * [Identification API Calls](#identification-api-calls)
-      * [Audio Identification](#audio-identification)
+      * [Voice Identification](#voice-identification)
       * [Video Identification](#video-identification)
 
 ## Getting Started
@@ -365,12 +366,10 @@ myVoiceIt?.deleteEnrollment(forUser: "USER_ID_HERE", enrollmentId: "ENROLLMENT_I
 
 #### Create Voice Enrollment
 
-Create audio enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: Immediately upon calling this method it records the user saying their VoicePrint phrase for 5 seconds calling the recordingFinished callback first, then it sends the recording to be added as an enrollment and returns the result in the callback
+Create voice enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.) and audio file.
 ##### *Swift*
 ```swift
-myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", recordingFinished: {
-    print("Audio Enrollment Recording Finished, now waiting for API Call to respond")
-}, callback: {
+myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioFilePath: "FILE_PATH_TO_VOICE_ENROLLMENT_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -378,21 +377,17 @@ myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createVoiceEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" recordingFinished:^(void){
-    NSLog(@"Audio Enrollment Recording Finished, now waiting for API Call to respond");
-} callback:^(NSString * jsonResponse){
+[_myVoiceIt createVoiceEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" audioFilePath: @"FILE_PATH_TO_VOICE_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
 
 #### Create Video Enrollment
 
-Create video enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: Immediately upon calling this method it displays the camera and starts recording a video of the user saying their VoicePrint phrase for 5 seconds calling the recordingFinished callback first, then it sends the recording to be added as an enrollment and returns the result in the callback
+Create video enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.) and video file.
 ##### *Swift*
 ```swift
-myVoiceIt?.createVideoEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", recordingFinished: {
-    print("Video Enrollment Recording Finished, now waiting for API Call to respond")
-}, callback: {
+myVoiceIt?.createVideoEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_ENROLLMENT_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -400,16 +395,36 @@ myVoiceIt?.createVideoEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createVideoEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" recordingFinished:^(void){
-    NSLog(@"Video Enrollment Recording Finished, now waiting for API Call to respond");
-} callback:^(NSString * jsonResponse){
+[_myVoiceIt createVideoEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
 
+#### Encapsulated Voice Enrollment
+
+Create three voice enrollments for user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the user and enrollment view controller that completely takes care of the three enrollments, including the UI and then provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
+
+##### *Swift*
+```swift
+myVoiceIt?.encapsulatedVoiceEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", userEnrollmentsCancelled: {
+print("User Enrollment Cancelled")
+}, userEnrollmentsPassed: {
+print("User Enrollments Passed")
+})
+```
+
+##### *Objective-C*
+```objc
+[_myVoiceIt encapsulatedVoiceEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
+NSLog(@"User Enrollments Cancelled");
+} userEnrollmentsPassed:^{
+NSLog(@"User Enrollments Passed");
+}];
+```
+
 #### Encapsulated Video Enrollment
 
-Create three video enrollments for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the user and enrollment view controller that completely takes care of the three enrollments, including the UI and then provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
+Create three video enrollments for user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the user and enrollment view controller that completely takes care of the three enrollments, including the UI and then provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
 
 ##### *Swift*
 ```swift
@@ -431,12 +446,10 @@ myVoiceIt?.encapsulatedVideoEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT
 
 #### Voice Verification
 
-Verify user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: Immediately upon calling this method it records the user saying their VoicePrint phrase for 5 seconds calling the recordingFinished callback first, then it sends the recording to be verified and returns the resulting confidence in the callback
+Verify user with the given userId(begins with 'usr_'), contentLanguage('en-US','es-ES' etc.) and audio file.
 ##### *Swift*
 ```swift
-myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", recordingFinished: {
-    print("Audio Verification Recording Finished, now waiting for API Call to respond")
-}, callback: {
+myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioFilePath: "FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -444,21 +457,18 @@ myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt voiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" recordingFinished:^(void){
-    NSLog(@"Audio Verification Recording Finished, now waiting for API Call to respond");
-} callback:^(NSString * jsonResponse){
+[_myVoiceIt voiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
 
 #### Video Verification
 
-Verify user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: Immediately upon calling this method it displays the camera and starts recording a video of the user saying their VoicePrint phrase for 5 seconds calling the recordingFinished callback first, then it sends the recording to be added as an enrollment and returns the result in the callback
+Verify user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.) and video file.
+
 ##### *Swift*
 ```swift
-myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", recordingFinished: {
-    print("Video Verification Recording Finished, now waiting for API Call to respond")
-}, callback: {
+myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -466,9 +476,7 @@ myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt videoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" recordingFinished:^(void){
-    NSLog(@"Video Verification Recording Finished, now waiting for API Call to respond");
-} callback:^(NSString * jsonResponse){
+[_myVoiceIt videoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -557,7 +565,7 @@ Identify user inside group with the given groupId(begins with 'grp_') and conten
 ##### *Swift*
 ```swift
 myVoiceIt?.voiceIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", recordingFinished: {
-    print("Audio Identification Recording Finished, now waiting for API Call to respond")
+    print("Voice Identification Recording Finished, now waiting for API Call to respond")
 }, callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")

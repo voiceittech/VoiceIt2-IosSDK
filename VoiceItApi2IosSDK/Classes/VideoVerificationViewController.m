@@ -20,7 +20,6 @@
 @end
 
 @implementation VideoVerificationViewController
-int VIDEO_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -56,6 +55,7 @@ int VIDEO_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
     // Initialize Boolean and All
     self.lookingIntoCam = NO;
     self.continueRunning = YES;
+    self.imageNotSaved = YES;
     self.lookingIntoCamCounter = 0;
     self.failCounter = 0;
     
@@ -365,7 +365,7 @@ int VIDEO_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND = 10;
     }
     
     if(faceFound) {
-        if (self.lookingIntoCamCounter > VIDEO_VERIFICATION_TIME_TO_WAIT_TILL_FACE_FOUND && !self.lookingIntoCam) {
+        if (self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND && !self.lookingIntoCam) {
             self.lookingIntoCam = YES;
             if(self.doLivenessDetection){
                 [self.livenessDetector doLivenessDetection];
@@ -404,7 +404,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if(self.doLivenessDetection){
         [self.livenessDetector processFrame:sampleBuffer];
     } else {
-        if(self.lookingIntoCamCounter > 5){
+        if(self.lookingIntoCamCounter > 5 && self.imageNotSaved){
             [self saveImageData:[GMVUtility sampleBufferTo32RGBA:sampleBuffer]];
         }
     }
@@ -413,6 +413,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 -(void)saveImageData:(UIImage *)image{
     if ( image != nil){
         self.finalCapturedPhotoData  = UIImageJPEGRepresentation(image, 0.8);
+        self.imageNotSaved = NO;
     }
 }
 
@@ -444,6 +445,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self stopRecording];
     [self showLoading];
     [self.myVoiceIt videoVerification:self.userToVerifyUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath callback:^(NSString * jsonResponse){
+            self.imageNotSaved = YES;
             [self removeLoading];
             NSLog(@"Video Verification JSON Response : %@", jsonResponse);
             NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];

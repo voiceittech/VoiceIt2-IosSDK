@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 #import  "SpinningView.h"
 #import "EnrollViewController.h"
+#import "FaceEnrollmentViewController.h"
+#import "VoiceEnrollmentViewController.h"
 #import "Utilities.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MainNavigationController.h"
 #import "Styles.h"
 
 @interface EnrollSetupViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *enrollmentSetupTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *enrollmentSetupSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
 @property (strong, nonatomic)  MainNavigationController * myNavController;
 @end

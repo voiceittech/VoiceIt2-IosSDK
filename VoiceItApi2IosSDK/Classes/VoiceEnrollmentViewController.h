@@ -1,5 +1,5 @@
 //
-//  EnrollViewController.h
+//  VoiceEnrollmentViewController.h
 //  Pods-VoiceItApi2IosSDK_Example
 //
 //  Created by Armaan Bindra on 10/1/17.
@@ -15,7 +15,7 @@
 #import "MainNavigationController.h"
 #import "Styles.h"
 
-@interface EnrollViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate,AVAudioRecorderDelegate>
+@interface VoiceEnrollmentViewController : UIViewController <AVAudioRecorderDelegate>
 
 #pragma mark - Audio Recording Stuff
 @property (nonatomic, strong) AVAudioRecorder * audioRecorder;
@@ -26,25 +26,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageleftConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet SpinningView *progressView;
-@property  CGPoint cameraCenterPoint;
-@property CAShapeLayer * progressCircle;
-@property CALayer * cameraBorderLayer;
-@property CALayer * faceRectangleLayer;
-
-#pragma mark -  Camera Related Stuff
-@property  AVCaptureSession * captureSession;
-@property AVCaptureDevice * videoDevice;
-@property AVCaptureVideoPreviewLayer *previewLayer;
-@property (nonatomic, strong) NSData *finalCapturedPhotoData;
-@property(nonatomic, strong) AVCaptureVideoDataOutput *videoDataOutput;
-@property(nonatomic, strong) dispatch_queue_t videoDataOutputQueue;
 
 #pragma mark -  Boolean Switches
-@property BOOL lookingIntoCam;
 @property BOOL enrollmentStarted;
 @property BOOL isRecording;
 @property BOOL continueRunning;
-@property BOOL imageNotSaved;
 
 #pragma mark -  Counters to keep track of stuff
 @property int enrollmentDoneCounter;

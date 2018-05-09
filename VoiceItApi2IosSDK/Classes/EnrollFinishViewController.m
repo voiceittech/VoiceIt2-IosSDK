@@ -28,6 +28,14 @@
     self.myNavController = (MainNavigationController*) [self navigationController];
     [self.navigationItem setHidesBackButton: YES];
     self.doneButton.layer.cornerRadius = 10.0;
+    if(self.myNavController.enrollmentType == face){
+        [self.enrollmentFinishTitleLabel setText:@"Face Verification is Ready"];
+        [self.enrollmentFinishSubtitleLabel setText:@"You can now use your face instead of a password to securely log in anytime."];
+    }
+    if(self.myNavController.enrollmentType == voice){
+        [self.enrollmentFinishTitleLabel setText:@"Voice Verification is Ready"];
+        [self.enrollmentFinishSubtitleLabel setText:@"You can now use your voice instead of a password to securely log in anytime."];
+    }
     // Setup Cancel Button on top left of navigation controller
     // Do any additional setup after loading the view.
 }

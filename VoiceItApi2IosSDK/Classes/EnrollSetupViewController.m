@@ -16,28 +16,63 @@
 @implementation EnrollSetupViewController
 
 - (IBAction)continueClicked:(id)sender {
-    [self checkMicrophonePermission];
-    [self checkCameraPermission];
-    NSLog(@"Microphone = %d, Camera = %d", self.microphonePermissionGranted, self.cameraPermissionGranted);
-    if(self.cameraPermissionGranted && self.microphonePermissionGranted){
-        [self launchEnrollmentProcess];
-    } else {
-        [self requestCameraAccess:^{
+    if(self.myNavController.enrollmentType == video){
+        [self checkMicrophonePermission];
+        [self checkCameraPermission];
+        NSLog(@"Microphone = %d, Camera = %d", self.microphonePermissionGranted, self.cameraPermissionGranted);
+        if(self.cameraPermissionGranted && self.microphonePermissionGranted){
+            [self launchEnrollmentProcess];
+        } else {
+            [self requestCameraAccess:^{
+                [self requestMicAccess:^{
+                    if(self.cameraPermissionGranted && self.microphonePermissionGranted){
+                        [self launchEnrollmentProcess];
+                    }
+                }];
+            }];
+        }
+    }
+    
+    if(self.myNavController.enrollmentType == face){
+        [self checkCameraPermission];
+        if(self.cameraPermissionGranted){
+            [self launchEnrollmentProcess];
+        } else {
+            [self requestCameraAccess:^{
+                if(self.cameraPermissionGranted){
+                        [self launchEnrollmentProcess];
+                    }
+            }];
+        }
+    }
+    
+    if(self.myNavController.enrollmentType == voice){
+        [self checkMicrophonePermission];
+        if(self.microphonePermissionGranted){
+            [self launchEnrollmentProcess];
+        } else {
             [self requestMicAccess:^{
-                if(self.cameraPermissionGranted && self.microphonePermissionGranted){
+                if(self.microphonePermissionGranted){
                     [self launchEnrollmentProcess];
                 }
             }];
-        }];
+        }
     }
 }
 
 -(void)launchEnrollmentProcess {
     dispatch_async(dispatch_get_main_queue(), ^{
-        EnrollViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"enrollVC"];
-        //TODO: Skip to final View to test the UI
-        //EnrollFinishViewController * enrollVC = [voiceItStoryboard instantiateViewControllerWithIdentifier:@"enrollFinishedVC"];
-        [[self navigationController] pushViewController:enrollVC animated: YES];
+        if(self.myNavController.enrollmentType == face){
+            FaceEnrollmentViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceEnrollVC"];
+            [[self navigationController] pushViewController:enrollVC animated: YES];
+        }
+        else if(self.myNavController.enrollmentType == voice){
+            VoiceEnrollmentViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"voiceEnrollVC"];
+            [[self navigationController] pushViewController:enrollVC animated: YES];
+        } else if(self.myNavController.enrollmentType == video){
+            EnrollViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"enrollVC"];
+            [[self navigationController] pushViewController:enrollVC animated: YES];
+        }
     });
 }
 
@@ -110,6 +145,16 @@
     self.myNavController = (MainNavigationController*) [self navigationController];
     self.continueButton.layer.cornerRadius = 10.0;
     [self.continueButton setBackgroundColor:[Styles getMainUIColor]];
+    
+    if(self.myNavController.enrollmentType == face){
+        [self.enrollmentSetupTitleLabel setText:@"Set Up Face Verification"];
+        [self.enrollmentSetupSubtitleLabel setText:@"This lets you log in by verifying your face"];
+    }
+    
+    if(self.myNavController.enrollmentType == voice){
+        [self.enrollmentSetupTitleLabel setText:@"Set Up Voice Verification"];
+        [self.enrollmentSetupSubtitleLabel setText:@"This lets you log in by verifying your voice"];
+    }
     // Do any additional setup after loading the view.
 }
 

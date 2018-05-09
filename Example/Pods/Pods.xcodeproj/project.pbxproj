@@ -19,6 +19,10 @@
 		21719B7F208BE3B70079E119 /* Liveness.m in Sources */ = {isa = PBXBuildFile; fileRef = 21719B7D208BE3B70079E119 /* Liveness.m */; };
 		21719B82208BE3EE0079E119 /* NSMutableArray+Shuffle.h in Headers */ = {isa = PBXBuildFile; fileRef = 21719B80208BE3EE0079E119 /* NSMutableArray+Shuffle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		21719B83208BE3EE0079E119 /* NSMutableArray+Shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = 21719B81208BE3EE0079E119 /* NSMutableArray+Shuffle.m */; };
+		21880C8620A0C6860093D0A0 /* FaceEnrollmentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 21880C8420A0C6860093D0A0 /* FaceEnrollmentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		21880C8720A0C6860093D0A0 /* FaceEnrollmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21880C8520A0C6860093D0A0 /* FaceEnrollmentViewController.m */; };
+		21880C8E20A275AA0093D0A0 /* VoiceEnrollmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 21880C8C20A275AA0093D0A0 /* VoiceEnrollmentViewController.m */; };
+		21880C8F20A275AA0093D0A0 /* VoiceEnrollmentViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 21880C8D20A275AA0093D0A0 /* VoiceEnrollmentViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28F54159955A477BD74D62BA20D457B5 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = C9864F06E28EE1C66C8F0C57354378B7 /* Utilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30305B728EA8C6F3F0D4D389E4BCE249 /* VoiceItLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B09EB19927F1AB4EA9DA9DC34B99E1 /* VoiceItLogo.m */; };
 		362C5ED0B33AEB1448443EA868DA8F7F /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = D686BBA68D26CB5F7FF5282FDBE0146A /* Prompts.strings */; };
@@ -94,6 +98,10 @@
 		21719B7D208BE3B70079E119 /* Liveness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Liveness.m; path = VoiceItApi2IosSDK/Classes/Liveness.m; sourceTree = "<group>"; };
 		21719B80208BE3EE0079E119 /* NSMutableArray+Shuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Shuffle.h"; path = "VoiceItApi2IosSDK/Classes/NSMutableArray+Shuffle.h"; sourceTree = "<group>"; };
 		21719B81208BE3EE0079E119 /* NSMutableArray+Shuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Shuffle.m"; path = "VoiceItApi2IosSDK/Classes/NSMutableArray+Shuffle.m"; sourceTree = "<group>"; };
+		21880C8420A0C6860093D0A0 /* FaceEnrollmentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FaceEnrollmentViewController.h; path = VoiceItApi2IosSDK/Classes/FaceEnrollmentViewController.h; sourceTree = "<group>"; };
+		21880C8520A0C6860093D0A0 /* FaceEnrollmentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FaceEnrollmentViewController.m; path = VoiceItApi2IosSDK/Classes/FaceEnrollmentViewController.m; sourceTree = "<group>"; };
+		21880C8C20A275AA0093D0A0 /* VoiceEnrollmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoiceEnrollmentViewController.m; path = VoiceItApi2IosSDK/Classes/VoiceEnrollmentViewController.m; sourceTree = "<group>"; };
+		21880C8D20A275AA0093D0A0 /* VoiceEnrollmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceEnrollmentViewController.h; path = VoiceItApi2IosSDK/Classes/VoiceEnrollmentViewController.h; sourceTree = "<group>"; };
 		24793BA1A3E30E42043D179AA612B6DD /* Pods-VoiceItApi2IosSDK_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-VoiceItApi2IosSDK_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		2658DB6382D610197EF5F49BE1E05160 /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
 		28A709D613FF4AE28DC2F898CF6312BC /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleNetworkingUtilities.framework; path = Frameworks/frameworks/GoogleNetworkingUtilities.framework; sourceTree = "<group>"; };
@@ -420,6 +428,10 @@
 				C6428C61027DCCD24B544C6A87ADF616 /* EnrollSetupViewController.m */,
 				1A3787D58C87F5FA4CAA8AE1C68F0529 /* EnrollViewController.h */,
 				48E5259893ED5CD85A801C4C59A9C72E /* EnrollViewController.m */,
+				21880C8420A0C6860093D0A0 /* FaceEnrollmentViewController.h */,
+				21880C8520A0C6860093D0A0 /* FaceEnrollmentViewController.m */,
+				21880C8D20A275AA0093D0A0 /* VoiceEnrollmentViewController.h */,
+				21880C8C20A275AA0093D0A0 /* VoiceEnrollmentViewController.m */,
 				6147173773CA3B4993C4905C8610988C /* FaceVerificationViewController.h */,
 				9F8001A721D46B78A6918679DFE73F10 /* FaceVerificationViewController.m */,
 				2119CE532065C7E600C68801 /* VideoVerificationViewController.h */,
@@ -525,11 +537,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21880C8620A0C6860093D0A0 /* FaceEnrollmentViewController.h in Headers */,
 				82A99B8FC826451A6C6D5C89C8483A3A /* EnrollFinishViewController.h in Headers */,
 				21719B7E208BE3B70079E119 /* Liveness.h in Headers */,
 				46CE32E0C898815C800CC9563934B037 /* EnrollSetupViewController.h in Headers */,
 				BB732E1B462C3291FFA5C8DB4D6ADE02 /* EnrollViewController.h in Headers */,
 				21719B82208BE3EE0079E119 /* NSMutableArray+Shuffle.h in Headers */,
+				21880C8F20A275AA0093D0A0 /* VoiceEnrollmentViewController.h in Headers */,
 				F17B526EA7C5D3607ECBCE9DE0A934B6 /* FaceVerificationViewController.h in Headers */,
 				8493350B82561330DEE73A82177C6355 /* MainNavigationController.h in Headers */,
 				21719B7B208BE3680079E119 /* SCSiriWaveformView.h in Headers */,
@@ -718,8 +732,10 @@
 				21719B83208BE3EE0079E119 /* NSMutableArray+Shuffle.m in Sources */,
 				44A83A2F7829D2B37ADE188A113919E0 /* ResponseManager.m in Sources */,
 				4E8CEF06ADD31ED4B6CA67C269F0DD32 /* SpinningView.m in Sources */,
+				21880C8720A0C6860093D0A0 /* FaceEnrollmentViewController.m in Sources */,
 				1A373325549AEBA3D2DCE2A80A5C4DE4 /* Styles.m in Sources */,
 				2119CE582066D73C00C68801 /* VideoVerificationViewController.m in Sources */,
+				21880C8E20A275AA0093D0A0 /* VoiceEnrollmentViewController.m in Sources */,
 				BA35537678A1D6DD6AB559088389B572 /* Utilities.m in Sources */,
 				9D4C211DFAFD7BA6919E2AE17594313A /* VoiceItApi2IosSDK-dummy.m in Sources */,
 				97F8C1FF69ED5B1374499B2F7D62110D /* VoiceItApi2IosSDK.m in Sources */,

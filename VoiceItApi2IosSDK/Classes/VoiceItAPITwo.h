@@ -35,6 +35,7 @@ typedef enum { enrollment, verification, identification } RecordingType;
 @property (nonatomic, copy) void (^voiceVerificationCompleted)(NSString * result);
 @property (nonatomic, copy) void (^videoVerificationCompleted)(NSString * result);
 @property (nonatomic, copy) void (^faceVerificationCompleted)(NSString * result);
+@property (nonatomic, copy) void (^faceEnrollmentCompleted)(NSString * result);
 @property (nonatomic, copy) void (^voiceIdentificationCompleted)(NSString * result);
 @property (nonatomic, copy) void (^recordingCompleted)(void);
 @property RecordingType recType;
@@ -44,6 +45,20 @@ typedef enum { enrollment, verification, identification } RecordingType;
 - (id)init:(UIViewController *)masterViewController apiKey:(NSString *)apiKey apiToken:(NSString *) apiToken styles:(NSMutableDictionary *) styles;
 
 #pragma mark - Brand New Awesome Fully Encapsulated Methods
+
+- (void)encapsulatedVoiceEnrollUser:(NSString *)userId
+                    contentLanguage:(NSString*)contentLanguage
+                   voicePrintPhrase:(NSString*)voicePrintPhrase
+           userEnrollmentsCancelled:(void (^)(void))userEnrollmentsCancelled
+              userEnrollmentsPassed:(void (^)(void))userEnrollmentsPassed;
+
+- (void)encapsulatedVoiceVerification:(NSString *)userId
+                      contentLanguage:(NSString*)contentLanguage
+                     voicePrintPhrase:(NSString*)voicePrintPhrase
+            userVerificationCancelled:(void (^)(void))userVerificationCancelled
+           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
+               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
+
 - (void)encapsulatedVideoEnrollUser:(NSString *)userId
                     contentLanguage:(NSString*)contentLanguage
                    voicePrintPhrase:(NSString*)voicePrintPhrase
@@ -58,12 +73,9 @@ typedef enum { enrollment, verification, identification } RecordingType;
            userVerificationSuccessful:(void (^)(float, float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed;
 
-- (void)encapsulatedVoiceVerification:(NSString *)userId
-                      contentLanguage:(NSString*)contentLanguage
-                     voicePrintPhrase:(NSString*)voicePrintPhrase
-            userVerificationCancelled:(void (^)(void))userVerificationCancelled
-           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
-               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
+- (void)encapsulatedFaceEnrollUser:(NSString *)userId
+           userEnrollmentsCancelled:(void (^)(void))userEnrollmentsCancelled
+              userEnrollmentsPassed:(void (^)(void))userEnrollmentsPassed;
 
 - (void)encapsulatedFaceVerification:(NSString *)userId
                  doLivenessDetection:(bool)doLivenessDetection
@@ -92,21 +104,38 @@ typedef enum { enrollment, verification, identification } RecordingType;
 - (void)getAllEnrollmentsForUser:(NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteEnrollmentForUser:(NSString *)userId enrollmentId:(NSString *)enrollmentId callback:(void (^)(NSString *))callback;
 - (void)deleteAllUserEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
-- (void)createVoiceEnrollment:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;
+- (void)createFaceEnrollment:(NSString *)userId
+                   videoPath:(NSString*)videoPath
+                    callback:(void (^)(NSString *))callback;
+- (void)createVoiceEnrollment:(NSString *)userId
+              contentLanguage:(NSString*)contentLanguage
+                    audioPath:(NSString*)audioPath
+                     callback:(void (^)(NSString *))callback;
 - (void)createVideoEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     imageData:(NSData*)imageData
                     audioPath:(NSString*)audioPath
                      callback:(void (^)(NSString *))callback;
+- (void)createVideoEnrollment:(NSString *)userId
+              contentLanguage:(NSString*)contentLanguage
+                    videoPath:(NSString*)videoPath
+                     callback:(void (^)(NSString *))callback;
 #pragma mark - Verification API Calls
-- (void)voiceVerification:(NSString *)userId contentLanguage:(NSString*)contentLanguage recordingFinished:(void (^)(void))recordingFinished callback:(void (^)(NSString *))callback;
+
 - (void)voiceVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 audioPath:(NSString*)audioPath
                  callback:(void (^)(NSString *))callback;
+
 - (void)faceVerification:(NSString *)userId
                videoPath:(NSString*)videoPath
                 callback:(void (^)(NSString *))callback;
+
+- (void)videoVerification:(NSString *)userId
+          contentLanguage:(NSString*)contentLanguage
+                videoPath:(NSString*)videoPath
+                 callback:(void (^)(NSString *))callback;
+
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 imageData:(NSData*)imageData

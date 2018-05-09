@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
+#define MAX_TIME_TO_WAIT_TILL_FACE_FOUND 10
 
 @interface Utilities : NSObject
 +(UIColor *)getGreenColor;
@@ -16,7 +17,6 @@
 +(CGColorRef)cgColorFromHexString:(NSString *)hexString;
 +(NSDictionary *)getJSONObject:(NSString *)jsonString;
 +(BOOL)isStrSame:(NSString *)firstString secondString:(NSString *) secondString;
-//+(void)savePhotoToPhotos:(UIImage *)thePhoto;
 +(NSData *)imageFromVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time;
 +(NSDictionary *)getRecordingSettings;
 +(UIStoryboard *)getVoiceItStoryBoard;

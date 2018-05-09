@@ -9,5 +9,7 @@
 #import "MainNavigationController.h"
 
 @interface EnrollFinishViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *enrollmentFinishTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *enrollmentFinishSubtitleLabel;
 @property (strong, nonatomic)  MainNavigationController * myNavController;
 @end
