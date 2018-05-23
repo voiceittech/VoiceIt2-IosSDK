@@ -31,12 +31,11 @@
 
 - (void)setup
 {
-    NSLog(@"Setup Started");
-    _circleLayer = [[CAShapeLayer alloc] init];
-    _circleLayer.lineWidth = 8;
-    _circleLayer.fillColor = nil;
-    _circleLayer.strokeColor = [Styles getMainCGColor];
-    [[self layer] addSublayer:_circleLayer];
+    self.circleLayer = [[CAShapeLayer alloc] init];
+    self.circleLayer.lineWidth = 8;
+    self.circleLayer.fillColor = nil;
+    self.circleLayer.strokeColor = [Styles getMainCGColor];
+    [[self layer] addSublayer:self.circleLayer];
     NSLog(@"Setup Finished");
 }
 
@@ -81,18 +80,17 @@
     [outAnimation setDuration:2.0];
     [outAnimation setTimingFunction:[CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionEaseOut]];
     
-    [_circleLayer removeAnimationForKey:@"strokeAnimation"];
+    [self.circleLayer removeAnimationForKey:@"strokeAnimation"];
     CAAnimationGroup * strokeAnimationGroup = [CAAnimationGroup animation];
     [strokeAnimationGroup setDuration:2.0 + [outAnimation beginTime] ];
     [strokeAnimationGroup setRepeatCount:MAXFLOAT];
     [strokeAnimationGroup setAnimations: [[NSArray alloc] initWithObjects:inAnimation, outAnimation, nil]];
-    [_circleLayer addAnimation:strokeAnimationGroup forKey:@"strokeAnimation"];
+    [self.circleLayer addAnimation:strokeAnimationGroup forKey:@"strokeAnimation"];
     [strokeAnimationGroup setDelegate:self];
-    NSLog(@"startAnimationCalled");
 }
 
 -(void)endAnimation{
-    [_circleLayer removeAllAnimations];
+    [self.circleLayer removeAllAnimations];
 }
 
 -(void)layoutSubviews{
@@ -100,20 +98,19 @@
     // Code to Build Basic Circle
     CGFloat yPoint = [self frame].size.height * 0.75;
     CGPoint bottomPoint = CGPointMake([self center].x, yPoint );
-    CGFloat radius = 75.0 / 2 - _circleLayer.lineWidth /2;
+    CGFloat radius = 75.0 / 2 - self.circleLayer.lineWidth /2;
     CGFloat startAngle = M_PI_2;
     CGFloat endAngle = startAngle + (M_PI * 2);
     UIBezierPath * path = [UIBezierPath bezierPathWithArcCenter:CGPointZero radius:radius startAngle:startAngle endAngle:endAngle clockwise:YES];
-    [_circleLayer setPosition:bottomPoint];
-    [_circleLayer setPath:[path CGPath]];
+    [self.circleLayer setPosition:bottomPoint];
+    [self.circleLayer setPath:[path CGPath]];
     [self startAnimation];
     CABasicAnimation * rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     [rotationAnimation setFromValue: [NSNumber numberWithFloat: 0]];
     [rotationAnimation setToValue:[NSNumber numberWithFloat: 2 * M_PI]];
     [rotationAnimation setDuration:4.0];
     [rotationAnimation setRepeatCount:MAXFLOAT];
-    [_circleLayer addAnimation: rotationAnimation forKey:@"rotateAnimation"];
-    NSLog(@"Sub View Layed Out and animation should have started");
+    [self.circleLayer addAnimation: rotationAnimation forKey:@"rotateAnimation"];
 }
 
 -(void)awakeFromNib{

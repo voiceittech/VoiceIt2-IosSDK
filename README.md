@@ -9,6 +9,7 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
 
 * [Getting Started](#getting-started)
 * [Installation](#installation)
+* [Strings and Prompts](#strings-and-prompts)
 * [API Calls](#api-calls)
   * [Initialization](#initialization)
   * [User API Calls](#user-api-calls)
@@ -73,6 +74,14 @@ Also add the following permission keys to your <b>info.plist</b> file like shown
 
 <img src="Graphics/Screenshot2.png" alt="API Key and Token" width="400px" style="margin:auto;display:block"/>
 
+## Strings and Prompts
+
+All strings utilized in the encapsulated views for the SDK and the prompts provided to the user can be modified by editing the strings in the Prompts.string file located at
+
+```
+Pods/VoiceItApi2IosSDK/Resources/Prompts.strings
+```
+You might have to unlock the Cocoapod to edit the file.
 
 ## API Calls
 
@@ -116,7 +125,7 @@ First import *VoiceItAPITwo.h* into your Objective-C file, then initialize a ref
     NSMutableDictionary * styles = [[NSMutableDictionary alloc] init];
     [styles setObject:@"#FBC132" forKey:@"kThemeColor"];
     [styles setObject:@"default" forKey:@"kIconStyle"];
-    _myVoiceIt = [[VoiceItAPITwo alloc] init:self apiKey:@"API_KEY_HERE" apiToken:@"API_TOKEN_HERE" styles: styles];
+    self.myVoiceIt = [[VoiceItAPITwo alloc] init:self apiKey:@"API_KEY_HERE" apiToken:@"API_TOKEN_HERE" styles: styles];
 }
 ```
 
@@ -134,7 +143,7 @@ myVoiceIt?.getAllUsers({
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt getAllUsers:^(NSString * jsonResponse){
+[self.myVoiceIt getAllUsers:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -151,7 +160,7 @@ myVoiceIt?.createUser({
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createUser:^(NSString * jsonResponse){
+[self.myVoiceIt createUser:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -168,7 +177,7 @@ myVoiceIt?.getUser("USER_ID_HERE", callback: {
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt getUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt getUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -185,7 +194,7 @@ myVoiceIt?.deleteUser("USER_ID_HERE", callback: {
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt deleteUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt deleteUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -202,7 +211,7 @@ myVoiceIt?.getGroupsForUser("USER_ID_HERE", callback: {
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt getGroupsForUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt getGroupsForUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -221,7 +230,7 @@ myVoiceIt?.getAllGroups({
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt getAllGroups:^(NSString * jsonResponse){
+[self.myVoiceIt getAllGroups:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -238,7 +247,7 @@ myVoiceIt?.getGroup("GROUP_ID_HERE", callback: {
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt getGroup:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt getGroup:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -256,7 +265,7 @@ myVoiceIt?.groupExists("GROUP_ID_HERE", callback: {
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt groupExists:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt groupExists:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -272,7 +281,7 @@ myVoiceIt?.createGroup("A Sample Group Description", callback: {
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createGroup:@"A Sample Group Description" callback:^(NSString * jsonResponse){
+[self.myVoiceIt createGroup:@"A Sample Group Description" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -290,7 +299,7 @@ myVoiceIt?.addUser(toGroup: "GROUP_ID_HERE", userId: "USER_ID_HERE", callback: {
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt addUserToGroup:@"GROUP_ID_HERE" userId:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt addUserToGroup:@"GROUP_ID_HERE" userId:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
             NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -308,7 +317,7 @@ myVoiceIt?.removeUser(fromGroup: "GROUP_ID_HERE", userId: "USER_ID_HERE", callba
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt removeUserFromGroup:@"GROUP_ID_HERE" userId:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt removeUserFromGroup:@"GROUP_ID_HERE" userId:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -325,7 +334,7 @@ myVoiceIt?.deleteGroup("GROUP_ID_HERE", callback: {
 ```
 ##### *Objective-C*
 ```objc
-[_myVoiceIt deleteGroup:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt deleteGroup:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -345,7 +354,7 @@ myVoiceIt?.getAllEnrollments(forUser: "USER_ID_HERE", callback: {
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt getAllEnrollmentsForUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt getAllEnrollmentsForUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -362,7 +371,7 @@ myVoiceIt?.deleteEnrollment(forUser: "USER_ID_HERE", enrollmentId: "ENROLLMENT_I
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt deleteEnrollmentForUser:@"USER_ID_HERE" enrollmentId:@"ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt deleteEnrollmentForUser:@"USER_ID_HERE" enrollmentId:@"ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -380,7 +389,7 @@ myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createVoiceEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt createVoiceEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -398,7 +407,7 @@ myVoiceIt?.createFaceEnrollment("USER_ID_HERE", videoPath: "FILE_PATH_TO_FACE_EN
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createVideoEnrollment:@"USER_ID_HERE" videoPath: @"FILE_PATH_TO_FACE_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt createVideoEnrollment:@"USER_ID_HERE" videoPath: @"FILE_PATH_TO_FACE_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -416,7 +425,7 @@ myVoiceIt?.createVideoEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt createVideoEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt createVideoEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -436,7 +445,7 @@ print("User Enrollments Passed")
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt encapsulatedVoiceEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
+[self.myVoiceIt encapsulatedVoiceEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
 NSLog(@"User Enrollments Cancelled");
 } userEnrollmentsPassed:^{
 NSLog(@"User Enrollments Passed");
@@ -458,7 +467,7 @@ myVoiceIt?.encapsulatedFaceEnrollUser("USER_ID_HERE", userEnrollmentsCancelled: 
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt encapsulatedFaceEnrollUser:@"USER_ID_HERE" userEnrollmentsCancelled:^{
+[self.myVoiceIt encapsulatedFaceEnrollUser:@"USER_ID_HERE" userEnrollmentsCancelled:^{
       NSLog(@"User Enrollments Cancelled");
   } userEnrollmentsPassed:^{
       NSLog(@"User Enrollments Passed");
@@ -480,7 +489,7 @@ myVoiceIt?.encapsulatedVideoEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt encapsulatedVideoEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
+[self.myVoiceIt encapsulatedVideoEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
       NSLog(@"User Enrollments Cancelled");
   } userEnrollmentsPassed:^{
       NSLog(@"User Enrollments Passed");
@@ -500,7 +509,7 @@ myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt voiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt voiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -519,7 +528,7 @@ myVoiceIt?.faceVerification("USER_ID_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_F
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt faceVerification:@"USER_ID_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_FACE_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt faceVerification:@"USER_ID_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_FACE_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -538,7 +547,7 @@ myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt videoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt videoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -560,7 +569,7 @@ print("User Verication Failed, voiceConfidence is \(voiceConfidence)")
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt encapsulatedVoiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userVerificationCancelled:^{
+[self.myVoiceIt encapsulatedVoiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userVerificationCancelled:^{
 NSLog(@"User Cancelled Verification");
 } userVerificationSuccessful:^(float voiceConfidence, NSString * jsonResponse){
 NSLog(@"User Verication Successful, voiceConfidence : %g",voiceConfidence);
@@ -586,7 +595,7 @@ print("User Verication Failed, faceConfidence is \(faceConfidence)")
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt encapsulatedFaceVerification:@"USER_ID_HERE" doLivenessDetection:YES userVerificationCancelled:^{
+[self.myVoiceIt encapsulatedFaceVerification:@"USER_ID_HERE" doLivenessDetection:YES userVerificationCancelled:^{
 NSLog(@"User Cancelled Verification");
 } userVerificationSuccessful:^(float faceConfidence, NSString * jsonResponse){
 NSLog(@"User Verication Successful faceConfidence : %g", faceConfidence);
@@ -613,7 +622,7 @@ myVoiceIt?.encapsulatedVideoVerification("USER_ID_HERE", contentLanguage: "CONTE
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt encapsulatedVideoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" doLivenessDetection:YES userVerificationCancelled:^{
+[self.myVoiceIt encapsulatedVideoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" doLivenessDetection:YES userVerificationCancelled:^{
      NSLog(@"User Cancelled Verification");
 } userVerificationSuccessful:^(float faceConfidence ,float voiceConfidence, NSString * jsonResponse){
     NSLog(@"User Verication Successful, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
@@ -636,7 +645,7 @@ print("JSON RESPONSE: \(jsonResponse!)")
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt voiceIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt voiceIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
 NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -655,7 +664,7 @@ print("JSON RESPONSE: \(jsonResponse!)")
 
 ##### *Objective-C*
 ```objc
-[_myVoiceIt videoIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt videoIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
 NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```

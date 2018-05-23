@@ -19,8 +19,9 @@
     self.API_KEY = @"API_KEY_HERE";
     self.API_TOKEN = @"API_TOKEN_HERE";
     self.TEST_USER_ID = @"USER_ID_HERE";
-    self.TEST_PHRASE = @"my face and voice identify me";
+    self.TEST_PHRASE = @"never forget tomorrow is a new day";
     self.TEST_CONTENT_LANGUAGE = @"en-US";
+    
 
     NSMutableDictionary * styles = [[NSMutableDictionary alloc] init];
     [styles setObject:@"#FBC132" forKey:@"kThemeColor"];

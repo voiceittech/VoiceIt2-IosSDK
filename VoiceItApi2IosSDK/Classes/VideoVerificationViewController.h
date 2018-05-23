@@ -56,9 +56,6 @@
 @property (strong, nonatomic)  NSString * contentLanguage;
 @property (strong, nonatomic)  NSObject * voiceItMaster;
 
-#pragma mark - Miscellaneous
-@property (strong, nonatomic) NSMutableArray* okResponseCodes;
-
 #pragma mark - callbacks
 @property (nonatomic, copy) void (^userVerificationCancelled)(void);
 @property (nonatomic, copy) void (^userVerificationSuccessful)(float, float, NSString *);

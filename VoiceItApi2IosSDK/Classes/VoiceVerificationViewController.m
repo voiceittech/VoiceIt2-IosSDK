@@ -19,6 +19,67 @@
 
 @implementation VoiceVerificationViewController
 
+#pragma mark - Life Cycle Methods
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.myVoiceIt = (VoiceItAPITwo *) [self voiceItMaster];
+    // Initialize Boolean and All
+    self.continueRunning = YES;
+    self.failCounter = 0;
+    
+    // Do any additional setup after loading the view.
+    [self.progressView setHidden:YES];
+    [self setMessage:[ResponseManager getMessage:@"READY_FOR_VOICE_VERIFICATION"]];
+    [self setupScreen];
+    [self setupWaveform];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.progressView startAnimation];
+    [self startVerificationProcess];
+}
+    
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self cleanupEverything];
+}
+
+#pragma mark - Setup Methods
+
+-(void)setupScreen {
+    [self.cancelButton setTitle:[ResponseManager getMessage:@"CANCEL"] forState:UIControlStateNormal];
+    // Setup Awesome Transparent Background and radius for Verification Box
+    if (!UIAccessibilityIsReduceTransparencyEnabled()) {
+        self.view.backgroundColor = [UIColor clearColor];
+        
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        blurEffectView.frame = self.view.bounds;
+        blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        [self.view insertSubview:blurEffectView atIndex:0];
+    } else {
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.58 green:0.65 blue:0.65 alpha:0.6]];
+    }
+    [[self.verificationBox layer] setCornerRadius:10.0];
+    [Utilities setBottomCornersForCancelButton:self.cancelButton];
+}
+
+-(void)setupWaveform {
+    CADisplayLink *displaylink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateMeters)];
+    [displaylink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    [self.waveformView setWaveColor:[Styles getMainUIColor]];
+    [self.waveformView setPrimaryWaveLineWidth:4.0f];
+    [self.waveformView setSecondaryWaveLineWidth:4.0f];
+    [self.waveformView setFrequency:2.0f];
+    [self.waveformView setIdleAmplitude:0.0f];
+    [self.waveformView setBackgroundColor:[UIColor clearColor]];
+}
+    
+#pragma mark - Action Methods
+    
 -(void)startVerificationProcess {
     [self startDelayedRecording:1.5];
 }
@@ -36,83 +97,6 @@
     });
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.okResponseCodes = [[NSMutableArray alloc] initWithObjects:@"FNFD",  nil];
-    self.myVoiceIt = (VoiceItAPITwo *) [self voiceItMaster];
-    // Initialize Boolean and All
-    self.continueRunning = YES;
-    self.failCounter = 0;
-    
-    // Do any additional setup after loading the view.
-    [self.progressView setHidden:YES];
-    [self setMessage:[ResponseManager getMessage:@"READY_FOR_VOICE_VERIFICATION"]];
-    
-    [self setupScreen];
-    
-    CADisplayLink *displaylink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateMeters)];
-    [displaylink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-    [self.waveformView setWaveColor:[Styles getMainUIColor]];
-    [self.waveformView setPrimaryWaveLineWidth:4.0f];
-    [self.waveformView setSecondaryWaveLineWidth:4.0f];
-    [self.waveformView setBackgroundColor:[UIColor clearColor]];
-}
-
-
--(void)setupScreen {
-    // Setup Awesome Transparent Background and radius for Verification Box
-    if (!UIAccessibilityIsReduceTransparencyEnabled()) {
-        self.view.backgroundColor = [UIColor clearColor];
-        
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        blurEffectView.frame = self.view.bounds;
-        blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        [self.view insertSubview:blurEffectView atIndex:0];
-    } else {
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.58 green:0.65 blue:0.65 alpha:0.6]];
-    }
-    [[self.verificationBox layer] setCornerRadius:10.0];
-    [self setBottomCornersForCancelButton];
-}
-
-- (IBAction)cancelClicked:(id)sender {
-    self.continueRunning = NO;
-    [self setAudioSessionInactive];
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self userVerificationCancelled]();
-    }];
-}
-
--(void)setMessage:(NSString *) newMessage {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.messageLabel setText: newMessage];
-        [self.messageLabel setAdjustsFontSizeToFitWidth:YES];
-    });
-}
-
--(void)setBottomCornersForCancelButton{
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: self.cancelButton.bounds byRoundingCorners:( UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(10.0, 10.0)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.cancelButton.bounds;
-    maskLayer.path  = maskPath.CGPath;
-    self.cancelButton.layer.mask = maskLayer;
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self.progressView startAnimation];
-    [self startVerificationProcess];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    self.continueRunning = NO;
-    [self setAudioSessionInactive];
-    [super viewDidDisappear:animated];
-}
-
 -(void)startRecording {
     NSLog(@"Starting RECORDING");
     self.isRecording = YES;
@@ -128,7 +112,7 @@
     {
         NSLog(@"%@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
     }
-
+    
     self.audioPath = [Utilities pathForTemporaryFileWithSuffix:@"wav"];
     NSURL *url = [NSURL fileURLWithPath:self.audioPath];
     err = nil;
@@ -142,18 +126,16 @@
     [self.audioRecorder setMeteringEnabled:YES];
     [self.audioRecorder recordForDuration:4.8];
 }
-
+    
 -(void)stopRecording{
     self.isRecording = NO;
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [self setAudioSessionInactive];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)setMessage:(NSString *) newMessage {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.messageLabel setText: newMessage];
+        [self.messageLabel setAdjustsFontSizeToFitWidth:YES];
+    });
 }
 
 -(void)showLoading{
@@ -169,14 +151,13 @@
     });
 }
 
-
--(void)setAudioSessionInactive{
-    [self.audioRecorder stop];
-    NSError * err;
-    [self.audioSession setActive:NO error:&err];
+- (IBAction)cancelClicked:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self userVerificationCancelled]();
+    }];
 }
 
-#pragma mark - AVAudioRecorderDelegate Methods
+#pragma mark - Audio Recording Methods
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     NSLog(@"AUDIO RECORDED FINISHED SUCCESS = %d", flag);
@@ -203,30 +184,35 @@
                 }];
             });
         } else {
-            if(![self.okResponseCodes containsObject:responseCode]){
-                self.failCounter += 1;
+            self.failCounter += 1;
+            if([Utilities isBadResponseCode:responseCode]){
+                [self setMessage:[ResponseManager getMessage: @"CONTACT_DEVELOPER" variable: responseCode]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [self dismissViewControllerAnimated: YES completion:^{
+                        [self userVerificationFailed](0.0, jsonResponse);
+                    }];
+                });
             }
-            
-            if(self.failCounter < 3){
+            else if(self.failCounter < 3){
                 if([responseCode isEqualToString:@"STTF"]){
                     [self setMessage:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
                     [self startDelayedRecording:3.0];
                 }
-                else if ([responseCode isEqualToString:@"TVER"]){
+                else if ([responseCode isEqualToString:@"PNTE"]){
                     [self setMessage:[ResponseManager getMessage: responseCode]];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                         [self dismissViewControllerAnimated: YES completion:^{
                             [self userVerificationFailed](0.0, jsonResponse);
                         }];
                     });
-                }else{
+                } else{
                     [self setMessage:[ResponseManager getMessage: responseCode]];
                     [self startDelayedRecording:3.0];
                 }
             } else {
                 [self setMessage:[ResponseManager getMessage: @"TOO_MANY_ATTEMPTS"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                    float voiceConfidence = [[jsonObj objectForKey:@"confidence"] floatValue];
+                    float voiceConfidence = [responseCode isEqualToString:@"FAIL"] ? [[jsonObj objectForKey:@"confidence"] floatValue] : 0.0;
                     [self dismissViewControllerAnimated: YES completion:^{
                         [self userVerificationFailed](voiceConfidence, jsonResponse);
                     }];
@@ -243,20 +229,20 @@
 
 - (void)updateMeters
 {
-    CGFloat normalizedValue;
     [self.audioRecorder updateMeters];
-    normalizedValue = [self _normalizedPowerLevelFromDecibels:[self.audioRecorder averagePowerForChannel:0]];
-    [self.waveformView updateWithLevel:normalizedValue];
+    [self.waveformView updateWithLevel:[Utilities normalizedPowerLevelFromDecibels: self.audioRecorder]];
 }
-
-
-- (CGFloat)_normalizedPowerLevelFromDecibels:(CGFloat)decibels
-{
-    if (decibels < -60.0f || decibels == 0.0f) {
-        return 0.0f;
-    }
     
-    return powf((powf(10.0f, 0.05f * decibels) - powf(10.0f, 0.05f * -60.0f)) * (1.0f / (1.0f - powf(10.0f, 0.05f * -60.0f))), 1.0f / 2.0f);
+-(void)setAudioSessionInactive{
+    [self.audioRecorder stop];
+    NSError * err;
+    [self.audioSession setActive:NO error:&err];
 }
 
+#pragma mark - Cleanup Methods
+
+-(void)cleanupEverything {
+    [self setAudioSessionInactive];
+    self.continueRunning = NO;
+}
 @end

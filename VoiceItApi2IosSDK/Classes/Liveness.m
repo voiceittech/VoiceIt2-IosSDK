@@ -25,8 +25,8 @@
     [self resetVariables];
     // Initialize the face detector.
     NSDictionary *options = @{
-                              GMVDetectorFaceMinSize : @(0.3),
-                              GMVDetectorFaceTrackingEnabled : @(YES),
+                              GMVDetectorFaceMinSize : @(0.5),
+                              GMVDetectorFaceTrackingEnabled : @(NO),
                               GMVDetectorFaceClassificationType : @(GMVDetectorFaceClassificationAll),
                               GMVDetectorFaceLandmarkType : @(GMVDetectorFaceLandmarkAll),
                               GMVDetectorFaceMode : @(GMVDetectorFaceAccurateMode)
@@ -94,6 +94,7 @@
 
 -(void)livenessFailedAction{
     [self stopTimer];
+    self.continueRunning = NO;
     self.livenessFailed();
 }
 
@@ -158,6 +159,9 @@
 }
 
 -(void)doLivenessDetection {
+    if(!self.continueRunning){
+        return;
+    }
     
     NSLog(@"successfulChallengesCounter : %d", self.successfulChallengesCounter);
     if(self.successfulChallengesCounter >= 2){
@@ -316,7 +320,7 @@
 }
 
 -(void)processFrame:(CMSampleBufferRef)sampleBuffer{
-    if(!self.livenessChallengeIsHappening){
+    if(!self.livenessChallengeIsHappening || !self.continueRunning){
         return;
     }
     

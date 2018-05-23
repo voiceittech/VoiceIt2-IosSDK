@@ -14,6 +14,36 @@
 @end
 
 @implementation EnrollSetupViewController
+#pragma mark - Life Cycle Methods
+
+- (void)viewDidLoad {
+    // Do any additional setup after loading the view.
+    [super viewDidLoad];
+    self.myNavController = (MainNavigationController*) [self navigationController];
+    
+    self.continueButton.layer.cornerRadius = 10.0;
+    [self.continueButton setBackgroundColor:[Styles getMainUIColor]];
+    [self.continueButton setTitle:[ResponseManager getMessage:@"CONTINUE"] forState:UIControlStateNormal];
+    
+    switch (self.myNavController.enrollmentType) {
+        case video:
+            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_SETUP"]];
+            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_SETUP_SUBTITLE"]];
+            break;
+        case face:
+            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"FACE_SETUP"]];
+            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"FACE_SETUP_SUBTITLE"]];
+            break;
+        case voice:
+            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"VOICE_SETUP"]];
+            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_SETUP_SUBTITLE"]];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Action Methods
 
 - (IBAction)continueClicked:(id)sender {
     if(self.myNavController.enrollmentType == video){
@@ -76,6 +106,14 @@
     });
 }
 
+- (IBAction)cancelClicked:(id)sender {
+    [[self navigationController] dismissViewControllerAnimated:YES completion: ^{
+            [[self myNavController] userEnrollmentsCancelled]();
+    }];
+}
+
+#pragma mark - Permission Methods
+
 -(void)requestCameraAccess :(void (^)(void))completionBlock {
     [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted){
         if(granted){
@@ -96,13 +134,6 @@
         }
         completionBlock();
     }];
-}
-
-- (IBAction)cancelClicked:(id)sender {
-    [[self navigationController] dismissViewControllerAnimated:YES completion: ^{
-        [[self myNavController] userEnrollmentsCancelled]();
-    }];
-    
 }
 
 -(void)checkMicrophonePermission {
@@ -140,38 +171,5 @@
     }
 }
 
-- (void)viewDidLoad {
-    // Do any additional setup after loading the view.
-    [super viewDidLoad];
-    self.myNavController = (MainNavigationController*) [self navigationController];
-    self.continueButton.layer.cornerRadius = 10.0;
-    [self.continueButton setBackgroundColor:[Styles getMainUIColor]];
-    
-    if(self.myNavController.enrollmentType == face){
-        [self.enrollmentSetupTitleLabel setText:@"Set Up Face Verification"];
-        [self.enrollmentSetupSubtitleLabel setText:@"This lets you log in by verifying your face"];
-    }
-    
-    if(self.myNavController.enrollmentType == voice){
-        [self.enrollmentSetupTitleLabel setText:@"Set Up Voice Verification"];
-        [self.enrollmentSetupSubtitleLabel setText:@"This lets you log in by verifying your voice"];
-    }
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 @end
 

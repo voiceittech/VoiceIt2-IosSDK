@@ -13,36 +13,21 @@
 @end
 
 @implementation VoiceEnrollmentViewController
-
--(void)cancelClicked{
-    [self setAudioSessionInactive];
-    self.continueRunning = NO;
-    [self.myVoiceIt deleteAllUserEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
-        [[self navigationController] dismissViewControllerAnimated:YES completion:^{
-            [[self myNavController] userEnrollmentsCancelled];
-        }];
-    }];
-}
-
--(void)setNavigationTitle:(int) enrollNumber {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString * newTitle = [[NSString alloc] initWithFormat:@"%d of 3", enrollNumber];
-        [[self navigationItem] setTitle: newTitle];
-    });
-}
-
+    
+#pragma mark - Life Cycle Methods
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.messageLabel.textColor  = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setHidesBackButton: YES];
     self.myNavController = (MainNavigationController*) [self navigationController];
-    self.myVoiceIt = (VoiceItAPITwo *) _myNavController.myVoiceIt;
-    self.thePhrase =  _myNavController.voicePrintPhrase;
-    self.contentLanguage =  _myNavController.contentLanguage;
-    self.userToEnrollUserId = _myNavController.uniqueId;
+    self.myVoiceIt = (VoiceItAPITwo *) self.myNavController.myVoiceIt;
+    self.thePhrase =  self.myNavController.voicePrintPhrase;
+    self.contentLanguage =  self.myNavController.contentLanguage;
+    self.userToEnrollUserId = self.myNavController.uniqueId;
     
     // Setup Cancel Button on top left of navigation controller
-    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelClicked)];
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:[ResponseManager getMessage:@"CANCEL"] style:UIBarButtonItemStylePlain target:self action:@selector(cancelClicked)];
     leftBarButton.tintColor = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setLeftBarButtonItem:leftBarButton];
     
@@ -52,8 +37,24 @@
     self.enrollmentDoneCounter = 0;
     [self setNavigationTitle:self.enrollmentDoneCounter + 1];
     [self.messageLabel setText:@""];
-    // Do any additional setup after loading the view.
-    
+    [self setupWaveform];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.originalMessageLeftConstraintContstant = self.messageleftConstraint.constant;
+    self.enrollmentStarted = YES;
+    [self startEnrollmentProcess];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self cleanupEverything];
+}
+
+#pragma mark - Setup Methods
+
+-(void)setupWaveform {
     CADisplayLink *displaylink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateMeters)];
     [displaylink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
     [self.waveformView setWaveColor:[Styles getMainUIColor]];
@@ -64,16 +65,15 @@
     [self.waveformView setBackgroundColor:[UIColor clearColor]];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    self.originalMessageLeftConstraintContstant = self.messageleftConstraint.constant;
-}
+#pragma mark - Action Methods
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    self.enrollmentStarted = YES;
-    [self startEnrollmentProcess];
+-(void)setNavigationTitle:(int) enrollNumber {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString * newTitle = [[NSString alloc] initWithFormat:@"%d of 3", enrollNumber];
+        [[self navigationItem] setTitle: newTitle];
+    });
 }
-
+    
 -(void)startDelayedRecording:(NSTimeInterval)delayTime{
     NSLog(@"Starting Delayed RECORDING with delayTime %f ", delayTime);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -157,16 +157,6 @@
     });
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    [self setAudioSessionInactive];
-    self.continueRunning = NO;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 -(void)showLoading{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self makeLabelFlyAway:^{
@@ -179,6 +169,22 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.progressView setHidden:YES];
     });
+}
+
+-(void)takeToFinishedView{
+    NSLog(@"Take to finished view");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        EnrollFinishViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"enrollFinishedVC"];
+        [[self navigationController] pushViewController:enrollVC animated: YES];
+    });
+}
+
+-(void)cancelClicked{
+    [self.myVoiceIt deleteAllUserEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+        [[self navigationController] dismissViewControllerAnimated:YES completion:^{
+            [[self myNavController] userEnrollmentsCancelled];
+        }];
+    }];
 }
 
 #pragma mark - AVAudioRecorderDelegate Methods
@@ -222,22 +228,23 @@
                 }];
             }
         } else {
-            [self startDelayedRecording:3.0];
-            if([Utilities isStrSame:responseCode secondString:@"STTF"]){
+            if([Utilities isBadResponseCode:responseCode]){
+                [self makeLabelFlyIn:[ResponseManager getMessage: @"CONTACT_DEVELOPER" variable: responseCode]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    [[self navigationController] dismissViewControllerAnimated:YES completion:^{
+                        [[self myNavController] userEnrollmentsCancelled];
+                    }];
+                });
+            }
+            else if([responseCode isEqualToString:@"STTF"]){
+                [self startDelayedRecording:3.0];
                 [self makeLabelFlyIn:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
             } else {
+                [self startDelayedRecording:3.0];
                 [self makeLabelFlyIn:[ResponseManager getMessage:responseCode]];
             }
         }
     }];
-}
-
--(void)takeToFinishedView{
-    NSLog(@"Take to finished view");
-    dispatch_async(dispatch_get_main_queue(), ^{
-        EnrollFinishViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"enrollFinishedVC"];
-        [[self navigationController] pushViewController:enrollVC animated: YES];
-    });
 }
 
 -(void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error
@@ -247,18 +254,14 @@
 
 - (void)updateMeters
 {
-    CGFloat normalizedValue;
     [self.audioRecorder updateMeters];
-    normalizedValue = [self _normalizedPowerLevelFromDecibels:[self.audioRecorder averagePowerForChannel:0]];
-    [self.waveformView updateWithLevel:normalizedValue];
+    [self.waveformView updateWithLevel:[Utilities normalizedPowerLevelFromDecibels: self.audioRecorder]];
 }
 
-- (CGFloat)_normalizedPowerLevelFromDecibels:(CGFloat)decibels
-{
-    if (decibels < -60.0f || decibels == 0.0f) {
-        return 0.0f;
-    }
+#pragma mark - Cleanup Methods
     
-    return powf((powf(10.0f, 0.05f * decibels) - powf(10.0f, 0.05f * -60.0f)) * (1.0f / (1.0f - powf(10.0f, 0.05f * -60.0f))), 1.0f / 2.0f);
+-(void)cleanupEverything {
+    [self setAudioSessionInactive];
+    self.continueRunning = NO;
 }
 @end

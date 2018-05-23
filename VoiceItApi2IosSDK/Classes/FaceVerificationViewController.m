@@ -24,6 +24,8 @@
 
 @implementation FaceVerificationViewController
 
+#pragma mark - Life Cycle Methods
+    
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -35,7 +37,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.okResponseCodes = [[NSMutableArray alloc] initWithObjects:@"FNFD",  nil];
     self.myVoiceIt = (VoiceItAPITwo *) [self voiceItMaster];
     // Initialize Boolean and All
     self.lookingIntoCam = NO;
@@ -56,13 +57,149 @@
     [self setupScreen];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.progressView startAnimation];
+    [self.messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM"]];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self cleanupEverything];
+}
+
+#pragma mark - Setup Methods
+
+-(void)setupScreen {
+    [self.cancelButton setTitle:[ResponseManager getMessage:@"CANCEL"] forState:UIControlStateNormal];
+    // Setup Awesome Transparent Background and radius for Verification Box
+    if (!UIAccessibilityIsReduceTransparencyEnabled()) {
+        self.view.backgroundColor = [UIColor clearColor];
+        
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        blurEffectView.frame = self.view.bounds;
+        blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        [self.view insertSubview:blurEffectView atIndex:0];
+    } else {
+        [[self view] setBackgroundColor:[UIColor colorWithRed:0.58 green:0.65 blue:0.65 alpha:0.6]];
+    }
+    [[self.verificationBox layer] setCornerRadius:10.0];
+    [Utilities setBottomCornersForCancelButton:self.cancelButton];
+    [self setupCameraCircle];
+    [self setupLivenessDetector];
+}
+
+- (void)setupVideoProcessing {
+    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    NSDictionary *rgbOutputSettings = @{
+                                        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
+                                        };
+    [self.videoDataOutput setVideoSettings:rgbOutputSettings];
+    
+    if (![self.captureSession canAddOutput:self.videoDataOutput]) {
+        [self cleanupVideoProcessing];
+        NSLog(@"Failed to setup video output");
+        return;
+    }
+    [self.videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
+    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoDataOutputQueue];
+    [self.captureSession addOutput:self.videoDataOutput];
+}
+
+-(void)setupCaptureSession{
+    // Setup Video Input Devices
+    self.captureSession = [[AVCaptureSession alloc] init];
+    [self.captureSession beginConfiguration];
+    [self.captureSession setSessionPreset: AVCaptureSessionPresetMedium];
+    self.videoDevice = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront];
+    NSError * videoError;
+    AVCaptureDeviceInput * videoInput = [AVCaptureDeviceInput deviceInputWithDevice: self.videoDevice error:&videoError];
+    [self.captureSession addInput:videoInput];
+}
+
+-(void)setupCameraCircle{
+    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: self.captureSession];
+    [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    
+    // Setup code to capture face meta data
+    AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    // Have to add the output before setting metadata types
+    [self.captureSession addOutput: metadataOutput];
+    // We're only interested in faces
+    [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
+    // This VC is the delegate. Please call us on the main queue
+    [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+    
+    // Setup Little Camera Circle and Positions
+    self.rootLayer = [[self verificationBox] layer];
+    self.backgroundWidthHeight = (CGFloat) [self verificationBox].frame.size.height  * 0.50;
+    CGFloat cameraViewWidthHeight = (CGFloat) [self verificationBox].frame.size.height  * 0.48;
+    self.circleWidth = (self.backgroundWidthHeight - cameraViewWidthHeight) / 2;
+    CGFloat backgroundViewX = ([self verificationBox].frame.size.width - self.backgroundWidthHeight)/2;
+    CGFloat cameraViewX = ([self verificationBox].frame.size.width - cameraViewWidthHeight)/2;
+    CGFloat backgroundViewY = VERIFICATION_BACKGROUND_VIEW_Y;
+    CGFloat cameraViewY = backgroundViewY + self.circleWidth;
+    
+    self.cameraBorderLayer = [[CALayer alloc] init];
+    self.progressCircle = [CAShapeLayer layer];
+    [self.cameraBorderLayer setFrame:CGRectMake(backgroundViewX, backgroundViewY, self.backgroundWidthHeight, self.backgroundWidthHeight)];
+    [self.previewLayer setFrame:CGRectMake(cameraViewX, cameraViewY, cameraViewWidthHeight, cameraViewWidthHeight)];
+    [self.previewLayer setCornerRadius: cameraViewWidthHeight / 2];
+    self.cameraCenterPoint = CGPointMake(self.cameraBorderLayer.frame.origin.x + (self.backgroundWidthHeight/2), self.cameraBorderLayer.frame.origin.y + (self.backgroundWidthHeight/2) );
+    
+    if ([self.videoDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+        CGPoint autofocusPoint = self.cameraCenterPoint;
+        [self.videoDevice setFocusPointOfInterest:autofocusPoint];
+        [self.videoDevice setFocusMode:AVCaptureFocusModeLocked];
+    }
+    
+    [self.cameraBorderLayer setBackgroundColor: [UIColor clearColor].CGColor];
+    self.cameraBorderLayer.cornerRadius = self.backgroundWidthHeight / 2;
+    
+    // Setup Rectangle Around Face
+    [Utilities setupFaceRectangle:self.faceRectangleLayer];
+    
+    // Setup Progress Circle
+    self.progressCircle .path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle:-M_PI_2 endAngle:2 * M_PI - M_PI_2 clockwise:YES].CGPath;
+    self.progressCircle.fillColor = [UIColor clearColor].CGColor;
+    self.progressCircle.strokeColor = [UIColor clearColor].CGColor;
+    self.progressCircle.lineWidth = self.circleWidth * 2.0;
+    [self.cameraBorderLayer setBackgroundColor: [UIColor clearColor].CGColor];
+    self.cameraBorderLayer.cornerRadius = self.circleWidth / 2;
+    
+    [self.rootLayer addSublayer:self.cameraBorderLayer];
+    [self.rootLayer addSublayer:self.progressCircle];
+    [self.rootLayer addSublayer:self.previewLayer];
+    [self.previewLayer addSublayer:self.faceRectangleLayer];
+    
+    [self.captureSession commitConfiguration];
+    [self.captureSession startRunning];
+}
+
+-(void)setupLivenessDetector{
+    if(self.doLivenessDetection){
+        self.livenessDetector = [[Liveness alloc] init:self cCP:self.cameraCenterPoint bgWH:self.backgroundWidthHeight cW:self.circleWidth rL:self.rootLayer mL:self.messageLabel livenessPassed:^(NSData * imageData){
+            NSLog(@"Face Verification Liveness Success");
+            [self stopRecording];
+        } livenessFailed:^{
+            self.continueRunning = NO;
+            self.livenessDetector.continueRunning = NO;
+            [self livenessFailedAction];
+        }];
+    }
+}
+
+#pragma mark - Action Methods
+
 -(void)livenessFailedAction{
     self.continueRunning = NO;
     if(self.doLivenessDetection){
         self.livenessDetector.continueRunning = NO;
     }
     self.lookingIntoCam = NO;
-    [self setMessage:[ResponseManager getMessage:@"VIDEO_VERIFY_FAILED"]];
+    [self setMessage:[ResponseManager getMessage:@"VERIFY_FACE_FAILED"]];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated: YES completion:^{
@@ -80,26 +217,6 @@
             }
         }];
     });
-}
-
--(void)setupScreen {
-    // Setup Awesome Transparent Background and radius for Verification Box
-    if (!UIAccessibilityIsReduceTransparencyEnabled()) {
-        self.view.backgroundColor = [UIColor clearColor];
-        
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        blurEffectView.frame = self.view.bounds;
-        blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        [self.view insertSubview:blurEffectView atIndex:0];
-    } else {
-        [[self view] setBackgroundColor:[UIColor colorWithRed:0.58 green:0.65 blue:0.65 alpha:0.6]];
-    }
-    [[self.verificationBox layer] setCornerRadius:10.0];
-    [self setBottomCornersForCancelButton];
-    [self setupCameraCircle];
-    [self setupLivenessDetector];
 }
 
 -(void)startWritingToVideoFile{
@@ -143,7 +260,6 @@
             [self removeLoading];
             NSLog(@"FaceVerification JSON Response : %@", jsonResponse);
             NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
-            NSLog(@"Response Code is %@ and message is : %@", [jsonObj objectForKey:@"responseCode"], [jsonObj objectForKey:@"message"]);
             NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
             
             if([responseCode isEqualToString:@"SUCC"]){
@@ -155,13 +271,18 @@
                     }];
                 });
             } else {
-                if(![self.okResponseCodes containsObject:responseCode]){
-                    self.failCounter += 1;
+                self.failCounter += 1;
+                if([Utilities isBadResponseCode:responseCode]){
+                    [self setMessage:[ResponseManager getMessage: @"CONTACT_DEVELOPER" variable: responseCode]];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                        [self dismissViewControllerAnimated: YES completion:^{
+                            [self userVerificationFailed](0.0, jsonResponse);
+                        }];
+                    });
                 }
-                
-                if(self.failCounter < 3){
+                else if(self.failCounter < 3){
                     if ([responseCode isEqualToString:@"FAIL"]){
-                        [self setMessage:[ResponseManager getMessage: @"VERIFY_FACE_FAILED_AGAIN"]];
+                        [self setMessage:[ResponseManager getMessage: @"VERIFY_FACE_FAILED_TRY_AGAIN"]];
                         [self startDelayedRecording:2.0];
                     }
                     else if ([responseCode isEqualToString:@"NFEF"]){
@@ -173,13 +294,12 @@
                         });
                     } else{
                         [self setMessage:[ResponseManager getMessage: responseCode]];
-                        NSLog(@"Face Not Found START DELAYED RECORDING");
                         [self startDelayedRecording:2.0];
                     }
                 } else {
                     [self setMessage:[ResponseManager getMessage: @"TOO_MANY_ATTEMPTS"]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                        float faceConfidence = [[jsonObj objectForKey:@"faceConfidence"] floatValue];
+                        float faceConfidence = [responseCode isEqualToString:@"FAIL"] ? [[jsonObj objectForKey:@"faceConfidence"] floatValue] : 0.0;
                         [self dismissViewControllerAnimated: YES completion:^{
                             [self userVerificationFailed](faceConfidence, jsonResponse);
                         }];
@@ -190,50 +310,6 @@
     }];
 }
 
-- (void)cleanupCaptureSession {
-    [self.captureSession stopRunning];
-    [self cleanupVideoProcessing];
-    self.captureSession = nil;
-    [self.previewLayer removeFromSuperlayer];
-}
-
-- (void)cleanupVideoProcessing {
-    if (self.videoDataOutput) {
-        [self.captureSession removeOutput:self.videoDataOutput];
-    }
-    self.videoDataOutput = nil;
-}
-
-- (void)setupVideoProcessing {
-    self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
-    NSDictionary *rgbOutputSettings = @{
-                                        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
-                                        };
-    [self.videoDataOutput setVideoSettings:rgbOutputSettings];
-    
-    if (![self.captureSession canAddOutput:self.videoDataOutput]) {
-        [self cleanupVideoProcessing];
-        NSLog(@"Failed to setup video output");
-        return;
-    }
-    [self.videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
-    [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoDataOutputQueue];
-    [self.captureSession addOutput:self.videoDataOutput];
-}
-
-- (IBAction)cancelClicked:(id)sender {
-    [self.captureSession stopRunning];
-    self.captureSession = nil;
-    self.continueRunning = NO;
-    if(self.doLivenessDetection){
-        self.livenessDetector.continueRunning = NO;
-    }
-    [self cleanupCaptureSession];
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self userVerificationCancelled]();
-    }];
-}
-
 -(void)setMessage:(NSString *) newMessage {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.messageLabel setText: newMessage];
@@ -241,117 +317,7 @@
     });
 }
 
--(void)setBottomCornersForCancelButton{
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: self.cancelButton.bounds byRoundingCorners:( UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(10.0, 10.0)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.cancelButton.bounds;
-    maskLayer.path  = maskPath.CGPath;
-   self.cancelButton.layer.mask = maskLayer;
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self.progressView startAnimation];
-    [self.messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM"]];
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [self.captureSession stopRunning];
-    [self cleanupCaptureSession];
-    [super viewDidDisappear:animated];
-}
-
--(void)setupCaptureSession{
-    // Setup Video Input Devices
-    self.captureSession = [[AVCaptureSession alloc] init];
-    [self.captureSession beginConfiguration];
-    [self.captureSession setSessionPreset: AVCaptureSessionPresetMedium];
-    self.videoDevice = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront];
-    NSError * videoError;
-    AVCaptureDeviceInput * videoInput = [AVCaptureDeviceInput deviceInputWithDevice: self.videoDevice error:&videoError];
-    [self.captureSession addInput:videoInput];
-}
-
--(void)setupCameraCircle{
-    self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: self.captureSession];
-    [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
-    // Setup code to capture face meta data
-    AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
-    // Have to add the output before setting metadata types
-    [self.captureSession addOutput: metadataOutput];
-    // We're only interested in faces
-    [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
-    // This VC is the delegate. Please call us on the main queue
-    [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-    
-    // Setup Little Camera Circle and Positions
-    self.rootLayer = [[self verificationBox] layer];
-    self.backgroundWidthHeight = (CGFloat) [self verificationBox].frame.size.height  * 0.50;
-    CGFloat cameraViewWidthHeight = (CGFloat) [self verificationBox].frame.size.height  * 0.48;
-    self.circleWidth = (self.backgroundWidthHeight - cameraViewWidthHeight) / 2;
-    CGFloat backgroundViewX = ([self verificationBox].frame.size.width - self.backgroundWidthHeight)/2;
-    CGFloat cameraViewX = ([self verificationBox].frame.size.width - cameraViewWidthHeight)/2;
-    CGFloat backgroundViewY = 30.0; // TODO: Make this number a constant
-    CGFloat cameraViewY = backgroundViewY + self.circleWidth;
-    
-    self.cameraBorderLayer = [[CALayer alloc] init];
-    self.progressCircle = [CAShapeLayer layer];
-    [self.cameraBorderLayer setFrame:CGRectMake(backgroundViewX, backgroundViewY, self.backgroundWidthHeight, self.backgroundWidthHeight)];
-    [self.previewLayer setFrame:CGRectMake(cameraViewX, cameraViewY, cameraViewWidthHeight, cameraViewWidthHeight)];
-    [self.previewLayer setCornerRadius: cameraViewWidthHeight / 2];
-    self.cameraCenterPoint = CGPointMake(self.cameraBorderLayer.frame.origin.x + (self.backgroundWidthHeight/2), self.cameraBorderLayer.frame.origin.y + (self.backgroundWidthHeight/2) );
-    
-    if ([self.videoDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
-        CGPoint autofocusPoint = self.cameraCenterPoint;
-        [self.videoDevice setFocusPointOfInterest:autofocusPoint];
-        [self.videoDevice setFocusMode:AVCaptureFocusModeLocked];
-    }
-    
-    [self.cameraBorderLayer setBackgroundColor: [UIColor clearColor].CGColor];
-    self.cameraBorderLayer.cornerRadius = self.backgroundWidthHeight / 2;
-    
-    // Setup Rectangle Around Face
-    self.faceRectangleLayer = [[CALayer alloc] init];
-    self.faceRectangleLayer.zPosition = 1;
-    self.faceRectangleLayer.borderColor = [Styles getMainCGColor];
-    self.faceRectangleLayer.borderWidth  = 4.0;
-    self.faceRectangleLayer.opacity = 0.7;
-    [self.faceRectangleLayer setHidden:YES];
-    
-    // Setup Progress Circle
-    self.progressCircle .path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle:-M_PI_2 endAngle:2 * M_PI - M_PI_2 clockwise:YES].CGPath;
-    self.progressCircle.fillColor = [UIColor clearColor].CGColor;
-    self.progressCircle.strokeColor = [UIColor clearColor].CGColor;
-    self.progressCircle.lineWidth = self.circleWidth * 2.0;
-    [self.cameraBorderLayer setBackgroundColor: [UIColor clearColor].CGColor];
-    self.cameraBorderLayer.cornerRadius = self.circleWidth / 2;
-    
-    [self.rootLayer addSublayer:self.cameraBorderLayer];
-    [self.rootLayer addSublayer:self.progressCircle];
-    [self.rootLayer addSublayer:self.previewLayer];
-    [self.previewLayer addSublayer:self.faceRectangleLayer];
-    
-    [self.captureSession commitConfiguration];
-    [self.captureSession startRunning];
-}
-
--(void)setupLivenessDetector{
-    if(self.doLivenessDetection){
-        self.livenessDetector = [[Liveness alloc] init:self cCP:self.cameraCenterPoint bgWH:self.backgroundWidthHeight cW:self.circleWidth rL:self.rootLayer mL:self.messageLabel livenessPassed:^(NSData * imageData){
-            NSLog(@"Face Verification Liveness Success");
-            [self stopRecording];
-            
-        } livenessFailed:^{
-            self.continueRunning = NO;
-            self.livenessDetector.continueRunning = NO;
-            [self livenessFailedAction];
-        }];
-    }
-}
-
 -(void)startRecording {
-    NSLog(@"Starting RECORDING");
     self.isRecording = YES;
     [self startWritingToVideoFile];
     if(self.doLivenessDetection){
@@ -405,24 +371,42 @@
     [self stopWritingToVideoFile];
 }
 
+-(void)showLoading{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.progressView setHidden:NO];
+        [self setMessage:@""];
+    });
+}
+
+-(void)removeLoading{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.progressView setHidden:YES];
+    });
+}
+
+- (IBAction)cancelClicked:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self userVerificationCancelled]();
+    }];
+}
+
+#pragma mark - Camera Delegate Methods
+
 // Code to Capture Face Rectangle and other cool metadata stuff
 -(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     BOOL faceFound = NO;
     for(AVMetadataObject *metadataObject in metadataObjects) {
         if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
-            [self.faceRectangleLayer setHidden:NO];
             faceFound = YES;
             AVMetadataObject * face = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
-            self.faceRectangleLayer.frame = face.bounds;
-            self.faceRectangleLayer.cornerRadius = 10.0;
+            [Utilities showFaceRectangle:self.faceRectangleLayer face:face];
         }
     }
-    
+
     if(faceFound) {
         self.lookingIntoCamCounter += 1;
         self.lookingIntoCam = self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND;
-        if (!self.lookingIntoCam &&!self.verificationStarted) {
-            self.lookingIntoCam = YES;
+        if (self.lookingIntoCam && !self.verificationStarted) {
             self.verificationStarted = YES;
             [self startRecording];
         }
@@ -432,17 +416,6 @@
         [self.faceRectangleLayer setHidden:YES];
     }
 }
-
--(void)viewWillDisappear:(BOOL)animated{
-    [self.captureSession stopRunning];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -473,17 +446,28 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
 }
 
--(void)showLoading{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.progressView setHidden:NO];
-        [self setMessage:@""];
-    });
-}
+#pragma mark - Cleanup Methods
 
--(void)removeLoading{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.progressView setHidden:YES];
-    });
+- (void)cleanupCaptureSession {
+    [self.captureSession stopRunning];
+    [self cleanupVideoProcessing];
+    self.captureSession = nil;
+    [self.previewLayer removeFromSuperlayer];
 }
-
+    
+- (void)cleanupVideoProcessing {
+    if (self.videoDataOutput) {
+        [self.captureSession removeOutput:self.videoDataOutput];
+    }
+    self.videoDataOutput = nil;
+}
+    
+-(void)cleanupEverything {
+    [self cleanupCaptureSession];
+    self.continueRunning = NO;
+    if(self.doLivenessDetection){
+        self.livenessDetector.continueRunning = NO;
+        self.livenessDetector = nil;
+    }
+}
 @end

@@ -50,8 +50,6 @@
 #pragma mark -  Developer Passed Options
 @property (strong, nonatomic)  NSString * userToVerifyUserId;
 @property (strong, nonatomic)  NSObject * voiceItMaster;
-#pragma mark - Miscellaneous
-@property (strong, nonatomic) NSMutableArray* okResponseCodes;
 
 #pragma mark - callbacks
 @property (nonatomic, copy) void (^userVerificationCancelled)(void);

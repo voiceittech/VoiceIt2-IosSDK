@@ -706,7 +706,7 @@ NSString * const host = @"https://api.voiceit.io/";
 {
     
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Create Video Enrollment"
+        @throw [NSException exceptionWithName:@"Cannot Create Face Enrollment"
                                        reason:@"Invalid userId passed"
                                      userInfo:nil];
         return;

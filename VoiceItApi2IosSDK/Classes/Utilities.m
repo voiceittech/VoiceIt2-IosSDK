@@ -7,6 +7,7 @@
 //
 
 #import "Utilities.h"
+#import "Styles.h"
 
 @implementation Utilities
 
@@ -123,5 +124,47 @@
                                                    error:nil];
     }
 }
+    
++(void)setupFaceRectangle:(CALayer *)faceRectangleLayer{
+    faceRectangleLayer = [[CALayer alloc] init];
+    faceRectangleLayer.zPosition = 1;
+    faceRectangleLayer.borderColor = [Styles getMainCGColor];
+    faceRectangleLayer.borderWidth  = 1.5;
+    faceRectangleLayer.opacity = 0.5;
+    [faceRectangleLayer setHidden:YES];
+}
+    
++(void)showFaceRectangle:(CALayer *)faceRectangleLayer face:(AVMetadataObject *)face {
+    [faceRectangleLayer setHidden:NO];
+    CGFloat padding = 20.0;
+    CGFloat halfPadding = padding/3;
+    CGRect faceRectangle = CGRectMake(face.bounds.origin.x - halfPadding, face.bounds.origin.y - halfPadding, face.bounds.size.width, face.bounds.size.height + padding);
+    faceRectangleLayer.frame = faceRectangle;
+    faceRectangleLayer.cornerRadius = 10.0;
+}
 
++(void)setBottomCornersForCancelButton:(UIButton *)cancelButton{
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect: cancelButton.bounds byRoundingCorners:( UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = cancelButton.bounds;
+    maskLayer.path  = maskPath.CGPath;
+    cancelButton.layer.mask = maskLayer;
+}
+
++(bool)isBadResponseCode:(NSString*) responseCode {
+    NSArray* badResponseCodes = [[NSArray alloc] initWithObjects:@"MISP", @"UNFD", @"DDNE", @"IFAD", @"IFVD", @"GERR", @"DAID", @"UNAC", @"CLNE", @"ACLR", nil];
+    if([badResponseCodes containsObject:responseCode]){
+        return YES;
+    }
+    return NO;
+}
+
++(CGFloat)normalizedPowerLevelFromDecibels:(AVAudioRecorder *)audioRecorder
+{
+    CGFloat decibels = [audioRecorder averagePowerForChannel:0];
+    if (decibels < -60.0f || decibels == 0.0f) {
+        return 0.0f;
+    }
+    return powf((powf(10.0f, 0.05f * decibels) - powf(10.0f, 0.05f * -60.0f)) * (1.0f / (1.0f - powf(10.0f, 0.05f * -60.0f))), 1.0f / 2.0f);
+}
 @end
