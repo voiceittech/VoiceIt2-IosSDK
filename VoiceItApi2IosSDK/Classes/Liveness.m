@@ -101,7 +101,7 @@
 -(void)livenessFailedAction{
     [self stopTimer];
     self.failCounter++;
-    if(self.failCounter < self.numberOfLivenessFailsAllowed){
+    if(self.failCounter <= self.numberOfLivenessFailsAllowed){
         [self livenessChallengeTryAgain];
     } else {
         self.continueRunning = NO;

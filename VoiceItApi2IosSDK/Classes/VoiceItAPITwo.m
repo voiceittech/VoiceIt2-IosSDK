@@ -779,7 +779,7 @@ NSString * const host = @"https://api.voiceit.io/";
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed{
-    [self encapsulatedFaceVerification:userId doLivenessDetection:doLivenessDetection livenessChallengeFailsAllowed:1 userVerificationCancelled: userVerificationCancelled userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed];
+    [self encapsulatedFaceVerification:userId doLivenessDetection:doLivenessDetection livenessChallengeFailsAllowed:0 userVerificationCancelled: userVerificationCancelled userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed];
 }
 
 - (void)encapsulatedFaceVerification:(NSString *)userId
@@ -817,7 +817,7 @@ NSString * const host = @"https://api.voiceit.io/";
             userVerificationCancelled:(void (^)(void))userVerificationCancelled
            userVerificationSuccessful:(void (^)(float, float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed{
-    [self encapsulatedVideoVerification:userId contentLanguage:contentLanguage voicePrintPhrase:voicePrintPhrase doLivenessDetection:doLivenessDetection livenessChallengeFailsAllowed:1 userVerificationCancelled:userVerificationCancelled userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed];
+    [self encapsulatedVideoVerification:userId contentLanguage:contentLanguage voicePrintPhrase:voicePrintPhrase doLivenessDetection:doLivenessDetection livenessChallengeFailsAllowed:0 userVerificationCancelled:userVerificationCancelled userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed];
 }
 
 - (void)encapsulatedVideoVerification:(NSString *)userId
