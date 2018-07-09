@@ -15,7 +15,7 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
   * [User API Calls](#user-api-calls)
       * [Get All Users](#get-all-users)
       * [Create User](#create-user)
-      * [Get User](#get-user)
+      * [Check User Exists](#check-user-exists)
       * [Get Groups for User](#get-groups-for-user)
       * [Delete User](#delete-user)
   * [Group API Calls](#group-api-calls)
