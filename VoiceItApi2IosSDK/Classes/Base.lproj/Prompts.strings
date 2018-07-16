@@ -39,7 +39,7 @@
 "FACE_ENROLL"= "Please wait for your face to be enrolled";
 "WAITING"= "Please wait";
 "WAIT_FOR_FACE_VERIFICATION" = "Please wait while we verify your face";
-"TOO_MANY_ATTEMPTS" = "Sorry! you failed too many times!! Try again later.";
+"TOO_MANY_ATTEMPTS" = "Sorry! You failed too many times! Try again later.";
 "SUCCESS" = "You have been successfully verified";
 
 /* Response Code Based Prompts */
