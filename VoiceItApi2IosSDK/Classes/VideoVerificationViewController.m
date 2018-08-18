@@ -257,7 +257,7 @@
 
 -(void)saveImageData:(UIImage *)image{
     if ( image != nil){
-        self.finalCapturedPhotoData  = UIImageJPEGRepresentation(image, 0.8);
+        self.finalCapturedPhotoData  = UIImageJPEGRepresentation(image, 0.4);
         self.imageNotSaved = NO;
     }
 }
@@ -403,7 +403,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self setAudioSessionInactive];
     [self stopRecording];
     [self showLoading];
-    [self.myVoiceIt videoVerification:self.userToVerifyUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath callback:^(NSString * jsonResponse){
+    [self.myVoiceIt videoVerification:self.userToVerifyUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath phrase:self.thePhrase callback:^(NSString * jsonResponse){
             [Utilities deleteFile:self.audioPath];
             self.imageNotSaved = YES;
             [self removeLoading];
@@ -443,7 +443,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                     });
                 }
                 else if(self.failCounter < 3){
-                    if([responseCode isEqualToString:@"STTF"]){
+                    if([responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
                         [self setMessage:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
                         [self startDelayedRecording:3.0];
                     }

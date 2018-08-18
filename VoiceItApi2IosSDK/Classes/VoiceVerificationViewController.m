@@ -167,10 +167,10 @@
     [self setAudioSessionInactive];
     [self stopRecording];
     [self showLoading];
-    [self.myVoiceIt voiceVerification:_userToVerifyUserId contentLanguage: self.contentLanguage audioPath:self.audioPath callback:^(NSString * jsonResponse){
+    [self.myVoiceIt voiceVerification:_userToVerifyUserId contentLanguage: self.contentLanguage audioPath:self.audioPath phrase: self.thePhrase callback:^(NSString * jsonResponse){
         [Utilities deleteFile:self.audioPath];
         [self removeLoading];
-        NSLog(@"Video Verification JSON Response : %@", jsonResponse);
+        NSLog(@"Voice Verification JSON Response : %@", jsonResponse);
         NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
         NSLog(@"Response Code is %@ and message is : %@", [jsonObj objectForKey:@"responseCode"], [jsonObj objectForKey:@"message"]);
         NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
@@ -194,7 +194,7 @@
                 });
             }
             else if(self.failCounter < 3){
-                if([responseCode isEqualToString:@"STTF"]){
+                if([responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
                     [self setMessage:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
                     [self startDelayedRecording:3.0];
                 }

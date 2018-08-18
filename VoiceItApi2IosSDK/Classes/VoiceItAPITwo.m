@@ -532,6 +532,7 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)createVoiceEnrollment:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 audioPath:(NSString*)audioPath
+                   phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback
 {
 
@@ -552,7 +553,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId};
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -615,6 +616,7 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)createVideoEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     videoPath:(NSString*)videoPath
+                       phrase:(NSString*)phrase
                      callback:(void (^)(NSString *))callback {
 
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
@@ -634,7 +636,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId};
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -656,6 +658,7 @@ NSString * const host = @"https://api.voiceit.io/";
               contentLanguage:(NSString*)contentLanguage
                     imageData:(NSData*)imageData
                     audioPath:(NSString*)audioPath
+                       phrase:(NSString*)phrase
                      callback:(void (^)(NSString *))callback
 {
 
@@ -676,7 +679,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId};
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -877,6 +880,7 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)voiceVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 audioPath:(NSString*)audioPath
+                   phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback
 {
 
@@ -897,7 +901,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId};
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -1001,6 +1005,7 @@ NSString * const host = @"https://api.voiceit.io/";
           contentLanguage:(NSString*)contentLanguage
                 imageData:(NSData*)imageData
                 audioPath:(NSString*)audioPath
+                   phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback
 {
 
@@ -1021,7 +1026,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId};
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -1043,6 +1048,7 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 videoPath:(NSString*)videoPath
+                   phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback {
 
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
@@ -1062,7 +1068,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId};
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -1084,6 +1090,7 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)voiceIdentification:(NSString *)groupId
             contentLanguage:(NSString*)contentLanguage
                   audioPath:(NSString*)audioPath
+                     phrase:(NSString*)phrase
                    callback:(void (^)(NSString *))callback
 {
 
@@ -1103,7 +1110,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"doBlinkDetection" : @NO };
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"doBlinkDetection" : @NO , @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];
@@ -1125,6 +1132,7 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)videoIdentification:(NSString *)groupId
             contentLanguage:(NSString*)contentLanguage
                   videoPath:(NSString*)videoPath
+                     phrase:(NSString*)phrase
                    callback:(void (^)(NSString *))callback
 {
 
@@ -1144,7 +1152,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
-    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"doBlinkDetection" : @NO };
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"doBlinkDetection" : @NO, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
 
     [self addParamsToBody:body parameters:params];

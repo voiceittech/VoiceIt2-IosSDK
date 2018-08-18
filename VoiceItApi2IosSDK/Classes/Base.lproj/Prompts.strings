@@ -48,16 +48,17 @@
 "FAIL" = "Failed.\nPlease try again.";
 "IFWD" = "Sorry, something went wrong.\nPlease try again.";
 "SRNR"= "Sorry, I couldn't quite hear you.\nPlease speak louder.";
-"TVER"= "Sorry, no video enrollments detected.\nPlease enroll before verifying.";
-"NFEF"= "Sorry, no face enrollments detected.\nPlease enroll before verifying.";
+"TVER"= "Sorry, not enough video enrollments detected.\nPlease enroll before verifying.";
+"NFEF"= "Sorry, not enough face enrollments detected.\nPlease enroll before verifying.";
 "NEHSD" = "Sorry, I couldn't quite catch that.\nPlease speak slower.";
 "STTF" = "Sorry, I couldn't understand you.\nPlease make sure you are saying \"%@\"";
 "SSTQ" = "Sorry, I couldn't quite hear you.\nPlease speak louder.";
 "SSTL" = "Oh! Its getting a little too loud in here.\nLet's try this again, speaking at a normal volume";
 "STTF" = "Sorry, I couldn't understand you.\nPlease make sure you are saying \"%@\"";
+"PDNM" = "Sorry, that is an invalid phrase.\nPlease make sure you are saying \"%@\"";
 "RWPU" = "Please do not use recordings. Try that again.";
 "FTMF"= "Make sure only your face is visible.\nPlease try again.";
-"PNTE"= "Sorry, no voice enrollments detected.\nPlease enroll before verifying.";
+"PNTE"= "Sorry, not enough voice enrollments detected.\nPlease enroll before verifying.";
 "GERR"= "Sorry, something went wrong.\nPlease try again.";
 "CONTACT_DEVELOPER" = "Error:\n Please contact app developer with response code \"%@\".";
 

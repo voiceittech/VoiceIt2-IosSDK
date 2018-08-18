@@ -56,7 +56,7 @@
 
 -(void)saveImageData:(UIImage *)image{
     if ( image != nil){
-        self.finalCapturedPhotoData  = UIImageJPEGRepresentation(image, 0.8);
+        self.finalCapturedPhotoData  = UIImageJPEGRepresentation(image, 0.4);
     }
 }
 

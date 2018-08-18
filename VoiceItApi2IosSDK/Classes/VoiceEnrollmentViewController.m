@@ -202,7 +202,7 @@
     [self setAudioSessionInactive];
     [self recordingStopped];
     [self showLoading];
-    [self.myVoiceIt createVoiceEnrollment:self.userToEnrollUserId contentLanguage:self.contentLanguage audioPath:self.audioPath callback:^(NSString * jsonResponse){
+    [self.myVoiceIt createVoiceEnrollment:self.userToEnrollUserId contentLanguage:self.contentLanguage audioPath:self.audioPath phrase: self.thePhrase callback:^(NSString * jsonResponse){
         [Utilities deleteFile:self.audioPath];
         [self removeLoading];
         NSLog(@"Voice Enrollment JSON Response : %@", jsonResponse);
@@ -210,22 +210,12 @@
         NSLog(@"Response Code is %@ and message is : %@", [jsonObj objectForKey:@"responseCode"], [jsonObj objectForKey:@"message"]);
         NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
         if([responseCode isEqualToString:@"SUCC"]){
-            NSString * enrollmentId =  [jsonObj objectForKey:@"id"];
-            NSString * enrollmentText = [jsonObj objectForKey:@"text"];
-            if([Utilities isStrSame:enrollmentText secondString:self.thePhrase]){
-                self.enrollmentDoneCounter += 1;
-                if( self.enrollmentDoneCounter < 3){
-                    [self setNavigationTitle:self.enrollmentDoneCounter + 1];
-                    [self startDelayedRecording:1];
-                } else {
-                    [self takeToFinishedView];
-                }
+            self.enrollmentDoneCounter += 1;
+            if( self.enrollmentDoneCounter < 3){
+                [self setNavigationTitle:self.enrollmentDoneCounter + 1];
+                [self startDelayedRecording:1];
             } else {
-                //If Successfully did enrollment with wrong phrase, then extract enrollmentId and delete this wrong enrollment
-                [self.myVoiceIt deleteEnrollmentForUser:self.userToEnrollUserId enrollmentId:enrollmentId callback:^(NSString * deleteEnrollmentJsonResponse){
-                    [self startDelayedRecording:2.5];
-                    [self makeLabelFlyIn:[ResponseManager getMessage: @"STTF" variable:self.thePhrase]];
-                }];
+                [self takeToFinishedView];
             }
         } else {
             if([Utilities isBadResponseCode:responseCode]){
@@ -236,7 +226,7 @@
                     }];
                 });
             }
-            else if([responseCode isEqualToString:@"STTF"]){
+            else if([responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
                 [self startDelayedRecording:3.0];
                 [self makeLabelFlyIn:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
             } else {

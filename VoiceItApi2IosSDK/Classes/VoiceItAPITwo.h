@@ -55,6 +55,7 @@
 - (void)createVoiceEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     audioPath:(NSString*)audioPath
+                       phrase:(NSString*)phrase
                      callback:(void (^)(NSString *))callback;
 
 - (void)createFaceEnrollment:(NSString *)userId
@@ -65,11 +66,13 @@
               contentLanguage:(NSString*)contentLanguage
                     imageData:(NSData*)imageData
                     audioPath:(NSString*)audioPath
+                       phrase:(NSString*)phrase
                      callback:(void (^)(NSString *))callback;
 
 - (void)createVideoEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     videoPath:(NSString*)videoPath
+                       phrase:(NSString*)phrase
                      callback:(void (^)(NSString *))callback;
 
 #pragma mark - Verification API Calls
@@ -77,6 +80,7 @@
 - (void)voiceVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 audioPath:(NSString*)audioPath
+                   phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback;
 
 - (void)faceVerification:(NSString *)userId
@@ -90,23 +94,27 @@
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 videoPath:(NSString*)videoPath
+                  phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback;
 
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 imageData:(NSData*)imageData
                 audioPath:(NSString*)audioPath
+                   phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback;
 
 #pragma mark - Identification API Calls
 - (void)voiceIdentification:(NSString *)groupId
             contentLanguage:(NSString*)contentLanguage
                   audioPath:(NSString*)audioPath
+                     phrase:(NSString*)phrase
                    callback:(void (^)(NSString *))callback;
 
 - (void)videoIdentification:(NSString *)groupId
             contentLanguage:(NSString*)contentLanguage
                   videoPath:(NSString*)videoPath
+                     phrase:(NSString*)phrase
                    callback:(void (^)(NSString *))callback;
 
 #pragma mark - Encapsulated Enrollment Methods

@@ -381,7 +381,7 @@ myVoiceIt?.deleteEnrollment(forUser: "USER_ID_HERE", enrollmentId: "ENROLLMENT_I
 Create voice enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.) and audio file.
 ##### *Swift*
 ```swift
-myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_ENROLLMENT_HERE", callback: {
+myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_ENROLLMENT_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -389,7 +389,7 @@ myVoiceIt?.createVoiceEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt createVoiceEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_ENROLLMENT_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt createVoiceEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_ENROLLMENT_HERE" phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -501,7 +501,7 @@ myVoiceIt?.encapsulatedVideoEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT
 Verify user with the given userId(begins with 'usr_'), contentLanguage('en-US','es-ES' etc.) and audio file.
 ##### *Swift*
 ```swift
-myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE", callback: {
+myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -509,7 +509,7 @@ myVoiceIt?.voiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt voiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt voiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_VERIFICATION_HERE" phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -539,7 +539,7 @@ Verify user with given userId(begins with 'usr_') , contentLanguage('en-US','es-
 
 ##### *Swift*
 ```swift
-myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE", callback: {
+myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -547,7 +547,7 @@ myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt videoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt videoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_VERIFICATION_HERE" phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -637,7 +637,7 @@ Identify user inside group with the given groupId(begins with 'grp_') and conten
 
 ##### *Swift*
 ```swift
-myVoiceIt?.voiceIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE", callback: {
+myVoiceIt?.voiceIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
 jsonResponse in
 print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -645,7 +645,8 @@ print("JSON RESPONSE: \(jsonResponse!)")
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt voiceIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt voiceIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE"
+phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
 NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
@@ -656,7 +657,7 @@ Identify user inside group with the given groupId(begins with 'grp_') and conten
 
 ##### *Swift*
 ```swift
-myVoiceIt?.videoIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE", callback: {
+myVoiceIt?.videoIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
 jsonResponse in
 print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -664,7 +665,7 @@ print("JSON RESPONSE: \(jsonResponse!)")
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt videoIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt videoIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE" phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
 NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
