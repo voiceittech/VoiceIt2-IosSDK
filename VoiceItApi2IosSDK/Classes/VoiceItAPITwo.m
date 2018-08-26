@@ -48,7 +48,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"getAllUsers Called and Returned: %@", result);
                    // Add Call to Callback function passing in result
                    callback(result);
                }];
@@ -81,7 +80,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"checkUserExists Called and Returned: %@", result);
                    callback(result);
                }];
     [task resume];
@@ -112,7 +110,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"getGroupsForUser Called and Returned: %@", result);
                    callback(result);
                }];
     [task resume];
@@ -135,7 +132,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"createUser Called and Returned: %@", result);
                    callback(result);
                }];
     [task resume];
@@ -165,7 +161,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"deleteUser Called and Returned: %@", result);
                    callback(result);
                }];
     [task resume];
@@ -193,7 +188,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"getAllGroups Called and Returned: %@", result);
                    callback(result);
                }];
     [task resume];
@@ -523,7 +517,6 @@ NSString * const host = @"https://api.voiceit.io/";
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
-                   NSLog(@"deleteUser Called and Returned: %@", result);
                    callback(result);
                }];
     [task resume];

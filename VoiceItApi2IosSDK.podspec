@@ -20,7 +20,7 @@ s.summary          = 'A pod that lets you add voice and face verification and id
 s.description      = 'A pod that lets you add voice and face verification and identification to your iOS apps, brought to you by VoiceIt. Now also with basic liveness detection challenges. Please visit https://voiceit.io to learn more and sign up for an account.'
 s.homepage         = 'https://github.com/voiceittech/VoiceItApi2IosSDK'
 s.license          = { :type => 'MIT', :file => 'LICENSE' }
-s.author           = { 'armaanbindra' => 'armaan.bindra@voiceit-tech.com' }
+s.author           = { 'armaanbindra' => 'armaan@voiceit.io' }
 s.source           = { :git => 'https://github.com/voiceittech/VoiceItApi2IosSDK.git', :tag => s.version.to_s }
 
 s.ios.deployment_target = '10.0'
@@ -28,12 +28,10 @@ s.static_framework = true
 s.dependency 'GoogleMobileVision/FaceDetector'
 s.source_files = 'VoiceItApi2IosSDK/Classes/**/*.{h,m}'
 
-# s.resources = ['VoiceItApi2IosSDK/Resources/*.{storyboard,strings}']
 s.resource_bundles = {
   'VoiceItApi2IosSDK' => ['VoiceItApi2IosSDK/Classes/**/*.{lproj,storyboard,xib,xcassets,strings}']
 }
 
-# s.public_header_files = 'VoiceItApi2IosSDK/Classes/*.h'
 s.frameworks = 'UIKit', 'AVFoundation'
 
 end

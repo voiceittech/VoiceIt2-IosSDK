@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		124E9B4F3B3809DF9C3EFAA5 /* Pods_VoiceItApi2IosSDK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD65E7E7B06EB13B7065995D /* Pods_VoiceItApi2IosSDK_Example.framework */; };
 		217DA1FF1E89A1EC00C918C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 217DA1FE1E89A1EC00C918C5 /* InfoPlist.strings */; };
+		2192DFF52133306E0078D2C9 /* VoiceItApi2IosSDK_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2192DFF42133306E0078D2C9 /* VoiceItApi2IosSDK_Test.swift */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -16,29 +17,25 @@
 		6003F59E195388D20070C39A /* VoiceItAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* VoiceItAppDelegate.m */; };
 		6003F5A7195388D20070C39A /* VoiceItViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* VoiceItViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
-		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
-		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
-		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
-		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		E5C9AC52C3923D4DE21AF70E /* Pods_VoiceItApi2IosSDK_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA2C94DEEA0FDAF8E5A81E4 /* Pods_VoiceItApi2IosSDK_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6003F5B3195388D20070C39A /* PBXContainerItemProxy */ = {
+		2192DFF72133306E0078D2C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6003F582195388D10070C39A /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 6003F589195388D20070C39A;
-			remoteInfo = VoiceItApi2IosSDK;
+			remoteInfo = VoiceItApi2IosSDK_Example;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0BA2C94DEEA0FDAF8E5A81E4 /* Pods_VoiceItApi2IosSDK_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoiceItApi2IosSDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		217DA1FE1E89A1EC00C918C5 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		2192DFF22133306E0078D2C9 /* VoiceItApi2IosSDK_Test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoiceItApi2IosSDK_Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2192DFF42133306E0078D2C9 /* VoiceItApi2IosSDK_Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceItApi2IosSDK_Test.swift; sourceTree = "<group>"; };
+		2192DFF62133306E0078D2C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39388264B1597DFC0CCDB71E /* VoiceItApi2IosSDK.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = VoiceItApi2IosSDK.podspec; path = ../VoiceItApi2IosSDK.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		49AA541CEE76F944758932B5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4AC2B55FC3282ABBD8ACB10E /* Pods-VoiceItApi2IosSDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Tests/Pods-VoiceItApi2IosSDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -54,22 +51,28 @@
 		6003F5A5195388D20070C39A /* VoiceItViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoiceItViewController.h; sourceTree = "<group>"; };
 		6003F5A6195388D20070C39A /* VoiceItViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VoiceItViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6003F5AE195388D20070C39A /* VoiceItApi2IosSDK_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoiceItApi2IosSDK_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
-		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
-		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7EAE8E0041ED26DAF9775BFB /* Pods-VoiceItApi2IosSDK_Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Test/Pods-VoiceItApi2IosSDK_Test.release.xcconfig"; sourceTree = "<group>"; };
+		81512A42B0B09FDBD87F6341 /* Pods-VoiceItApi2IosSDK_Test.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_Test.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Test/Pods-VoiceItApi2IosSDK_Test.debug.xcconfig"; sourceTree = "<group>"; };
 		854AE9EBAE4291439F1B6F9B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		92B33784FFD044BA67AA9771 /* Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Tests/Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD65E7E7B06EB13B7065995D /* Pods_VoiceItApi2IosSDK_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoiceItApi2IosSDK_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B54E0627F8C8494CEEB2B149 /* Pods-VoiceItApi2IosSDK_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_ExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_ExampleTests/Pods-VoiceItApi2IosSDK_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C644F06EB6C08DB4E94A2DB5 /* Pods-VoiceItApi2IosSDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Example/Pods-VoiceItApi2IosSDK_Example.release.xcconfig"; sourceTree = "<group>"; };
+		DFE3378B0A921BF5C2694D52 /* Pods-VoiceItApi2IosSDK_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_ExampleTests/Pods-VoiceItApi2IosSDK_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		FAC46DA00FEA0C639E41311E /* Pods-VoiceItApi2IosSDK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoiceItApi2IosSDK_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Example/Pods-VoiceItApi2IosSDK_Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2192DFEF2133306E0078D2C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6003F587195388D20070C39A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -81,26 +84,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6003F5AB195388D20070C39A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
-				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
-				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				E5C9AC52C3923D4DE21AF70E /* Pods_VoiceItApi2IosSDK_Tests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2192DFF32133306E0078D2C9 /* VoiceItApi2IosSDK_Test */ = {
+			isa = PBXGroup;
+			children = (
+				2192DFF42133306E0078D2C9 /* VoiceItApi2IosSDK_Test.swift */,
+				2192DFF62133306E0078D2C9 /* Info.plist */,
+			);
+			path = VoiceItApi2IosSDK_Test;
+			sourceTree = "<group>";
+		};
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for VoiceItApi2IosSDK */,
-				6003F5B5195388D20070C39A /* Tests */,
+				2192DFF32133306E0078D2C9 /* VoiceItApi2IosSDK_Test */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				BD5898F0AF7AD00E6899562B /* Pods */,
@@ -111,7 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F58A195388D20070C39A /* VoiceItApi2IosSDK_Example.app */,
-				6003F5AE195388D20070C39A /* VoiceItApi2IosSDK_Tests.xctest */,
+				2192DFF22133306E0078D2C9 /* VoiceItApi2IosSDK_Test.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,7 +125,6 @@
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 				AD65E7E7B06EB13B7065995D /* Pods_VoiceItApi2IosSDK_Example.framework */,
-				0BA2C94DEEA0FDAF8E5A81E4 /* Pods_VoiceItApi2IosSDK_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -156,25 +156,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		6003F5B5195388D20070C39A /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				6003F5BB195388D20070C39A /* Tests.m */,
-				6003F5B6195388D20070C39A /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		6003F5B6195388D20070C39A /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				6003F5B7195388D20070C39A /* Tests-Info.plist */,
-				6003F5B8195388D20070C39A /* InfoPlist.strings */,
-				606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		60FF7A9C1954A5C5007DD14C /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +173,10 @@
 				C644F06EB6C08DB4E94A2DB5 /* Pods-VoiceItApi2IosSDK_Example.release.xcconfig */,
 				92B33784FFD044BA67AA9771 /* Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig */,
 				4AC2B55FC3282ABBD8ACB10E /* Pods-VoiceItApi2IosSDK_Tests.release.xcconfig */,
+				B54E0627F8C8494CEEB2B149 /* Pods-VoiceItApi2IosSDK_ExampleTests.debug.xcconfig */,
+				DFE3378B0A921BF5C2694D52 /* Pods-VoiceItApi2IosSDK_ExampleTests.release.xcconfig */,
+				81512A42B0B09FDBD87F6341 /* Pods-VoiceItApi2IosSDK_Test.debug.xcconfig */,
+				7EAE8E0041ED26DAF9775BFB /* Pods-VoiceItApi2IosSDK_Test.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -199,6 +184,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2192DFF12133306E0078D2C9 /* VoiceItApi2IosSDK_Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2192DFF92133306E0078D2C9 /* Build configuration list for PBXNativeTarget "VoiceItApi2IosSDK_Test" */;
+			buildPhases = (
+				43C47BCDABF138953026DD2D /* [CP] Check Pods Manifest.lock */,
+				2192DFEE2133306E0078D2C9 /* Sources */,
+				2192DFEF2133306E0078D2C9 /* Frameworks */,
+				2192DFF02133306E0078D2C9 /* Resources */,
+				B94B789DEF2FE192F5022C3C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2192DFF82133306E0078D2C9 /* PBXTargetDependency */,
+			);
+			name = VoiceItApi2IosSDK_Test;
+			productName = VoiceItApi2IosSDK_Test;
+			productReference = 2192DFF22133306E0078D2C9 /* VoiceItApi2IosSDK_Test.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		6003F589195388D20070C39A /* VoiceItApi2IosSDK_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "VoiceItApi2IosSDK_Example" */;
@@ -207,7 +212,6 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				CD5F6C0C020E2A7B52E7DD6F /* [CP] Embed Pods Frameworks */,
 				4FADE86B7D243DC100E1407E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -219,27 +223,6 @@
 			productReference = 6003F58A195388D20070C39A /* VoiceItApi2IosSDK_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6003F5AD195388D20070C39A /* VoiceItApi2IosSDK_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "VoiceItApi2IosSDK_Tests" */;
-			buildPhases = (
-				1FE386B09256224926C0BA0F /* [CP] Check Pods Manifest.lock */,
-				6003F5AA195388D20070C39A /* Sources */,
-				6003F5AB195388D20070C39A /* Frameworks */,
-				6003F5AC195388D20070C39A /* Resources */,
-				9897C0C310083F76014ACE31 /* [CP] Embed Pods Frameworks */,
-				06AEF5CF6917B5C6317A7531 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6003F5B4195388D20070C39A /* PBXTargetDependency */,
-			);
-			name = VoiceItApi2IosSDK_Tests;
-			productName = VoiceItApi2IosSDKTests;
-			productReference = 6003F5AE195388D20070C39A /* VoiceItApi2IosSDK_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -247,14 +230,17 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "com.voiceit-tech";
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = armaanbindra;
 				TargetAttributes = {
-					6003F589195388D20070C39A = {
-						DevelopmentTeam = VS9YK7ML83;
-					};
-					6003F5AD195388D20070C39A = {
+					2192DFF12133306E0078D2C9 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 6003F589195388D20070C39A;
+					};
+					6003F589195388D20070C39A = {
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -272,12 +258,19 @@
 			projectRoot = "";
 			targets = (
 				6003F589195388D20070C39A /* VoiceItApi2IosSDK_Example */,
-				6003F5AD195388D20070C39A /* VoiceItApi2IosSDK_Tests */,
+				2192DFF12133306E0078D2C9 /* VoiceItApi2IosSDK_Test */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2192DFF02133306E0078D2C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6003F588195388D20070C39A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -289,33 +282,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6003F5AC195388D20070C39A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		06AEF5CF6917B5C6317A7531 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Tests/Pods-VoiceItApi2IosSDK_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1FE386B09256224926C0BA0F /* [CP] Check Pods Manifest.lock */ = {
+		43C47BCDABF138953026DD2D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -326,7 +296,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VoiceItApi2IosSDK_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-VoiceItApi2IosSDK_Test-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -363,37 +333,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Example/Pods-VoiceItApi2IosSDK_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9897C0C310083F76014ACE31 /* [CP] Embed Pods Frameworks */ = {
+		B94B789DEF2FE192F5022C3C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Test/Pods-VoiceItApi2IosSDK_Test-resources.sh",
+				"${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLjoy_100.emd",
+				"${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLlefteyeclosed_200.emd",
+				"${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/BCLrighteyeclosed_200.emd",
+				"${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/LMprec_600.emd",
+				"${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/MFTprec_202.emd",
+				"${PODS_ROOT}/GoogleMobileVision/FaceDetector/Resources/PFFprec_702.emd",
+				"${PODS_CONFIGURATION_BUILD_DIR}/VoiceItApi2IosSDK/VoiceItApi2IosSDK.bundle",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/BCLjoy_100.emd",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/BCLlefteyeclosed_200.emd",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/BCLrighteyeclosed_200.emd",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/LMprec_600.emd",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MFTprec_202.emd",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PFFprec_702.emd",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/VoiceItApi2IosSDK.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Tests/Pods-VoiceItApi2IosSDK_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CD5F6C0C020E2A7B52E7DD6F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Example/Pods-VoiceItApi2IosSDK_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/VoiceItApi2IosSDK/VoiceItApi2IosSDK.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VoiceItApi2IosSDK.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Example/Pods-VoiceItApi2IosSDK_Example-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VoiceItApi2IosSDK_Test/Pods-VoiceItApi2IosSDK_Test-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CF5CCCF5DB0A26B0B1BE4710 /* [CP] Check Pods Manifest.lock */ = {
@@ -417,6 +384,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2192DFEE2133306E0078D2C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2192DFF52133306E0078D2C9 /* VoiceItApi2IosSDK_Test.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6003F586195388D20070C39A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,33 +402,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6003F5AA195388D20070C39A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6003F5B4195388D20070C39A /* PBXTargetDependency */ = {
+		2192DFF82133306E0078D2C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6003F589195388D20070C39A /* VoiceItApi2IosSDK_Example */;
-			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+			targetProxy = 2192DFF72133306E0078D2C9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		6003F5B8195388D20070C39A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6003F5B9195388D20070C39A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -465,6 +424,64 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2192DFFA2133306E0078D2C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81512A42B0B09FDBD87F6341 /* Pods-VoiceItApi2IosSDK_Test.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = VoiceItApi2IosSDK_Test/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.voiceit.VoiceItApi2IosSDK-Test";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoiceItApi2IosSDK_Example.app/VoiceItApi2IosSDK_Example";
+			};
+			name = Debug;
+		};
+		2192DFFB2133306E0078D2C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EAE8E0041ED26DAF9775BFB /* Pods-VoiceItApi2IosSDK_Test.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = VoiceItApi2IosSDK_Test/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.voiceit.VoiceItApi2IosSDK-Test";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoiceItApi2IosSDK_Example.app/VoiceItApi2IosSDK_Example";
+			};
+			name = Release;
+		};
 		6003F5BD195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -569,13 +586,15 @@
 			baseConfigurationReference = FAC46DA00FEA0C639E41311E /* Pods-VoiceItApi2IosSDK_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VS9YK7ML83;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceItApi2IosSDK/VoiceItApi2IosSDK-Prefix.pch";
 				INFOPLIST_FILE = "VoiceItApi2IosSDK/VoiceItApi2IosSDK-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.voiceit-tech";
+				PRODUCT_BUNDLE_IDENTIFIER = io.voiceit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -585,64 +604,31 @@
 			baseConfigurationReference = C644F06EB6C08DB4E94A2DB5 /* Pods-VoiceItApi2IosSDK_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = VS9YK7ML83;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VoiceItApi2IosSDK/VoiceItApi2IosSDK-Prefix.pch";
 				INFOPLIST_FILE = "VoiceItApi2IosSDK/VoiceItApi2IosSDK-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.voiceit-tech";
+				PRODUCT_BUNDLE_IDENTIFIER = io.voiceit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		6003F5C3195388D20070C39A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 92B33784FFD044BA67AA9771 /* Pods-VoiceItApi2IosSDK_Tests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoiceItApi2IosSDK_Example.app/VoiceItApi2IosSDK_Example";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		6003F5C4195388D20070C39A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4AC2B55FC3282ABBD8ACB10E /* Pods-VoiceItApi2IosSDK_Tests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
-				INFOPLIST_FILE = "Tests/Tests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoiceItApi2IosSDK_Example.app/VoiceItApi2IosSDK_Example";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2192DFF92133306E0078D2C9 /* Build configuration list for PBXNativeTarget "VoiceItApi2IosSDK_Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2192DFFA2133306E0078D2C9 /* Debug */,
+				2192DFFB2133306E0078D2C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6003F585195388D10070C39A /* Build configuration list for PBXProject "VoiceItApi2IosSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -657,15 +643,6 @@
 			buildConfigurations = (
 				6003F5C0195388D20070C39A /* Debug */,
 				6003F5C1195388D20070C39A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "VoiceItApi2IosSDK_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6003F5C3195388D20070C39A /* Debug */,
-				6003F5C4195388D20070C39A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
