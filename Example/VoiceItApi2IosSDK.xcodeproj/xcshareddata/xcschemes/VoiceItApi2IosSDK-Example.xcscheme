@@ -71,6 +71,18 @@
             ReferencedContainer = "container:VoiceItApi2IosSDK.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "VIAPITOKEN"
+            value = "${VIAPITOKEN}"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "VIAPIKEY"
+            value = "${VIAPIKEY}"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
