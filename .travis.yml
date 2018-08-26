@@ -2,6 +2,7 @@ language: objective-c
 podfile: Example/Podfile
 xcode_workspace: Example/VoiceItApi2IosSDK.xcworkspace
 xcode_scheme:  VoiceItApi2IosSDK-Example
+xcode_destination: platform=iOS Simulator,OS=11.4,name=iPhone X
 # before_script:
 # - cd Example
 # - pod install
