@@ -1,63 +1,12 @@
 //
-//  VoiceItApi2IosSDK_ExampleTests.swift
-//  VoiceItApi2IosSDK_ExampleTests
+//  VoiceItApi2IosSDK_Test.swift
+//  VoiceItApi2IosSDK_Test
 //
 //  Created by Armaan Bindra on 8/26/18.
 //  Copyright © 2018 armaanbindra. All rights reserved.s
 
 import UIKit
 import XCTest
-@testable import VoiceItApi2IosSDK
-
-struct VoiceItResponse: Decodable {
-    let responseCode: String
-    let message: String
-    let status: Int
-}
-
-class VoiceItTest : XCTestCase {
-    var myVoiceIt:VoiceItAPITwo?
-    var viewController: UIViewController!
-    var VI_API_KEY: String?
-    var VI_API_TOKEN: String?
-    let TIMEOUT = 1000.0
-    var started = false
-    var counter = 0
-    
-    func getEnvironmentVar(_ name: String) -> String? {
-        guard let rawValue = getenv(name) else { return nil }
-        return String(utf8String: rawValue)
-    }
-    
-    class func decodeSimpleJSON(jsonString: String) -> VoiceItResponse?{
-        let jsonData = jsonString.data(using: .utf8)
-        guard let ret = try? JSONDecoder().decode(VoiceItResponse.self, from: jsonData!) else {
-            return nil
-        }
-        return ret
-    }
-    
-    class func basicAssert(expectedRC: String, expectedSC: Int, jsonResponse : String){
-        let ret = decodeSimpleJSON(jsonString: jsonResponse)!
-        XCTAssertEqual(ret.responseCode, expectedRC)
-        XCTAssertEqual(ret.status, expectedSC)
-    }
-    
-    // Called once before all tests
-    override func setUp() {
-        if let viApiKey = getEnvironmentVar("VIAPIKEY") {
-            VI_API_KEY = viApiKey
-        }
-        
-        if let viApiTok = getEnvironmentVar("VIAPITOKEN") {
-            VI_API_TOKEN = viApiTok
-        }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateInitialViewController()
-        self.myVoiceIt  = VoiceItAPITwo(viewController, apiKey: VI_API_KEY, apiToken: VI_API_TOKEN)
-    }
-}
 
 class VoiceItApi2IosSDK_Test: VoiceItTest {
     override func setUp() {
@@ -71,13 +20,129 @@ class VoiceItApi2IosSDK_Test: VoiceItTest {
     }
     
     func testUsers() {
-        let expectation = XCTestExpectation(description: "Testing Get All Users")
-        myVoiceIt?.getAllUsers({
+        print("TEST USER API CALLS")
+        // Setup Expectations
+        var expectations = [XCTestExpectation]()
+        expectations.append(XCTestExpectation(description: "Test Get All Users"))
+        expectations.append(XCTestExpectation(description: "Test Create User"))
+        expectations.append(XCTestExpectation(description: "Test Check User Exists"))
+        expectations.append(XCTestExpectation(description: "Test Get Groups For User"))
+        expectations.append(XCTestExpectation(description: "Test Delete User"))
+        
+        print("\tTEST GET ALL USERS")
+        self.myVoiceIt?.getAllUsers({
             jsonResponse in
             VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: jsonResponse!)
-            expectation.fulfill()
+            expectations[0].fulfill()
         })
-        wait(for: [expectation], timeout: TIMEOUT)
+        
+        print("\tTEST CREATE USER")
+        self.myVoiceIt?.createUser({
+            createUserResponse in
+            let userResponse = TestHelper.decodeUserJSON(jsonString: createUserResponse!)
+            XCTAssertEqual(userResponse?.responseCode, "SUCC")
+            XCTAssertEqual(userResponse?.status, 201)
+            expectations[1].fulfill()
+            print("\tTEST CHECK USER EXISTS")
+            self.myVoiceIt?.checkUserExists(userResponse?.userId, callback: {
+                checkUserExistsResponse in
+                VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: checkUserExistsResponse!)
+                expectations[2].fulfill()
+                print("\tTEST GET GROUPS FOR USER")
+                self.myVoiceIt?.getGroupsForUser(userResponse?.userId, callback: {
+                    getGroupsForUserResponse in
+                    VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: getGroupsForUserResponse!)
+                    expectations[3].fulfill()
+                    print("\tTEST DELETE USER")
+                    self.myVoiceIt?.deleteUser(userResponse?.userId, callback: {
+                        deleteUserResponse in
+                        VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: deleteUserResponse!)
+                        expectations[4].fulfill()
+                    })
+                })
+            })
+      })
+      wait(for: expectations, timeout: TIMEOUT)
+    }
+    
+    func testGroups() {
+        print("TEST GROUP API CALLS")
+        // Setup Expectations
+        var expectations = [XCTestExpectation]()
+        expectations.append(XCTestExpectation(description: "Test Get All Groups"))
+        expectations.append(XCTestExpectation(description: "Test Create Group"))
+        expectations.append(XCTestExpectation(description: "Test Get Group"))
+        expectations.append(XCTestExpectation(description: "Test Group Exists"))
+        expectations.append(XCTestExpectation(description: "Test Add User To Group"))
+        expectations.append(XCTestExpectation(description: "Test Remove User From Group"))
+        expectations.append(XCTestExpectation(description: "Test Delete Group"))
+        
+        print("\tTEST GET ALL GROUPS")
+        myVoiceIt?.getAllGroups({
+            jsonResponse in
+            VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: jsonResponse!)
+            expectations[0].fulfill()
+        })
+        
+        print("\tTEST CREATE GROUP")
+        myVoiceIt?.createGroup("Test Group", callback: {
+            createGroupResponse in
+            let groupResponse = TestHelper.decodeGroupJSON(jsonString: createGroupResponse!)
+            XCTAssertEqual(groupResponse?.responseCode, "SUCC")
+            XCTAssertEqual(groupResponse?.status, 201)
+            expectations[1].fulfill()
+            print("\tTEST GET GROUP")
+            self.myVoiceIt?.getGroup(groupResponse?.groupId, callback: {
+                getGroupResponse in
+                VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: getGroupResponse!)
+                expectations[2].fulfill()
+                print("\tTEST GROUP EXISTS")
+                self.myVoiceIt?.groupExists(groupResponse?.groupId, callback: {
+                    groupExistsResponse in
+                    VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: groupExistsResponse!)
+                    expectations[3].fulfill()
+                    self.myVoiceIt?.createUser({
+                        createUserResponse in
+                        let user = TestHelper.decodeUserJSON(jsonString: createUserResponse!)
+                            print("\tTEST ADD USER TO GROUP")
+                            self.myVoiceIt?.addUser(toGroup: groupResponse?.groupId, userId: user?.userId, callback: {
+                                addUserResponse in
+                                VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: addUserResponse!)
+                                expectations[4].fulfill()
+                                print("\tTEST REMOVE USER FROM GROUP")
+                                self.myVoiceIt?.removeUser(fromGroup: groupResponse?.groupId, userId: user?.userId, callback: {
+                                    removeUserResponse in
+                                    VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: removeUserResponse!)
+                                    expectations[5].fulfill()
+                                    print("\tTEST DELETE GROUP")
+                                    self.myVoiceIt?.deleteGroup(groupResponse?.groupId, callback: {
+                                        deleteGroupResponse in
+                                        VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: deleteGroupResponse!)
+                                        expectations[6].fulfill()
+                                    })
+                                })
+                            })
+                        })
+                })
+            })
+        })
+        
+        wait(for: expectations, timeout: TIMEOUT)
+    }
+    
+    func testPhrases() {
+        print("TEST PHRASE API CALLS")
+        // Setup Expectations
+        var expectations = [XCTestExpectation]()
+        expectations.append(XCTestExpectation(description: "Test Get Phrases"))
+        
+        print("\tTEST GET PHRASES")
+        myVoiceIt?.getPhrases("en-US", callback : {
+            jsonResponse in
+            VoiceItTest.basicAssert(expectedRC: "SUCC", expectedSC: 200, jsonResponse: jsonResponse!)
+            expectations[0].fulfill()
+        })
+        wait(for: expectations, timeout: TIMEOUT)
     }
     
     //    func testPerformanceExample() {

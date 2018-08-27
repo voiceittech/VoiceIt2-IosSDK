@@ -27,6 +27,32 @@ NSString * const host = @"https://api.voiceit.io/";
     return self;
 }
 
+#pragma mark - Phrase API Calls
+
+- (void)getPhrases:(NSString *)contentLanguage callback:(void (^)(NSString *))callback
+{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"phrases"], contentLanguage]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"GET"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionDataTask *task =
+    [session dataTaskWithRequest:request
+               completionHandler:^(NSData *data, NSURLResponse *response,
+                                   NSError *error) {
+                   
+                   NSString *result =
+                   [[NSString alloc] initWithData:data
+                                         encoding:NSUTF8StringEncoding];
+                   callback(result);
+               }];
+    [task resume];
+}
+
 #pragma mark - User API Calls
 
 - (void)getAllUsers:(void (^)(NSString *))callback
@@ -94,7 +120,8 @@ NSString * const host = @"https://api.voiceit.io/";
     }
 
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"users/groups"], userId]]];
+                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/%@",[self buildURL:@"users"], userId, @"groups"]]
+                                    ];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

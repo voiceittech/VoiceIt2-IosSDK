@@ -31,6 +31,7 @@
 
 #pragma mark - User API Calls
 - (void)getAllUsers:(void (^)(NSString *))callback;
+- (void)getPhrases:(NSString *)contentLanguage callback:(void (^)(NSString *))callback;
 - (void)createUser:(void (^)(NSString *))callback;
 - (void)checkUserExists:(NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)getGroupsForUser:(NSString *)userId callback:(void (^)(NSString *))callback;
