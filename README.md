@@ -8,6 +8,7 @@
 A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring Voice + Face Verification and Identification with built in user interfaces and liveness detection.
 
 * [Getting Started](#getting-started)
+* [Preview](#preview)
 * [Installation](#installation)
 * [Strings and Prompts](#strings-and-prompts)
 * [API Calls](#api-calls)
@@ -62,6 +63,13 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
 Get a Developer Account at <a href="https://voiceit.io/signup" target="_blank">VoiceIt</a> and view your API Key and Token in the settings page (as shown below). Also review the HTTP Documentation at <a href="https://api.voiceit.io" target="_blank">api.voiceit.io</a>. All the documentation shows code snippets in both Swift 4 and Objective-C.
 
 <img src="Graphics/Settings.png" alt="View API Key and Token on Settings Page" width="600px" />
+
+## Preview
+
+The graphics below shows the encapsulatedVideoEnrollment and encapsulatedVideoVerification view respectively in action.
+
+<img width="200px" src="Graphics/VideoEnrollment.gif" style="display: inline !important"/>
+<img width="200px" src="Graphics/VideoVerification.gif" style="display: inline-block !important;"/>
 
 ## Installation
 

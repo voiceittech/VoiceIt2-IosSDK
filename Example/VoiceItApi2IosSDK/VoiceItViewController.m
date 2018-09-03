@@ -189,4 +189,10 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
+- (void)viewDidAppear:(BOOL)animated{
+    if([self.TEST_USER_ID isEqualToString:@"USER_ID_HERE"]){
+        [self showAlert:@"Please replace variables under VoiceItViewController.m with your credentials, groupId and userIds"];
+    }
+}
 @end
