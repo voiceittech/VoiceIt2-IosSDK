@@ -37,13 +37,18 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
       * [Remove User from Group](#remove-user-from-group)     
       * [Delete Group](#delete-group)
   * [Enrollment API Calls](#enrollment-api-calls)
-      * [Get Voice Enrollments](#get-voice-enrollments)
-      * [Get Face Enrollments](#get-face-enrollments)
-      * [Get Video Enrollments](#get-video-enrollments)
-      * [Delete Enrollment for User](#delete-enrollment-for-user)
+      * [Get All Voice Enrollments](#get-all-voice-enrollments)
+      * [Get All Face Enrollments](#get-all-face-enrollments)
+      * [Get All Video Enrollments](#get-all-video-enrollments)
       * [Create Voice Enrollment](#create-voice-enrollment)
       * [Create Face Enrollment](#create-face-enrollment)
       * [Create Video Enrollment](#create-video-enrollment)
+      * [Delete Voice Enrollment](#delete-voice-enrollment)
+      * [Delete Face Enrollment](#delete-face-enrollment)
+      * [Delete Video Enrollment](#delete-video-enrollment)
+      * [Delete All Voice Enrollments](#delete-all-voice-enrollments)
+      * [Delete All Face Enrollments](#delete-all-face-enrollments)
+      * [Delete All Video Enrollments](#delete-all-video-enrollments)
   * [Verification API Calls](#verification-api-calls)
       * [Voice Verification](#voice-verification)
       * [Face Verification](#face-verification)
@@ -143,18 +148,18 @@ Creates three voice enrollments for user with the given userId(begins with 'usr_
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedVoiceEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", userEnrollmentsCancelled: {
-print("User Enrollment Cancelled")
+    print("User Enrollment Cancelled")
 }, userEnrollmentsPassed: {
-print("User Enrollments Passed")
+    print("User Enrollments Passed")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedVoiceEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
-NSLog(@"User Enrollments Cancelled");
+    NSLog(@"User Enrollments Cancelled");
 } userEnrollmentsPassed:^{
-NSLog(@"User Enrollments Passed");
+    NSLog(@"User Enrollments Passed");
 }];
 ```
 
@@ -165,18 +170,18 @@ Creates a face enrollment for user with the given userId(begins with 'usr_'). No
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedFaceEnrollUser("USER_ID_HERE", userEnrollmentsCancelled: {
-print("User Enrollment Cancelled")
+    print("User Enrollment Cancelled")
 }, userEnrollmentsPassed: {
-print("User Enrollments Passed")
+    print("User Enrollments Passed")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedFaceEnrollUser:@"USER_ID_HERE" userEnrollmentsCancelled:^{
-NSLog(@"User Enrollments Cancelled");
+    NSLog(@"User Enrollments Cancelled");
 } userEnrollmentsPassed:^{
-NSLog(@"User Enrollments Passed");
+    NSLog(@"User Enrollments Passed");
 }];
 ```
 
@@ -187,18 +192,18 @@ Creates three video enrollments for user with the given userId(begins with 'usr_
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedVideoEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", userEnrollmentsCancelled: {
-print("User Enrollment Cancelled")
+    print("User Enrollment Cancelled")
 }, userEnrollmentsPassed: {
-print("User Enrollments Passed")
+    print("User Enrollments Passed")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedVideoEnrollUser:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userEnrollmentsCancelled:^{
-NSLog(@"User Enrollments Cancelled");
+    NSLog(@"User Enrollments Cancelled");
 } userEnrollmentsPassed:^{
-NSLog(@"User Enrollments Passed");
+    NSLog(@"User Enrollments Passed");
 }];
 ```
 
@@ -209,22 +214,22 @@ Verify user with given userId(begins with 'usr_'). Note: Immediately upon callin
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedVoiceVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", userVerificationCancelled: {
-print("User Cancelled Verification");
+    print("User Cancelled Verification");
 }, userVerificationSuccessful: {(voiceConfidence, jsonResponse) in
-print("User Verication Successful, voiceConfidence : \(voiceConfidence)")
+    print("User Verication Successful, voiceConfidence : \(voiceConfidence)")
 }, userVerificationFailed: { (voiceConfidence, jsonResponse) in
-print("User Verication Failed, voiceConfidence : \(voiceConfidence)")
+    print("User Verication Failed, voiceConfidence : \(voiceConfidence)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedVoiceVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userVerificationCancelled:^{
-NSLog(@"User Cancelled Verification");
+    NSLog(@"User Cancelled Verification");
 } userVerificationSuccessful:^(float voiceConfidence, NSString * jsonResponse){
-NSLog(@"User Verication Successful, voiceConfidence : %g",voiceConfidence);
+    NSLog(@"User Verication Successful, voiceConfidence : %g",voiceConfidence);
 } userVerificationFailed:^(float faceConfidence, float voiceConfidence, NSString * jsonResponse){
-NSLog(@"User Verication Failed, voiceConfidence : %g",voiceConfidence);
+    NSLog(@"User Verication Failed, voiceConfidence : %g",voiceConfidence);
 }];
 ```
 
@@ -235,22 +240,22 @@ Verify user with given userId(begins with 'usr_') and a parameter to enable or d
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedFaceVerification("USER_ID_HERE", doLivenessDetection:true, userVerificationCancelled: {
-print("User Cancelled Verification");
+    print("User Cancelled Verification");
 }, userVerificationSuccessful: {(faceConfidence, jsonResponse) in
-print("User Verication Successful faceConfidence : \(faceConfidence)")
+    print("User Verication Successful faceConfidence : \(faceConfidence)")
 }, userVerificationFailed: { (faceConfidence, jsonResponse) in
-print("User Verication Failed, faceConfidence : \(faceConfidence)")
+    print("User Verication Failed, faceConfidence : \(faceConfidence)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedFaceVerification:@"USER_ID_HERE" doLivenessDetection:YES userVerificationCancelled:^{
-NSLog(@"User Cancelled Verification");
+    NSLog(@"User Cancelled Verification");
 } userVerificationSuccessful:^(float faceConfidence, NSString * jsonResponse){
-NSLog(@"User Verication Successful faceConfidence : %g", faceConfidence);
+    NSLog(@"User Verication Successful faceConfidence : %g", faceConfidence);
 } userVerificationFailed:^(float faceConfidence, NSString * jsonResponse){
-NSLog(@"User Verication Failed, faceConfidence : %g",faceConfidence);
+    NSLog(@"User Verication Failed, faceConfidence : %g",faceConfidence);
 }];
 ```
 
@@ -262,22 +267,22 @@ Verify user with given userId(begins with 'usr_') , contentLanguage('en-US','es-
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedVideoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", doLivenessDetection:true, userVerificationCancelled: {
-print("User Cancelled Verification");
+    print("User Cancelled Verification");
 }, userVerificationSuccessful: {(faceConfidence, voiceConfidence, jsonResponse) in
-print("User Verication Successful, voiceConfidence : \(voiceConfidence), faceConfidence : \(faceConfidence)")
+    print("User Verication Successful, voiceConfidence : \(voiceConfidence), faceConfidence : \(faceConfidence)")
 }, userVerificationFailed: { (faceConfidence, voiceConfidence, jsonResponse) in
-print("User Verication Failed, voiceConfidence : \(voiceConfidence), faceConfidence : \(faceConfidence)")
+    print("User Verication Failed, voiceConfidence : \(voiceConfidence), faceConfidence : \(faceConfidence)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedVideoVerification:@"USER_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" doLivenessDetection:YES userVerificationCancelled:^{
-NSLog(@"User Cancelled Verification");
+    NSLog(@"User Cancelled Verification");
 } userVerificationSuccessful:^(float faceConfidence, float voiceConfidence, NSString * jsonResponse){
-NSLog(@"User Verication Successful, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
+    NSLog(@"User Verication Successful, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
 } userVerificationFailed:^(float faceConfidence, float voiceConfidence, NSString * jsonResponse){
-NSLog(@"User Verication Failed, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
+    NSLog(@"User Verication Failed, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
 }];
 ```
 
@@ -288,22 +293,22 @@ Identify user in group with given groupId(begins with 'grp_'). Note: Immediately
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedVoiceIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", userIdentificationCancelled: {
-print("User Cancelled Identification");
+    print("User Cancelled Identification");
 }, userIdentificationSuccessful: {(voiceConfidence, foundUserId, jsonResponse) in
-print("User Identification Successful, userId : \(foundUserId) voiceConfidence : \(voiceConfidence)")
+    print("User Identification Successful, userId : \(foundUserId) voiceConfidence : \(voiceConfidence)")
 }, userIdentificationFailed: { (voiceConfidence, jsonResponse) in
-print("User Identification Failed, voiceConfidence is \(voiceConfidence)")
+    print("User Identification Failed, voiceConfidence is \(voiceConfidence)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedVoiceIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" userIdentificationCancelled:^{
-NSLog(@"User Cancelled Identification");
+    NSLog(@"User Cancelled Identification");
 } userIdentificationSuccessful:^(float voiceConfidence, NSString * foundUserId, NSString * jsonResponse){
-NSLog(@"User Identification Successful, userId: %@ voiceConfidence : %g",foundUserId, voiceConfidence);
+    NSLog(@"User Identification Successful, userId: %@ voiceConfidence : %g",foundUserId, voiceConfidence);
 } userIdentificationFailed:^(float faceConfidence, float voiceConfidence, NSString * jsonResponse){
-NSLog(@"User Identification Failed, voiceConfidence : %g",voiceConfidence);
+    NSLog(@"User Identification Failed, voiceConfidence : %g",voiceConfidence);
 }];
 ```
 
@@ -314,22 +319,22 @@ Identify user in group with given groupId(begins with 'grp_') and a parameter to
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedFaceIdentification("GROUP_ID_HERE", doLivenessDetection:true, userIdentificationCancelled: {
-print("User Cancelled Identification");
+    print("User Cancelled Identification");
 }, userIdentificationSuccessful: {(faceConfidence, foundUserId, jsonResponse) in
-print("User Identification Successful userId : \(foundUserId) faceConfidence : \(faceConfidence)")
+    print("User Identification Successful userId : \(foundUserId) faceConfidence : \(faceConfidence)")
 }, userIdentificationFailed: { (faceConfidence, jsonResponse) in
-print("User Identification Failed, faceConfidence is \(faceConfidence)")
+    print("User Identification Failed, faceConfidence is \(faceConfidence)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedFaceIdentification:@"GROUP_ID_HERE" doLivenessDetection:YES userIdentificationCancelled:^{
-NSLog(@"User Cancelled Identification");
+    NSLog(@"User Cancelled Identification");
 } userIdentificationSuccessful:^(float faceConfidence, NSString * foundUserId, NSString * jsonResponse){
-NSLog(@"User Identification Successful userId: %@ faceConfidence : %g", foundUserId, faceConfidence);
+    NSLog(@"User Identification Successful userId: %@ faceConfidence : %g", foundUserId, faceConfidence);
 } userIdentificationFailed:^(float faceConfidence, NSString * jsonResponse){
-NSLog(@"User Identification Failed, faceConfidence : %g",faceConfidence);
+    NSLog(@"User Identification Failed, faceConfidence : %g",faceConfidence);
 }];
 ```
 
@@ -341,22 +346,22 @@ Identify user in group with given groupId(begins with 'grp_'), contentLanguage('
 ##### *Swift*
 ```swift
 myVoiceIt?.encapsulatedVideoIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", voicePrintPhrase: "my face and voice identify me", doLivenessDetection:true, userIdentificationCancelled: {
-print("User Cancelled Identification");
+    print("User Cancelled Identification");
 }, userIdentificationSuccessful: {(faceConfidence, voiceConfidence, foundUserId, jsonResponse) in
-print("User Identification Successful, voiceConfidence is \(voiceConfidence), faceConfidence is \(faceConfidence)")
+    print("User Identification Successful, voiceConfidence is \(voiceConfidence), faceConfidence is \(faceConfidence)")
 }, userIdentificationFailed: { (faceConfidence, voiceConfidence, jsonResponse) in
-print("User Identification Failed, voiceConfidence is \(voiceConfidence), faceConfidence is \(faceConfidence)")
+    print("User Identification Failed, voiceConfidence is \(voiceConfidence), faceConfidence is \(faceConfidence)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt encapsulatedVideoIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" voicePrintPhrase:@"my face and voice identify me" doLivenessDetection:YES userIdentificationCancelled:^{
-NSLog(@"User Cancelled Identification");
+    NSLog(@"User Cancelled Identification");
 } userIdentificationSuccessful:^(float faceConfidence, float voiceConfidence, NSString * foundUserId, NSString * jsonResponse){
-NSLog(@"User Identification Successful, userId: %@, voiceConfidence : %g , faceConfidence : %g", foundUserId, voiceConfidence, faceConfidence);
+    NSLog(@"User Identification Successful, userId: %@, voiceConfidence : %g , faceConfidence : %g", foundUserId, voiceConfidence, faceConfidence);
 } userIdentificationFailed:^(float faceConfidence ,float voiceConfidence, NSString * jsonResponse){
-NSLog(@"User Identification Failed, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
+    NSLog(@"User Identification Failed, voiceConfidence : %g , faceConfidence : %g",voiceConfidence, faceConfidence);
 }];
 ```
 
@@ -423,8 +428,8 @@ Get a list of groups that the user with given userId(begins with 'usr_') is a pa
 ##### *Swift*
 ```swift
 myVoiceIt?.getGroupsForUser("USER_ID_HERE", callback: {
-                jsonResponse in
-                print("JSON RESPONSE: \(jsonResponse!)")
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 ##### *Objective-C*
@@ -441,14 +446,14 @@ Delete user with given userId(begins with 'usr_')
 ##### *Swift*
 ```swift
 myVoiceIt?.deleteUser("USER_ID_HERE", callback: {
-jsonResponse in
-print("JSON RESPONSE: \(jsonResponse!)")
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt deleteUser:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
+    NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
 
@@ -575,6 +580,7 @@ myVoiceIt?.deleteGroup("GROUP_ID_HERE", callback: {
     print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
+
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt deleteGroup:@"GROUP_ID_HERE" callback:^(NSString * jsonResponse){
@@ -584,13 +590,13 @@ myVoiceIt?.deleteGroup("GROUP_ID_HERE", callback: {
 
 ### Enrollment API Calls
 
-#### Get Voice Enrollments
+#### Get All Voice Enrollments
 
 Gets all voice enrollments for user with given userId(begins with 'usr_')
 
 ##### *Swift*
 ```swift
-myVoiceIt?.getVoiceEnrollments("USER_ID_HERE", callback: {
+myVoiceIt?.getAllVoiceEnrollments("USER_ID_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -598,98 +604,45 @@ myVoiceIt?.getVoiceEnrollments("USER_ID_HERE", callback: {
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt getVoiceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt getAllVoiceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
 
-#### Get Face Enrollments
+#### Get All Face Enrollments
 
 Gets all face enrollments for user with given userId(begins with 'usr_')
 
 ##### *Swift*
 ```swift
-myVoiceIt?.getFaceEnrollments("USER_ID_HERE", callback: {
+myVoiceIt?.getAllFaceEnrollments("USER_ID_HERE", callback: {
 jsonResponse in
-print("JSON RESPONSE: \(jsonResponse!)")
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt getFaceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
+[self.myVoiceIt getAllFaceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
 
-#### Get Video Enrollments
+#### Get All Video Enrollments
 
 Gets all video enrollments for user with given userId(begins with 'usr_')
 
 ##### *Swift*
 ```swift
-myVoiceIt?.getVideoEnrollments("USER_ID_HERE", callback: {
+myVoiceIt?.getAllVideoEnrollments("USER_ID_HERE", callback: {
 jsonResponse in
-print("JSON RESPONSE: \(jsonResponse!)")
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt getVideoEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete Voice Enrollment
-
-Delete voice enrollment for user with given userId(begins with 'usr_') and voiceEnrollmentId(integer)
-
-##### *Swift*
-```swift
-myVoiceIt?.deleteVoiceEnrollment("USER_ID_HERE", voiceEnrollmentId: "VOICE_ENROLLMENT_ID_HERE", callback: {
-jsonResponse in
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteVoiceEnrollment:@"USER_ID_HERE" voiceEnrollmentId:@"VOICE_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete Face Enrollment
-
-Delete face enrollment for user with given userId(begins with 'usr_') and faceEnrollmentId(integer)
-##### *Swift*
-```swift
-myVoiceIt?.deleteFaceEnrollment("USER_ID_HERE", faceEnrollmentId: "FACE_ENROLLMENT_ID_HERE", callback: {
-jsonResponse in
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteFaceEnrollment:@"USER_ID_HERE" faceEnrollmentId:@"FACE_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete Video Enrollment
-
-Delete video enrollment for user with given userId(begins with 'usr_') and videoEnrollmentId(integer)
-
-##### *Swift*
-```swift
-myVoiceIt?.deleteVideoEnrollment("USER_ID_HERE", videoEnrollmentId: "VIDEO_ENROLLMENT_ID_HERE", callback: {
-    jsonResponse in
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteVideoEnrollment:@"USER_ID_HERE" videoEnrollmentId:@"VIDEO_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt getAllVideoEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```
@@ -748,6 +701,119 @@ myVoiceIt?.createVideoEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
 [self.myVoiceIt createVideoEnrollment:@"USER_ID_HERE" contentLanguage: @"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_ENROLLMENT_HERE" phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
+```
+
+#### Delete Voice Enrollment
+
+Delete voice enrollment for user with given userId(begins with 'usr_') and voiceEnrollmentId(integer)
+
+##### *Swift*
+```swift
+myVoiceIt?.deleteVoiceEnrollment("USER_ID_HERE", voiceEnrollmentId: "VOICE_ENROLLMENT_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+
+##### *Objective-C*
+```objc
+[self.myVoiceIt deleteVoiceEnrollment:@"USER_ID_HERE" voiceEnrollmentId:@"VOICE_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+}];
+```
+
+#### Delete Face Enrollment
+
+Delete face enrollment for user with given userId(begins with 'usr_') and faceEnrollmentId(integer)
+##### *Swift*
+```swift
+myVoiceIt?.deleteFaceEnrollment("USER_ID_HERE", faceEnrollmentId: "FACE_ENROLLMENT_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+
+##### *Objective-C*
+```objc
+[self.myVoiceIt deleteFaceEnrollment:@"USER_ID_HERE" faceEnrollmentId:@"FACE_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+}];
+```
+
+#### Delete Video Enrollment
+
+Delete video enrollment for user with given userId(begins with 'usr_') and videoEnrollmentId(integer)
+
+##### *Swift*
+```swift
+myVoiceIt?.deleteVideoEnrollment("USER_ID_HERE", videoEnrollmentId: "VIDEO_ENROLLMENT_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+
+##### *Objective-C*
+```objc
+[self.myVoiceIt deleteVideoEnrollment:@"USER_ID_HERE" videoEnrollmentId:@"VIDEO_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+}];
+```
+
+#### Delete All Voice Enrollments
+
+Delete all voice enrollment for user with given userId(begins with 'usr_').
+
+##### *Swift*
+```swift
+myVoiceIt?.deleteAllVoiceEnrollments("USER_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+
+##### *Objective-C*
+```objc
+[self.myVoiceIt deleteAllVoiceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+}];
+```
+
+#### Delete All Face Enrollments
+
+Delete all face enrollment for user with given userId(begins with 'usr_').
+
+##### *Swift*
+```swift
+myVoiceIt?.deleteAllFaceEnrollments("USER_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+
+##### *Objective-C*
+```objc
+[self.myVoiceIt deleteAllFaceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+}];
+```
+
+#### Delete All Video Enrollments
+
+Delete all video enrollment for user with given userId(begins with 'usr_').
+
+##### *Swift*
+```swift
+myVoiceIt?.deleteAllVideoEnrollments("USER_ID_HERE", callback: {
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
+})
+```
+
+##### *Objective-C*
+```objc
+[self.myVoiceIt deleteAllVideoEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+    NSLog(@"JSONResponse: %@", jsonResponse);
+}];
 ```
 
 #### Voice Verification
@@ -814,8 +880,8 @@ Identify user's voice  inside group with the given groupId(begins with 'grp_') a
 ##### *Swift*
 ```swift
 myVoiceIt?.voiceIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", audioPath: "FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
-jsonResponse in
-print("JSON RESPONSE: \(jsonResponse!)")
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 
@@ -823,7 +889,7 @@ print("JSON RESPONSE: \(jsonResponse!)")
 ```objc
 [self.myVoiceIt voiceIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" audioPath: @"FILE_PATH_TO_VOICE_FOR_IDENTIFICATION_HERE"
 phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
+    NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
 
@@ -834,15 +900,15 @@ Identify user' face inside group with the given groupId(begins with 'grp_') and 
 ##### *Swift*
 ```swift
 myVoiceIt?.faceIdentification("GROUP_ID_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE",
-jsonResponse in
-print("JSON RESPONSE: \(jsonResponse!)")
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt faceIdentification:@"GROUP_ID_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
+    NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
 
@@ -853,15 +919,15 @@ Identify user's voice  and face inside group with the given groupId(begins with 
 ##### *Swift*
 ```swift
 myVoiceIt?.videoIdentification("GROUP_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE", phrase: "VOICEPRINT_PHRASE_HERE", callback: {
-jsonResponse in
-print("JSON RESPONSE: \(jsonResponse!)")
+    jsonResponse in
+    print("JSON RESPONSE: \(jsonResponse!)")
 })
 ```
 
 ##### *Objective-C*
 ```objc
 [self.myVoiceIt videoIdentification:@"GROUP_ID_HERE" contentLanguage:@"CONTENT_LANGUAGE_HERE" videoPath: @"FILE_PATH_TO_VIDEO_FOR_IDENTIFICATION_HERE" phrase: @"VOICEPRINT_PHRASE_HERE" callback:^(NSString * jsonResponse){
-NSLog(@"JSONResponse: %@", jsonResponse);
+    NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
 
