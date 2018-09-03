@@ -121,14 +121,9 @@
 }
 
 -(void)startEnrollmentProcess {
-    [self.myVoiceIt getVoiceEnrollments:self.userToEnrollUserId callback:^(NSString * getEnrollmentsJSONResponse){
-        NSDictionary *getEnrollmentsJSONObj = [Utilities getJSONObject:getEnrollmentsJSONResponse];
-        int enrollmentCount = [[getEnrollmentsJSONObj objectForKey: @"count"] intValue];
-        NSLog(@"Voice Enrollment Count From Server is %d", enrollmentCount);
-        [self.myVoiceIt deleteAllUserEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+    [self.myVoiceIt deleteAllVoiceEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
                 NSLog(@"DELETING ENROLLMENTS IN THE BEGINNING %@",deleteEnrollmentsJSONResponse);
                 [self startDelayedRecording:0.0];
-        }];
     }];
 }
 
@@ -180,7 +175,7 @@
 }
 
 -(void)cancelClicked{
-    [self.myVoiceIt deleteAllUserEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+    [self.myVoiceIt deleteAllVoiceEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
         [[self navigationController] dismissViewControllerAnimated:YES completion:^{
             [[self myNavController] userEnrollmentsCancelled];
         }];

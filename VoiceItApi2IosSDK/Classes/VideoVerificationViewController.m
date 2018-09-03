@@ -1,6 +1,6 @@
 //
 //  VideoVerificationViewController.m
-//  Pods-VoiceItApi2IosSDK_Example
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 3/23/18.
 //
@@ -442,7 +442,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                         }];
                     });
                 }
-                else if(self.failCounter < 3){
+                else if(self.failCounter < self.failsAllowed){
                     if([responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
                         [self setMessage:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
                         [self startDelayedRecording:3.0];

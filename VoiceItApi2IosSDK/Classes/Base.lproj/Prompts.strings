@@ -23,24 +23,32 @@
 "VOICE_READY" = "Voice Verification is Ready";
 "VOICE_READY_SUBTITLE" = "You can now use your voice instead of a password to securely log in anytime";
 
-/* Prompts for Enrollment and Verification Flow */
+/* Prompts for Enrollment, Verification & Identification Flow */
 "LOOK_INTO_CAM" = "Please look into the camera";
 "GET_ENROLLED" = "There you are, let's get you enrolled";
 "GET_VERIFIED" = "There you are, let's get you verified";
 "READY_FOR_VOICE_VERIFICATION" = "Please get ready to verify your voice";
+"READY_FOR_VOICE_IDENTIFICATION" = "Please get ready for your voice to be identified";
 "VERIFY" = "Say\n\"%@\"";
+"IDENTIFY" = "Say\n\"%@\"";
+"VIDEO_VERIFY_FAILED" = "Failed video verification";
+"VIDEO_IDENTIFY_FAILED" = "Failed video identification";
 "VERIFY_FACE" = "Please wait while your face is verified";
 "VERIFY_FACE_FAILED" = "Failed face verification";
 "VERIFY_FACE_FAILED_TRY_AGAIN" = "Failed face verification. Try again.";
-"VIDEO_VERIFY_FAILED" = "Failed video verification";
+"IDENTIFY_FACE" = "Please wait while your face is identified";
+"IDENTIFY_FACE_FAILED" = "Failed face identification";
+"IDENTIFY_FACE_FAILED_TRY_AGAIN" = "Failed face identification. Try again.";
 "ENROLL_0"= "Say \"%@\" into the iPhone";
 "ENROLL_1"= "Say \"%@\" again";
 "ENROLL_2"= "Say \"%@\" one more time";
 "FACE_ENROLL"= "Please wait for your face to be enrolled";
 "WAITING"= "Please wait";
 "WAIT_FOR_FACE_VERIFICATION" = "Please wait while we verify your face";
+"WAIT_FOR_FACE_IDENTIFICATION" = "Please wait while we identify your face";
 "TOO_MANY_ATTEMPTS" = "Sorry! You failed too many times! Try again later.";
 "SUCCESS" = "You have been successfully verified";
+"SUCCESS_IDENTIFIED" = "You have been successfully identifed";
 
 /* Response Code Based Prompts */
 "FNFD" = "Sorry, I couldn't quite see your face.\nPlease try again.";
@@ -50,6 +58,7 @@
 "SRNR"= "Sorry, I couldn't quite hear you.\nPlease speak louder.";
 "TVER"= "Sorry, not enough video enrollments detected.\nPlease enroll before verifying.";
 "NFEF"= "Sorry, not enough face enrollments detected.\nPlease enroll before verifying.";
+"NFEF_IDENTIFICATION"= "Sorry, not enough face enrollments detected.\nPlease enroll before identification.";
 "NEHSD" = "Sorry, I couldn't quite catch that.\nPlease speak slower.";
 "STTF" = "Sorry, I couldn't understand you.\nPlease make sure you are saying \"%@\"";
 "SSTQ" = "Sorry, I couldn't quite hear you.\nPlease speak louder.";
@@ -58,7 +67,8 @@
 "PDNM" = "Sorry, that is an invalid phrase.\nPlease make sure you are saying \"%@\"";
 "RWPU" = "Please do not use recordings. Try that again.";
 "FTMF"= "Make sure only your face is visible.\nPlease try again.";
-"PNTE"= "Sorry, not enough voice enrollments detected.\nPlease enroll before verifying.";
+"PNTE"= "Sorry, not enough enrollments detected.\nPlease enroll before verifying.";
+"PNTE_IDENTIFICATION"= "Sorry, not enough enrollments detected.\nPlease enroll before identification.";
 "GERR"= "Sorry, something went wrong.\nPlease try again.";
 "CONTACT_DEVELOPER" = "Error:\n Please contact app developer with response code \"%@\".";
 

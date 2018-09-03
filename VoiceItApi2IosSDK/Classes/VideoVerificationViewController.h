@@ -1,6 +1,6 @@
 //
 //  VideoVerificationViewController.h
-//  Pods-VoiceItApi2IosSDK_Example
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 3/23/18.
 //
@@ -49,6 +49,7 @@
 #pragma mark -  Counters to keep track of stuff
 @property int lookingIntoCamCounter;
 @property int failCounter;
+@property int failsAllowed;
 @property int numberOfLivenessFailsAllowed;
 
 #pragma mark -  Developer Passed Options

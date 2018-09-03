@@ -1,6 +1,6 @@
 //
 //  Styles.h
-//  Pods-VoiceItApi2IosSDK_Example
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 10/12/17.
 //

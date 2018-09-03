@@ -31,6 +31,7 @@
 
 #pragma mark -  Counters to keep track of stuff
 @property int failCounter;
+@property int failsAllowed;
 
 
 #pragma mark -  Developer Passed Options

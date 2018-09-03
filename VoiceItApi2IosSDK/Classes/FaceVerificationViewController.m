@@ -1,6 +1,6 @@
 //
 //  FaceVerificationViewController.m
-//  Pods-VoiceItApi2IosSDK_Example
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 3/17/18.
 //
@@ -273,7 +273,7 @@
                 }];
             });
         }
-        else if(self.failCounter < 3){
+        else if(self.failCounter < self.failsAllowed){
             if ([responseCode isEqualToString:@"FAIL"]){
                 [self setMessage:[ResponseManager getMessage: @"VERIFY_FACE_FAILED_TRY_AGAIN"]];
                 [self startDelayedRecording:2.0];

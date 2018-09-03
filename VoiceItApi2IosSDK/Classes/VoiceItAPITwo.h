@@ -1,6 +1,6 @@
 //
 //  VoiceItAPITwo.h
-//  VoiceItAPITwoDemoApp
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 3/7/17.
 //  Copyright © 2017 Armaan Bindra. All rights reserved.
@@ -11,9 +11,12 @@
 #import <UIKit/UIKit.h>
 #import "Utilities.h"
 #import "MainNavigationController.h"
+#import "VoiceVerificationViewController.h"
 #import "FaceVerificationViewController.h"
 #import "VideoVerificationViewController.h"
-#import "VoiceVerificationViewController.h"
+#import "VoiceIdentificationViewController.h"
+#import "FaceIdentificationViewController.h"
+#import "VideoIdentificationViewController.h"
 
 @import MobileCoreServices;
 
@@ -48,16 +51,16 @@
 - (void)deleteGroup: (NSString *)groupId callback:(void (^)(NSString *))callback;
 
 #pragma mark - Enrollment API Calls
-- (void)getVoiceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
-- (void)getFaceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
-- (void)getVideoEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
+- (void)getAllVoiceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
+- (void)getAllFaceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
+- (void)getAllVideoEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteVoiceEnrollment:(NSString *)userId voiceEnrollmentId:(NSInteger)voiceEnrollmentId callback:(void (^)(NSString *))callback;
 - (void)deleteFaceEnrollment:(NSString *)userId faceEnrollmentId:(NSInteger)faceEnrollmentId callback:(void (^)(NSString *))callback;
 - (void)deleteVideoEnrollment:(NSString *)userId videoEnrollmentId:(NSInteger)videoEnrollmentId callback:(void (^)(NSString *))callback;
-- (void)deleteAllUserEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteAllVoiceEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteAllFaceEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteAllVideoEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
+- (void)deleteAllEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)createVoiceEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
                     audioPath:(NSString*)audioPath
@@ -121,11 +124,22 @@
                  videoPath:(NSString*)videoPath
                   callback:(void (^)(NSString *))callback;
 
+- (void)faceIdentification:(NSString *)groupId
+               imageData:(NSData*)imageData
+                callback:(void (^)(NSString *))callback;
+
 - (void)videoIdentification:(NSString *)groupId
             contentLanguage:(NSString*)contentLanguage
                   videoPath:(NSString*)videoPath
                      phrase:(NSString*)phrase
                    callback:(void (^)(NSString *))callback;
+
+- (void)videoIdentification:(NSString *)groupId
+          contentLanguage:(NSString*)contentLanguage
+                imageData:(NSData*)imageData
+                audioPath:(NSString*)audioPath
+                   phrase:(NSString*)phrase
+                 callback:(void (^)(NSString *))callback;
 
 #pragma mark - Encapsulated Enrollment Methods
 
@@ -154,6 +168,14 @@
            userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
 
+- (void)encapsulatedVoiceVerification:(NSString *)userId
+                      contentLanguage:(NSString*)contentLanguage
+                     voicePrintPhrase:(NSString*)voicePrintPhrase
+                      numFailsAllowed:(int)numFailsAllowed
+            userVerificationCancelled:(void (^)(void))userVerificationCancelled
+           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
+               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
+
 - (void)encapsulatedFaceVerification:(NSString *)userId
                  doLivenessDetection:(bool)doLivenessDetection
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
@@ -162,6 +184,7 @@
 
 - (void)encapsulatedFaceVerification:(NSString *)userId
                  doLivenessDetection:(bool)doLivenessDetection
+                     numFailsAllowed:(int)numFailsAllowed
        livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
@@ -179,8 +202,59 @@
                       contentLanguage:(NSString*)contentLanguage
                      voicePrintPhrase:(NSString*)voicePrintPhrase
                   doLivenessDetection:(bool)doLivenessDetection
+                      numFailsAllowed:(int)numFailsAllowed
          livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
             userVerificationCancelled:(void (^)(void))userVerificationCancelled
            userVerificationSuccessful:(void (^)(float, float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed;
+
+#pragma mark - Encapsulated Identification Methods
+
+- (void)encapsulatedVoiceIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed;
+
+- (void)encapsulatedVoiceIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+                        numFailsAllowed:(int)numFailsAllowed
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed;
+
+- (void)encapsulatedFaceIdentification:(NSString *)groupId
+                   doLivenessDetection:(bool)doLivenessDetection
+           userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+          userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+              userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed;
+
+- (void)encapsulatedFaceIdentification:(NSString *)groupId
+                   doLivenessDetection:(bool)doLivenessDetection
+                       numFailsAllowed:(int)numFailsAllowed
+         livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
+           userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+          userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+              userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed;
+
+- (void)encapsulatedVideoIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+                    doLivenessDetection:(bool)doLivenessDetection
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, float, NSString *))userIdentificationFailed;
+
+- (void)encapsulatedVideoIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+                    doLivenessDetection:(bool)doLivenessDetection
+                        numFailsAllowed:(int)numFailsAllowed
+          livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, float, NSString *))userIdentificationFailed;
+
 @end

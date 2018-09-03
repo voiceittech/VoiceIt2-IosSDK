@@ -1,6 +1,6 @@
 //
 //  VoiceItAPITwo.m
-//  VoiceItAPITwoDemoApp
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 3/7/17.
 //  Copyright © 2017 Armaan Bindra. All rights reserved.
@@ -428,7 +428,7 @@ NSString * const host = @"https://api.voiceit.io/";
 }
 
 #pragma mark - Enrollment API Calls
-- (void)getVoiceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
+- (void)getAllVoiceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
 
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Get All Voice Enrollments"
@@ -459,7 +459,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [task resume];
 }
 
-- (void)getFaceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
+- (void)getAllFaceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
 
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Get All Face Enrollments"
@@ -490,7 +490,7 @@ NSString * const host = @"https://api.voiceit.io/";
     [task resume];
 }
 
-- (void)getVideoEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
+- (void)getAllVideoEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
     
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Get All Video Enrollments"
@@ -611,10 +611,10 @@ NSString * const host = @"https://api.voiceit.io/";
     [task resume];
 }
 
-- (void)deleteAllUserEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback{
+- (void)deleteAllEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback{
 
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Call Delete All User Enrollments"
+        @throw [NSException exceptionWithName:@"Cannot Call Delete All Enrollments"
                                        reason:@"Invalid userId passed"
                                      userInfo:nil];
         return;
@@ -974,6 +974,24 @@ NSString * const host = @"https://api.voiceit.io/";
            userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
 {
+    [self encapsulatedVoiceVerification:userId
+                        contentLanguage:contentLanguage
+                       voicePrintPhrase:voicePrintPhrase
+                        numFailsAllowed:3
+              userVerificationCancelled:userVerificationCancelled
+             userVerificationSuccessful:userVerificationSuccessful
+                 userVerificationFailed:userVerificationFailed
+    ];
+}
+
+- (void)encapsulatedVoiceVerification:(NSString *)userId
+                      contentLanguage:(NSString*)contentLanguage
+                     voicePrintPhrase:(NSString*)voicePrintPhrase
+                      numFailsAllowed:(int)numFailsAllowed
+            userVerificationCancelled:(void (^)(void))userVerificationCancelled
+           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
+               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
+{
 
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Do Video Verification"
@@ -988,6 +1006,7 @@ NSString * const host = @"https://api.voiceit.io/";
     verifyVoice.userToVerifyUserId = userId;
     verifyVoice.contentLanguage = contentLanguage;
     verifyVoice.thePhrase = voicePrintPhrase;
+    verifyVoice.failsAllowed = numFailsAllowed;
     verifyVoice.userVerificationCancelled = userVerificationCancelled;
     verifyVoice.userVerificationSuccessful = userVerificationSuccessful;
     verifyVoice.userVerificationFailed = userVerificationFailed;
@@ -999,25 +1018,33 @@ NSString * const host = @"https://api.voiceit.io/";
                  doLivenessDetection:(bool)doLivenessDetection
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
-              userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed{
-    [self encapsulatedFaceVerification:userId doLivenessDetection:doLivenessDetection livenessChallengeFailsAllowed:0 userVerificationCancelled: userVerificationCancelled userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed];
+              userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
+{
+    [self encapsulatedFaceVerification:userId
+                   doLivenessDetection:doLivenessDetection
+                       numFailsAllowed:3
+         livenessChallengeFailsAllowed:0
+             userVerificationCancelled:userVerificationCancelled
+            userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed
+     ];
 }
 
 - (void)encapsulatedFaceVerification:(NSString *)userId
                  doLivenessDetection:(bool)doLivenessDetection
-        livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
+                     numFailsAllowed:(int)numFailsAllowed
+       livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
 {
-
+    
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Do Face Verification"
                                        reason:@"Invalid userId passed"
                                      userInfo:nil];
         return;
     }
-
+    
     FaceVerificationViewController *faceVerificationVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceVerificationVC"];
     faceVerificationVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     faceVerificationVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1027,8 +1054,54 @@ NSString * const host = @"https://api.voiceit.io/";
     faceVerificationVC.userVerificationFailed = userVerificationFailed;
     faceVerificationVC.voiceItMaster = self;
     faceVerificationVC.doLivenessDetection = doLivenessDetection;
+    faceVerificationVC.failsAllowed = numFailsAllowed;
     faceVerificationVC.numberOfLivenessFailsAllowed = livenessChallengeFailsAllowed;
     [[self masterViewController] presentViewController: faceVerificationVC animated:YES completion:nil];
+}
+
+- (void)encapsulatedFaceIdentification:(NSString *)groupId
+                   doLivenessDetection:(bool)doLivenessDetection
+           userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+          userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+              userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed
+{
+        [self encapsulatedFaceIdentification:groupId
+                         doLivenessDetection:doLivenessDetection
+                             numFailsAllowed:3
+               livenessChallengeFailsAllowed:0
+                 userIdentificationCancelled: userIdentificationCancelled
+                userIdentificationSuccessful:userIdentificationSuccessful userIdentificationFailed:userIdentificationFailed
+        ];
+}
+
+- (void)encapsulatedFaceIdentification:(NSString *)groupId
+                   doLivenessDetection:(bool)doLivenessDetection
+                       numFailsAllowed:(int)numFailsAllowed
+         livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
+           userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+          userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+              userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed
+{
+    
+    if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
+        @throw [NSException exceptionWithName:@"Cannot Call Encapsulated Video Identification"
+                                       reason:@"Invalid groupId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    FaceIdentificationViewController *faceIdentificationVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceIdentificationVC"];
+    faceIdentificationVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    faceIdentificationVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    faceIdentificationVC.groupToIdentifyGroupId = groupId;
+    faceIdentificationVC.userIdentificationCancelled = userIdentificationCancelled;
+    faceIdentificationVC.userIdentificationSuccessful = userIdentificationSuccessful;
+    faceIdentificationVC.userIdentificationFailed = userIdentificationFailed;
+    faceIdentificationVC.voiceItMaster = self;
+    faceIdentificationVC.doLivenessDetection = doLivenessDetection;
+    faceIdentificationVC.failsAllowed = numFailsAllowed;
+    faceIdentificationVC.numberOfLivenessFailsAllowed = livenessChallengeFailsAllowed;
+    [[self masterViewController] presentViewController: faceIdentificationVC animated:YES completion:nil];
 }
 
 - (void)encapsulatedVideoVerification:(NSString *)userId
@@ -1037,15 +1110,24 @@ NSString * const host = @"https://api.voiceit.io/";
                   doLivenessDetection:(bool)doLivenessDetection
             userVerificationCancelled:(void (^)(void))userVerificationCancelled
            userVerificationSuccessful:(void (^)(float, float, NSString *))userVerificationSuccessful
-               userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed{
-    [self encapsulatedVideoVerification:userId contentLanguage:contentLanguage voicePrintPhrase:voicePrintPhrase doLivenessDetection:doLivenessDetection livenessChallengeFailsAllowed:0 userVerificationCancelled:userVerificationCancelled userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed];
+               userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed
+{
+    [self encapsulatedVideoVerification:userId
+                        contentLanguage:contentLanguage
+                       voicePrintPhrase:voicePrintPhrase
+                    doLivenessDetection:doLivenessDetection
+                        numFailsAllowed:3
+          livenessChallengeFailsAllowed:0 userVerificationCancelled:userVerificationCancelled
+             userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed
+    ];
 }
 
 - (void)encapsulatedVideoVerification:(NSString *)userId
                       contentLanguage:(NSString*)contentLanguage
                      voicePrintPhrase:(NSString*)voicePrintPhrase
                   doLivenessDetection:(bool)doLivenessDetection
-         livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
+                      numFailsAllowed:(int)numFailsAllowed
+        livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
             userVerificationCancelled:(void (^)(void))userVerificationCancelled
            userVerificationSuccessful:(void (^)(float, float, NSString *))userVerificationSuccessful
                userVerificationFailed:(void (^)(float, float, NSString *))userVerificationFailed
@@ -1068,9 +1150,109 @@ NSString * const host = @"https://api.voiceit.io/";
     verifyVC.userVerificationSuccessful = userVerificationSuccessful;
     verifyVC.userVerificationFailed = userVerificationFailed;
     verifyVC.doLivenessDetection = doLivenessDetection;
+    verifyVC.failsAllowed = numFailsAllowed;
     verifyVC.numberOfLivenessFailsAllowed = livenessChallengeFailsAllowed;
     verifyVC.voiceItMaster = self;
     [[self masterViewController] presentViewController: verifyVC animated:YES completion:nil];
+}
+
+- (void)encapsulatedVideoIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+                    doLivenessDetection:(bool)doLivenessDetection
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, float, NSString *))userIdentificationFailed
+{
+    [self encapsulatedVideoIdentification:groupId
+                          contentLanguage:contentLanguage
+                         voicePrintPhrase:voicePrintPhrase
+                      doLivenessDetection:doLivenessDetection
+                          numFailsAllowed:3
+            livenessChallengeFailsAllowed:0
+              userIdentificationCancelled:userIdentificationCancelled
+             userIdentificationSuccessful:userIdentificationSuccessful userIdentificationFailed:userIdentificationFailed
+    ];
+}
+
+- (void)encapsulatedVideoIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+                    doLivenessDetection:(bool)doLivenessDetection
+                        numFailsAllowed:(int)numFailsAllowed
+          livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, float, NSString *))userIdentificationFailed
+{
+    
+    if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
+        @throw [NSException exceptionWithName:@"Cannot Call Encapsulated Video Identification"
+                                       reason:@"Invalid groupId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    VideoIdentificationViewController *identifyVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"videoIdentifyVC"];
+    identifyVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    identifyVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    identifyVC.groupToIdentifyGroupId = groupId;
+    identifyVC.contentLanguage = contentLanguage;
+    identifyVC.thePhrase = voicePrintPhrase;
+    identifyVC.userIdentificationCancelled = userIdentificationCancelled;
+    identifyVC.userIdentificationSuccessful = userIdentificationSuccessful;
+    identifyVC.userIdentificationFailed = userIdentificationFailed;
+    identifyVC.doLivenessDetection = doLivenessDetection;
+    identifyVC.failsAllowed = numFailsAllowed;
+    identifyVC.numberOfLivenessFailsAllowed = livenessChallengeFailsAllowed;
+    identifyVC.voiceItMaster = self;
+    [[self masterViewController] presentViewController: identifyVC animated:YES completion:nil];
+}
+
+- (void)encapsulatedVoiceIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed
+{
+    [self encapsulatedVoiceIdentification:groupId
+                          contentLanguage:contentLanguage
+                         voicePrintPhrase:voicePrintPhrase
+              userIdentificationCancelled:userIdentificationCancelled
+             userIdentificationSuccessful:userIdentificationSuccessful
+                 userIdentificationFailed:userIdentificationFailed
+    ];
+}
+
+- (void)encapsulatedVoiceIdentification:(NSString *)groupId
+                        contentLanguage:(NSString*)contentLanguage
+                       voicePrintPhrase:(NSString*)voicePrintPhrase
+                        numFailsAllowed:(int)numFailsAllowed
+            userIdentificationCancelled:(void (^)(void))userIdentificationCancelled
+           userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
+               userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed
+{
+    
+    if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
+        @throw [NSException exceptionWithName:@"Cannot Call Encapsulated Voice Identification"
+                                       reason:@"Invalid groupId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    VoiceIdentificationViewController *identifyVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"identifyVoiceVC"];
+    identifyVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    identifyVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    identifyVC.groupToIdentifyGroupId = groupId;
+    identifyVC.contentLanguage = contentLanguage;
+    identifyVC.thePhrase = voicePrintPhrase;
+    identifyVC.failsAllowed = numFailsAllowed;
+    identifyVC.userIdentificationCancelled = userIdentificationCancelled;
+    identifyVC.userIdentificationSuccessful = userIdentificationSuccessful;
+    identifyVC.userIdentificationFailed = userIdentificationFailed;
+    identifyVC.voiceItMaster = self;
+    [[self masterViewController] presentViewController: identifyVC animated:YES completion:nil];
 }
 
 #pragma mark - Verification API Calls
@@ -1328,6 +1510,45 @@ NSString * const host = @"https://api.voiceit.io/";
 }
 
 - (void)faceIdentification:(NSString *)groupId
+                 imageData:(NSData*)imageData
+                  callback:(void (^)(NSString *))callback{
+    
+    if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
+        @throw [NSException exceptionWithName:@"Cannot Call Face Identification"
+                                       reason:@"Invalid groupId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"identification/face"]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary *params = @{@"groupId": groupId, @"doBlinkDetection" : @false};
+    NSMutableData *body = [NSMutableData data];
+    [self addParamsToBody:body parameters:params];
+    [self addImageToBody:body imageData:imageData fieldName:@"photo"];
+    [self endBody:body];
+    
+    NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *result =
+        [[NSString alloc] initWithData:data
+                              encoding:NSUTF8StringEncoding];
+        if(callback){
+            callback(result);
+        }
+    }];
+    
+    [task resume];
+}
+
+- (void)faceIdentification:(NSString *)groupId
                   videoPath:(NSString*)videoPath
                    callback:(void (^)(NSString *))callback
 {
@@ -1406,6 +1627,49 @@ NSString * const host = @"https://api.voiceit.io/";
         }
     }];
 
+    [task resume];
+}
+
+- (void)videoIdentification:(NSString *)groupId
+            contentLanguage:(NSString*)contentLanguage
+                  imageData:(NSData*)imageData
+                  audioPath:(NSString*)audioPath
+                     phrase:(NSString*)phrase
+                   callback:(void (^)(NSString *))callback{
+    
+    if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
+        @throw [NSException exceptionWithName:@"Cannot Call Video Identification"
+                                       reason:@"Invalid groupId passed"
+                                     userInfo:nil];
+        return;
+    }
+    
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"identification/video"]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"phrase" : phrase };
+    NSMutableData *body = [NSMutableData data];
+    
+    [self addParamsToBody:body parameters:params];
+    [self addFileToBody:body filePath:audioPath fieldName:@"audio"];
+    [self addImageToBody:body imageData:imageData fieldName:@"photo"];
+    [self endBody:body];
+    
+    NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *result =
+        [[NSString alloc] initWithData:data
+                              encoding:NSUTF8StringEncoding];
+        if(callback){
+            callback(result);
+        }
+    }];
     [task resume];
 }
 

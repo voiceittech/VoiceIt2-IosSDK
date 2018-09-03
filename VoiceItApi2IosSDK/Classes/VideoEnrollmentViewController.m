@@ -1,6 +1,6 @@
 //
 //  VideoEnrollmentViewController.m
-//  Pods-VoiceItApi2IosSDK_Example
+//  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 10/1/17.
 //
@@ -222,14 +222,9 @@
 }
     
 -(void)startEnrollmentProcess {
-    [self.myVoiceIt getVideoEnrollments:self.userToEnrollUserId callback:^(NSString * getEnrollmentsJSONResponse){
-        NSDictionary *getEnrollmentsJSONObj = [Utilities getJSONObject:getEnrollmentsJSONResponse];
-        int enrollmentCount = [[getEnrollmentsJSONObj objectForKey: @"count"] intValue];
-        NSLog(@"Enrollment Count From Server is %d", enrollmentCount);
-        [self.myVoiceIt deleteAllUserEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
-            [self makeLabelFlyIn: [ResponseManager getMessage:@"GET_ENROLLED"]];
-            [self startDelayedRecording:2.0];
-        }];
+    [self.myVoiceIt deleteAllVideoEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+        [self makeLabelFlyIn: [ResponseManager getMessage:@"GET_ENROLLED"]];
+        [self startDelayedRecording:2.0];
     }];
 }
     
@@ -288,7 +283,7 @@
 }
 
 -(void)cancelClicked{
-    [self.myVoiceIt deleteAllUserEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+    [self.myVoiceIt deleteAllVideoEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
         [[self navigationController] dismissViewControllerAnimated:YES completion:^{
             [[self myNavController] userEnrollmentsCancelled];
         }];
