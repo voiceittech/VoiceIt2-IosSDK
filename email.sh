@@ -6,7 +6,7 @@ git checkout master
 # Save the messages into an array called message
 IFS=$'\n' message=($(git log -1 --pretty=%B | sed -e '1,2d'))
 
-if [[ $title = *"SENDEMAIL"* ]];
+if [[ $title = *"NOTIFY"* ]];
 then
   formattedmessages=''
   for i in "${message[@]}"
