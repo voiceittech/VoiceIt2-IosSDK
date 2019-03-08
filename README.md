@@ -6,13 +6,13 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
 
 ## Table of Contents
 
+* [UI Previews](#ui-previews)
 * [Getting Started](#getting-started)
-* [Previews](#previews)
 * [Installation](#installation)
 * [Strings and Prompts](#strings-and-prompts)
 * [API Calls](#api-calls)
   * [Initialization](#initialization)
-  * [Encapsulated Methods](#encapsulates-methods)
+  * [Encapsulated Methods](#encapsulated-methods)
       * [Encapsulated Voice Enrollment](#encapsulated-voice-enrollment)
       * [Encapsulated Face Enrollment](#encapsulated-face-enrollment)
       * [Encapsulated Video Enrollment](#encapsulated-video-enrollment)
@@ -58,8 +58,8 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
       * [Video Identification](#video-identification)
 
 
-## UI Screenshots
-The following show Voice Verification, Face Verification (With liveness detection on) and Video Verification (with Liveness turned off), respectively.
+## UI Previews
+The following gifs show the UI for Voice Verification, Face Verification (With liveness detection on) and Video Verification (with Liveness turned off), respectively.
 
 <div style="background: #000 !important;">
   <img width="290px" src="./Graphics/voiceVerification.gif" style="display: inline-block !important"/><img width="290px" src="./Graphics/faceVerification.gif" style="display: inline-block !important;"/><img width="290px" src="./Graphics/videoVerification.gif" style="display: inline-block !important;"/>
@@ -108,7 +108,7 @@ You might have to unlock the Cocoapod to edit the file.
 
 #### *Swift*
 
-First import *VoiceItApi2IosSDK* into your Swift file then initialize a reference to the SDK inside a ViewController passing in a reference to the ViewController as the first argument, then the API Credentials and finally a styles dictionary ( *kThemeColor* can be any hexadecimal color code and *kIconStyle* can be "default" or "monochrome").
+First import *VoiceItApi2IosSDK* in your Swift file then initialize a reference to the SDK inside a ViewController, passing in a reference to the ViewController as the first argument, then the API Credentials, and finally a styles dictionary ( *kThemeColor* can be any hexadecimal color code and *kIconStyle* can be "default" or "monochrome").
 
 ```swift
 import VoiceItApi2IosSDK
@@ -126,7 +126,7 @@ class ViewController: UIViewController {
 ```
 #### *Objective-C*
 
-First import *VoiceItAPITwo.h* into your Objective-C file, then initialize a reference to the SDK inside a ViewController passing in a reference to the ViewController as the first argument
+First import *VoiceItAPITwo.h* into your Objective-C file, then initialize a reference to the SDK inside a ViewController, passing in a reference to the ViewController as the first argument.
 
 ```objc
 #import "ViewController.h"
@@ -151,7 +151,7 @@ First import *VoiceItAPITwo.h* into your Objective-C file, then initialize a ref
 
 #### Encapsulated Voice Enrollment
 
-Creates three voice enrollments for user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the user and enrollment view controller that completely takes care of the three enrollments, including the UI and then provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
+Creates three voice enrollments for user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the enrollment view controller that completely takes care of the three enrollments, including the UI, and provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
 
 ##### *Swift*
 ```swift
@@ -173,7 +173,7 @@ myVoiceIt?.encapsulatedVoiceEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT
 
 #### Encapsulated Face Enrollment
 
-Creates a face enrollment for user with the given userId(begins with 'usr_'). Note: Immediately upon calling this method it displays the user and enrollment view controller that completely takes care of enrolling the user's face, including the UI and then provides relevant callbacks for whether the user cancelled their enrollment or successfully completed it.
+Creates a face enrollment for user with the given userId(begins with 'usr_'). Note: Immediately upon calling this method it displays the enrollment view controller that completely takes care of enrolling the user's face, including the UI, and provides relevant callbacks for whether the user cancelled their enrollment or successfully completed it.
 
 ##### *Swift*
 ```swift
@@ -195,7 +195,7 @@ myVoiceIt?.encapsulatedFaceEnrollUser("USER_ID_HERE", userEnrollmentsCancelled: 
 
 #### Encapsulated Video Enrollment
 
-Creates three video enrollments for user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the user and enrollment view controller that completely takes care of the three enrollments, including the UI and then provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
+Creates three video enrollments for user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.) and a given phrase such as "my face and voice identify me". Note: Immediately upon calling this method it displays the enrollment view controller that completely takes care of the three enrollments, including the UI, and provides relevant callbacks for whether the user cancelled their enrollments or successfully completed them.
 
 ##### *Swift*
 ```swift
@@ -217,7 +217,7 @@ myVoiceIt?.encapsulatedVideoEnrollUser("USER_ID_HERE", contentLanguage: "CONTENT
 
 #### Encapsulated Voice Verification
 
-Verify user with given userId(begins with 'usr_'). Note: Immediately upon calling this method it displays a view controller with a view that records and verifies the user's voice and provides relevant callbacks for whether the verification was successful or not, and associated voice confidence
+Verify user with given userId(begins with 'usr_'). Note: Immediately upon calling this method it displays a view controller that records and verifies the user's voice and provides relevant callbacks for whether the verification was successful or not, and the associated voice confidence.
 
 ##### *Swift*
 ```swift
@@ -243,7 +243,7 @@ myVoiceIt?.encapsulatedVoiceVerification("USER_ID_HERE", contentLanguage: "CONTE
 
 #### Encapsulated Face Verification
 
-Verify user with given userId(begins with 'usr_') and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera view that verifies the user's face and provides relevant callbacks for whether the verification was successful or not, and associated face confidence
+Verify user with given userId(begins with 'usr_') and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera preview that verifies the user's face and provides relevant callbacks for whether the verification was successful or not, and the associated face confidence.
 
 ##### *Swift*
 ```swift
@@ -270,7 +270,7 @@ myVoiceIt?.encapsulatedFaceVerification("USER_ID_HERE", doLivenessDetection:true
 
 #### Encapsulated Video Verification
 
-Verify user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.) and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera view that verifies the user and provides relevant callbacks for whether the verification was successful or not, and associated voice and face confidences
+Verify user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.) and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera preview that verifies the user and provides relevant callbacks for whether the verification was successful or not, and the associated voice and face confidences.
 
 ##### *Swift*
 ```swift
@@ -296,7 +296,7 @@ myVoiceIt?.encapsulatedVideoVerification("USER_ID_HERE", contentLanguage: "CONTE
 
 #### Encapsulated Voice Identification
 
-Identify user in group with given groupId(begins with 'grp_'). Note: Immediately upon calling this method it displays a view controller with a view that records and identifies the user's voice and provides relevant callbacks for whether the identification was successful or not, and associated voice confidence
+Identify user in group with given groupId(begins with 'grp_'). Note: Immediately upon calling this method it displays a view controller that records and identifies the user's voice and provides relevant callbacks for whether the identification was successful or not, and the associated voice confidence.
 
 ##### *Swift*
 ```swift
@@ -322,7 +322,7 @@ myVoiceIt?.encapsulatedVoiceIdentification("GROUP_ID_HERE", contentLanguage: "CO
 
 #### Encapsulated Face Identification
 
-Identify user in group with given groupId(begins with 'grp_') and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera view that identifies the user's face and provides relevant callbacks for whether the identification was successful or not, and associated face confidence
+Identify a user in a group with a given groupId(begins with 'grp_') and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera preview that identifies the user's face and provides relevant callbacks for whether the identification was successful or not, and the associated face confidence.
 
 ##### *Swift*
 ```swift
@@ -349,7 +349,7 @@ myVoiceIt?.encapsulatedFaceIdentification("GROUP_ID_HERE", doLivenessDetection:t
 
 #### Encapsulated Video Identification
 
-Identify user in group with given groupId(begins with 'grp_'), contentLanguage('en-US','es-ES' etc.)  and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera view that identifies the user and provides relevant callbacks for whether the identification was successful or not, and associated voice and face confidences
+Identify user in group with given groupId(begins with 'grp_'), contentLanguage('en-US','es-ES' etc.)  and a parameter to enable or disable liveness detection. Note: Immediately upon calling this method it displays a view controller with a camera preview that identifies the user and provides relevant callbacks for whether the identification was successful or not, and the associated voice and face confidences.
 
 ##### *Swift*
 ```swift
@@ -377,7 +377,7 @@ myVoiceIt?.encapsulatedVideoIdentification("GROUP_ID_HERE", contentLanguage: "CO
 
 #### Get All Users
 
-Get all the users associated with the apiKey
+Get all users associated with the apiKey
 
 ##### *Swift*
 ```swift
@@ -413,7 +413,7 @@ myVoiceIt?.createUser({
 
 #### Check if Specific User Exists
 
-Check whether a user exists for the given userId(begins with 'usr_')
+Check whether a user exists for given userId(begins with 'usr_')
 
 ##### *Swift*
 ```swift
@@ -431,7 +431,7 @@ myVoiceIt?.checkUserExists("USER_ID_HERE", callback: {
 
 #### Get Groups for User
 
-Get a list of groups that the user with given userId(begins with 'usr_') is a part of
+Get a list of groups that the user with the given userId(begins with 'usr_') is a part of
 
 ##### *Swift*
 ```swift
@@ -469,7 +469,7 @@ myVoiceIt?.deleteUser("USER_ID_HERE", callback: {
 
 #### Get All Groups
 
-Get all the groups associated with the apiKey
+Get all groups associated with apiKey
 
 ##### *Swift*
 ```swift
@@ -579,7 +579,7 @@ myVoiceIt?.removeUser(fromGroup: "GROUP_ID_HERE", userId: "USER_ID_HERE", callba
 
 #### Delete Group
 
-Delete group with given groupId(begins with 'grp_'), note: this call does not delete any users, but simply deletes the group and disassociates the users from the group
+Delete group with given groupId(begins with 'grp_'), note: This call does not delete any users, but simply deletes the group and disassociates the users from the group.
 
 ##### *Swift*
 ```swift
@@ -657,7 +657,7 @@ jsonResponse in
 
 #### Create Voice Enrollment
 
-Creates voice enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from the developer account and audio file.
+Creates voice enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from the developer account, and audio file.
 
 ##### *Swift*
 ```swift
@@ -694,7 +694,7 @@ myVoiceIt?.createFaceEnrollment("USER_ID_HERE", videoPath: "FILE_PATH_TO_FACE_EN
 
 #### Create Video Enrollment
 
-Creates video enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from the developer account and video file.
+Creates video enrollment for user with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from the developer account, and video file.
 
 ##### *Swift*
 ```swift
@@ -824,9 +824,11 @@ myVoiceIt?.deleteAllVideoEnrollments("USER_ID_HERE", callback: {
 }];
 ```
 
+### Verification API Calls
+
 #### Voice Verification
 
-Verify user's voice with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from  developer account and audio file.
+Verify user's voice with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from  developer account, and audio file.
 
 ##### *Swift*
 ```swift
@@ -864,7 +866,7 @@ myVoiceIt?.faceVerification("USER_ID_HERE", videoPath: "FILE_PATH_TO_VIDEO_FOR_F
 
 #### Video Verification
 
-Verify user's face and voice with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from  developer account and video file.
+Verify user's face and voice with given userId(begins with 'usr_') , contentLanguage('en-US','es-ES' etc.), approved phrase from  developer account, and video file.
 
 ##### *Swift*
 ```swift
@@ -881,9 +883,11 @@ myVoiceIt?.videoVerification("USER_ID_HERE", contentLanguage: "CONTENT_LANGUAGE_
 } ];
 ```
 
+### Identification API Calls
+
 #### Voice Identification
 
-Identify user's voice  inside group with the given groupId(begins with 'grp_') and contentLanguage('en-US','es-ES' etc.), and approved phrase from developer account and audioFile.
+Identify user's voice  inside group with the given groupId(begins with 'grp_') and contentLanguage('en-US','es-ES' etc.), and approved phrase from developer account, and audioFile.
 
 ##### *Swift*
 ```swift
@@ -922,7 +926,7 @@ myVoiceIt?.faceIdentification("GROUP_ID_HERE", videoPath: "FILE_PATH_TO_VIDEO_FO
 
 #### Video Identification
 
-Identify user's voice  and face inside group with the given groupId(begins with 'grp_') and contentLanguage('en-US','es-ES' etc.), and approved phrase from developer account and videoFile.
+Identify user's voice  and face inside group with the given groupId(begins with 'grp_') and contentLanguage('en-US','es-ES' etc.), and approved phrase from developer account, and videoFile.
 
 ##### *Swift*
 ```swift
