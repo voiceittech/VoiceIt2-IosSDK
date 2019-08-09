@@ -39,12 +39,12 @@ NSString * const host = @"https://api.voiceit.io/";
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
+
     NSURLSessionDataTask *task =
     [session dataTaskWithRequest:request
                completionHandler:^(NSData *data, NSURLResponse *response,
                                    NSError *error) {
-                   
+
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
@@ -491,117 +491,27 @@ NSString * const host = @"https://api.voiceit.io/";
 }
 
 - (void)getAllVideoEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback{
-    
+
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Get All Video Enrollments"
                                        reason:@"Invalid userId passed"
                                      userInfo:nil];
         return;
     }
-    
-    
+
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"enrollments/video"], userId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"GET"];
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionDataTask *task =
-    [session dataTaskWithRequest:request
-               completionHandler:^(NSData *data, NSURLResponse *response,
-                                   NSError *error) {
-                   
-                   NSString *result =
-                   [[NSString alloc] initWithData:data
-                                         encoding:NSUTF8StringEncoding];
-                   // Add Call to Callback function passing in result
-                   callback(result);
-               }];
-    [task resume];
-}
-
-- (void)deleteVoiceEnrollment:(NSString *)userId voiceEnrollmentId:(NSInteger)voiceEnrollmentId callback:(void (^)(NSString *))callback{
-
-    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Delete Voice Enrollment"
-                                       reason:@"Invalid userId passed"
-                                     userInfo:nil];
-        return;
-    }
-
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/%ld",[self buildURL:@"enrollments/voice"], userId, (long) voiceEnrollmentId]]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
-    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
     [session dataTaskWithRequest:request
                completionHandler:^(NSData *data, NSURLResponse *response,
                                    NSError *error) {
 
-                   NSString *result =
-                   [[NSString alloc] initWithData:data
-                                         encoding:NSUTF8StringEncoding];
-                   // Add Call to Callback function passing in result
-                   callback(result);
-               }];
-    [task resume];
-}
-
-- (void)deleteFaceEnrollment:(NSString *)userId faceEnrollmentId:(NSInteger)faceEnrollmentId callback:(void (^)(NSString *))callback{
-    
-    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Delete Face Enrollment"
-                                       reason:@"Invalid userId passed"
-                                     userInfo:nil];
-        return;
-    }
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/%ld",[self buildURL:@"enrollments/face"], userId, (long) faceEnrollmentId]]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
-    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionDataTask *task =
-    [session dataTaskWithRequest:request
-               completionHandler:^(NSData *data, NSURLResponse *response,
-                                   NSError *error) {
-                   
-                   NSString *result =
-                   [[NSString alloc] initWithData:data
-                                         encoding:NSUTF8StringEncoding];
-                   // Add Call to Callback function passing in result
-                   callback(result);
-               }];
-    [task resume];
-}
-
-- (void)deleteVideoEnrollment:(NSString *)userId videoEnrollmentId:(NSInteger)videoEnrollmentId callback:(void (^)(NSString *))callback{
-    
-    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Delete Video Enrollment"
-                                       reason:@"Invalid userId passed"
-                                     userInfo:nil];
-        return;
-    }
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/%ld",[self buildURL:@"enrollments/video"], userId, (long) videoEnrollmentId]]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
-    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionDataTask *task =
-    [session dataTaskWithRequest:request
-               completionHandler:^(NSData *data, NSURLResponse *response,
-                                   NSError *error) {
-                   
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
@@ -632,93 +542,6 @@ NSString * const host = @"https://api.voiceit.io/";
                completionHandler:^(NSData *data, NSURLResponse *response,
                                    NSError *error) {
 
-                   NSString *result =
-                   [[NSString alloc] initWithData:data
-                                         encoding:NSUTF8StringEncoding];
-                   callback(result);
-               }];
-    [task resume];
-}
-
-- (void)deleteAllVoiceEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback{
-    
-    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Call Delete All Voice Enrollments"
-                                       reason:@"Invalid userId passed"
-                                     userInfo:nil];
-        return;
-    }
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/voice",[self buildURL:@"enrollments"], userId]]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
-    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionDataTask *task =
-    [session dataTaskWithRequest:request
-               completionHandler:^(NSData *data, NSURLResponse *response,
-                                   NSError *error) {
-                   
-                   NSString *result =
-                   [[NSString alloc] initWithData:data
-                                         encoding:NSUTF8StringEncoding];
-                   callback(result);
-               }];
-    [task resume];
-}
-
-- (void)deleteAllFaceEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback{
-    
-    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Call Delete All Face Enrollments"
-                                       reason:@"Invalid userId passed"
-                                     userInfo:nil];
-        return;
-    }
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/face",[self buildURL:@"enrollments"], userId]]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
-    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionDataTask *task =
-    [session dataTaskWithRequest:request
-               completionHandler:^(NSData *data, NSURLResponse *response,
-                                   NSError *error) {
-                   
-                   NSString *result =
-                   [[NSString alloc] initWithData:data
-                                         encoding:NSUTF8StringEncoding];
-                   callback(result);
-               }];
-    [task resume];
-}
-
-- (void)deleteAllVideoEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback{
-    
-    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
-        @throw [NSException exceptionWithName:@"Cannot Call Delete All Video Enrollments"
-                                       reason:@"Invalid userId passed"
-                                     userInfo:nil];
-        return;
-    }
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                    initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/video",[self buildURL:@"enrollments"], userId]]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
-    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
-    NSURLSessionDataTask *task =
-    [session dataTaskWithRequest:request
-               completionHandler:^(NSData *data, NSURLResponse *response,
-                                   NSError *error) {
-                   
                    NSString *result =
                    [[NSString alloc] initWithData:data
                                          encoding:NSUTF8StringEncoding];
@@ -1037,14 +860,14 @@ NSString * const host = @"https://api.voiceit.io/";
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
 {
-    
+
     if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"]){
         @throw [NSException exceptionWithName:@"Cannot Do Face Verification"
                                        reason:@"Invalid userId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     FaceVerificationViewController *faceVerificationVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceVerificationVC"];
     faceVerificationVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     faceVerificationVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1082,14 +905,14 @@ NSString * const host = @"https://api.voiceit.io/";
           userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
               userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed
 {
-    
+
     if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
         @throw [NSException exceptionWithName:@"Cannot Call Encapsulated Video Identification"
                                        reason:@"Invalid groupId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     FaceIdentificationViewController *faceIdentificationVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceIdentificationVC"];
     faceIdentificationVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     faceIdentificationVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1185,14 +1008,14 @@ NSString * const host = @"https://api.voiceit.io/";
            userIdentificationSuccessful:(void (^)(float, float, NSString *, NSString *))userIdentificationSuccessful
                userIdentificationFailed:(void (^)(float, float, NSString *))userIdentificationFailed
 {
-    
+
     if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
         @throw [NSException exceptionWithName:@"Cannot Call Encapsulated Video Identification"
                                        reason:@"Invalid groupId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     VideoIdentificationViewController *identifyVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"videoIdentifyVC"];
     identifyVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     identifyVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1233,14 +1056,14 @@ NSString * const host = @"https://api.voiceit.io/";
            userIdentificationSuccessful:(void (^)(float, NSString *, NSString *))userIdentificationSuccessful
                userIdentificationFailed:(void (^)(float, NSString *))userIdentificationFailed
 {
-    
+
     if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
         @throw [NSException exceptionWithName:@"Cannot Call Encapsulated Voice Identification"
                                        reason:@"Invalid groupId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     VoiceIdentificationViewController *identifyVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"identifyVoiceVC"];
     identifyVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     identifyVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -1512,30 +1335,30 @@ NSString * const host = @"https://api.voiceit.io/";
 - (void)faceIdentification:(NSString *)groupId
                  imageData:(NSData*)imageData
                   callback:(void (^)(NSString *))callback{
-    
+
     if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
         @throw [NSException exceptionWithName:@"Cannot Call Face Identification"
                                        reason:@"Invalid groupId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"identification/face"]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"POST"];
-    
+
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
+
     NSDictionary *params = @{@"groupId": groupId};
     NSMutableData *body = [NSMutableData data];
     [self addParamsToBody:body parameters:params];
     [self addImageToBody:body imageData:imageData fieldName:@"photo"];
     [self endBody:body];
-    
+
     NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSString *result =
         [[NSString alloc] initWithData:data
@@ -1544,7 +1367,7 @@ NSString * const host = @"https://api.voiceit.io/";
             callback(result);
         }
     }];
-    
+
     [task resume];
 }
 
@@ -1552,14 +1375,14 @@ NSString * const host = @"https://api.voiceit.io/";
                   videoPath:(NSString*)videoPath
                    callback:(void (^)(NSString *))callback
 {
-    
+
     if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
         @throw [NSException exceptionWithName:@"Cannot Call Face Identification"
                                        reason:@"Invalid groupId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"identification/face"]]];
@@ -1568,14 +1391,14 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
+
     NSDictionary *params = @{@"groupId": groupId};
     NSMutableData *body = [NSMutableData data];
-    
+
     [self addParamsToBody:body parameters:params];
     [self addFileToBody:body filePath:videoPath fieldName:@"video"];
     [self endBody:body];
-    
+
     NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSString *result =
         [[NSString alloc] initWithData:data
@@ -1584,7 +1407,7 @@ NSString * const host = @"https://api.voiceit.io/";
             callback(result);
         }
     }];
-    
+
     [task resume];
 }
 
@@ -1636,32 +1459,32 @@ NSString * const host = @"https://api.voiceit.io/";
                   audioPath:(NSString*)audioPath
                      phrase:(NSString*)phrase
                    callback:(void (^)(NSString *))callback{
-    
+
     if([groupId isEqualToString:@""] || ![[self getFirst:groupId numChars:4] isEqualToString:@"grp_"]){
         @throw [NSException exceptionWithName:@"Cannot Call Video Identification"
                                        reason:@"Invalid groupId passed"
                                      userInfo:nil];
         return;
     }
-    
+
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
                                     initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"identification/video"]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"POST"];
-    
+
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     [request addValue:@"41" forHTTPHeaderField:@"platformId"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
-    
+
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"phrase" : phrase };
     NSMutableData *body = [NSMutableData data];
-    
+
     [self addParamsToBody:body parameters:params];
     [self addFileToBody:body filePath:audioPath fieldName:@"audio"];
     [self addImageToBody:body imageData:imageData fieldName:@"photo"];
     [self endBody:body];
-    
+
     NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSString *result =
         [[NSString alloc] initWithData:data

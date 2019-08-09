@@ -17,7 +17,7 @@
 @implementation FaceEnrollmentViewController
 
 #pragma mark - Life Cycle Methods
-    
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -38,7 +38,7 @@
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:[ResponseManager getMessage:@"CANCEL"] style:UIBarButtonItemStylePlain target:self action:@selector(cancelClicked)];
     leftBarButton.tintColor = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setLeftBarButtonItem:leftBarButton];
-    
+
     // Initialize Boolean and All
     self.lookingIntoCam = NO;
     self.enoughRecordingTimePassed = NO;
@@ -76,11 +76,11 @@
     AVCaptureDeviceInput * videoInput = [AVCaptureDeviceInput deviceInputWithDevice: self.videoDevice error:&videoError];
     [self.captureSession addInput:videoInput];
 }
-    
+
 -(void)setupCameraCircle{
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession: self.captureSession];
     [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    
+
     // Setup code to capture face meta data
     AVCaptureMetadataOutput *metadataOutput = [[AVCaptureMetadataOutput alloc] init];
     // Have to add the output before setting metadata types
@@ -89,7 +89,7 @@
     [metadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeFace]];
     // This VC is the delegate. Please call us on the main queue
     [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-    
+
     // Setup Little Camera Circle and Positions
     CALayer *rootLayer = [[self view] layer];
     CGFloat backgroundWidthHeight = (CGFloat) self.view.frame.size.height  * 0.42;
@@ -99,20 +99,20 @@
     CGFloat cameraViewX = (self.view.frame.size.width - cameraViewWidthHeight)/2;
     CGFloat backgroundViewY = ENROLLMENT_BACKGROUND_VIEW_Y;
     CGFloat cameraViewY = backgroundViewY + circleWidth;
-    
+
     self.cameraBorderLayer = [[CALayer alloc] init];
     self.progressCircle = [CAShapeLayer layer];
     [self.cameraBorderLayer setFrame:CGRectMake(backgroundViewX, backgroundViewY, backgroundWidthHeight, backgroundWidthHeight)];
     [self.previewLayer setFrame:CGRectMake(cameraViewX, cameraViewY, cameraViewWidthHeight, cameraViewWidthHeight)];
     [self.previewLayer setCornerRadius: cameraViewWidthHeight / 2];
     self.cameraCenterPoint = CGPointMake(self.cameraBorderLayer.frame.origin.x + (backgroundWidthHeight/2), self.cameraBorderLayer.frame.origin.y + (backgroundWidthHeight/2) );
-    
+
     if ([self.videoDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
         CGPoint autofocusPoint = self.cameraCenterPoint;
         [self.videoDevice setFocusPointOfInterest:autofocusPoint];
         [self.videoDevice setFocusMode:AVCaptureFocusModeLocked];
     }
-    
+
     // Setup Progress Circle
     self.progressCircle .path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(backgroundWidthHeight / 2) startAngle:-M_PI_2 endAngle:2 * M_PI - M_PI_2 clockwise:YES].CGPath;
     self.progressCircle.fillColor = [UIColor clearColor].CGColor;
@@ -120,10 +120,10 @@
     self.progressCircle.lineWidth = circleWidth * 2.0;
     [self.cameraBorderLayer setBackgroundColor: [UIColor clearColor].CGColor];
     self.cameraBorderLayer.cornerRadius = circleWidth / 2;
-    
+
     // Setup Rectangle Around Face
     [Utilities setupFaceRectangle:self.faceRectangleLayer];
-    
+
     [rootLayer addSublayer:self.cameraBorderLayer];
     [rootLayer addSublayer:self.progressCircle];
     [rootLayer addSublayer:self.previewLayer];
@@ -138,7 +138,7 @@
                                         (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
                                         };
     [self.videoDataOutput setVideoSettings:rgbOutputSettings];
-    
+
     if (![self.captureSession canAddOutput:self.videoDataOutput]) {
         [self cleanupVideoProcessing];
         NSLog(@"Failed to setup video output");
@@ -148,9 +148,9 @@
     [self.videoDataOutput setSampleBufferDelegate:self queue:self.videoDataOutputQueue];
     [self.captureSession addOutput:self.videoDataOutput];
 }
-    
+
 #pragma mark - Action Methods
-    
+
 -(void)animateProgressCircle {
     dispatch_async(dispatch_get_main_queue(), ^{
         self.progressCircle.strokeColor = [Styles getMainCGColor];
@@ -162,9 +162,9 @@
         animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
         [self.progressCircle addAnimation:animation forKey:@"drawCircleAnimation"];
     });
-    
+
 }
-    
+
 -(void)startDelayedRecording:(NSTimeInterval)delayTime{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if(self.continueRunning){
@@ -177,7 +177,7 @@
         }
     });
 }
-    
+
 -(void)startRecording {
     self.isRecording = YES;
     [self startWritingToVideoFile];
@@ -192,13 +192,13 @@
     // Start Progress Circle Around Face Animation
     [self animateProgressCircle];
 }
-    
+
 -(void)stopRecording{
     self.isRecording = NO;
     [self setEnoughRecordingTimePassed:NO];
     [self stopWritingToVideoFile];
 }
-    
+
 -(void)setNavigationTitle:(NSString *) titleText {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[self navigationItem] setTitle: titleText];
@@ -212,13 +212,13 @@
         }];
     });
 }
-    
+
 -(void)removeLoading{
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.progressView setHidden:YES];
     });
 }
-    
+
 -(void)takeToFinishedView{
     NSLog(@"Take to finished view");
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -240,10 +240,10 @@
       [NSNumber numberWithInt:kCVPixelFormatType_32BGRA],
       kCVPixelBufferPixelFormatTypeKey,
       nil]];
-    
+
     self.videoPath = [Utilities pathForTemporaryFileWithSuffix:@"mp4"];
     NSURL *videoURL = [NSURL fileURLWithPath:self.videoPath];
-    
+
     /* Asset writer with MPEG4 format*/
     self.assetWriterMyData = [[AVAssetWriter alloc]
                               initWithURL: videoURL
@@ -291,7 +291,7 @@
 }
 
 -(void)startEnrollmentProcess {
-    [self.myVoiceIt deleteAllFaceEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+    [self.myVoiceIt deleteAllEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
                 [self makeLabelFlyIn: [ResponseManager getMessage:@"GET_ENROLLED"]];
                 [self startDelayedRecording:2.0];
     }];
@@ -323,7 +323,7 @@
 }
 
 -(void)cancelClicked{
-    [self.myVoiceIt deleteAllFaceEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
+    [self.myVoiceIt deleteAllEnrollments:_userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
         [[self navigationController] dismissViewControllerAnimated:YES completion:^{
             [[self myNavController] userEnrollmentsCancelled];
         }];
@@ -331,7 +331,7 @@
 }
 
 #pragma mark - Camera Delegate Methods
-    
+
 // Code to Capture Face Rectangle and other cool metadata stuff
 -(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     BOOL faceFound = NO;
@@ -342,7 +342,7 @@
             [Utilities showFaceRectangle:self.faceRectangleLayer face:face];
         }
     }
-    
+
     if(faceFound) {
         self.lookingIntoCamCounter += 1;
         self.lookingIntoCam = self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND;
@@ -364,14 +364,14 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 fromConnection:(AVCaptureConnection *)connection {
-    
+
    if(self.isRecording && !self.enoughRecordingTimePassed && self.isReadyToWrite){
         CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         // a very dense way to keep track of the time at which this frame
         // occurs relative to the output stream, but it's just an example!
         static int64_t frameNumber = 0;
         if(self.assetWriterInput.readyForMoreMediaData){
-            
+
             if(self.pixelBufferAdaptor != nil){
                 [self.pixelBufferAdaptor appendPixelBuffer:imageBuffer
                                       withPresentationTime:CMTimeMake(frameNumber, 25)];
@@ -379,28 +379,28 @@ fromConnection:(AVCaptureConnection *)connection {
             }
         }
     }
-    
+
     // Don't do any analysis when not looking into the camera
     if(!self.lookingIntoCam){
         return;
     }
-    
+
 }
 
 #pragma mark - Cleanup Methods
-    
+
 -(void)cleanupEverything {
     [self cleanupCaptureSession];
     self.continueRunning = NO;
 }
-    
+
 - (void)cleanupCaptureSession {
     [self.captureSession stopRunning];
     [self cleanupVideoProcessing];
     self.captureSession = nil;
     [self.previewLayer removeFromSuperlayer];
 }
-    
+
 - (void)cleanupVideoProcessing {
     if (self.videoDataOutput) {
         [self.captureSession removeOutput:self.videoDataOutput];

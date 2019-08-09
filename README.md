@@ -43,12 +43,7 @@ A fully comprehensive SDK that gives you access to VoiceIt's API 2.0 featuring V
       * [Create Voice Enrollment](#create-voice-enrollment)
       * [Create Face Enrollment](#create-face-enrollment)
       * [Create Video Enrollment](#create-video-enrollment)
-      * [Delete Voice Enrollment](#delete-voice-enrollment)
-      * [Delete Face Enrollment](#delete-face-enrollment)
-      * [Delete Video Enrollment](#delete-video-enrollment)
-      * [Delete All Voice Enrollments](#delete-all-voice-enrollments)
-      * [Delete All Face Enrollments](#delete-all-face-enrollments)
-      * [Delete All Video Enrollments](#delete-all-video-enrollments)
+      * [Delete All Enrollments](#delete-all-enrollments)
   * [Verification API Calls](#verification-api-calls)
       * [Voice Verification](#voice-verification)
       * [Face Verification](#face-verification)
@@ -710,14 +705,13 @@ myVoiceIt?.createVideoEnrollment("USER_ID_HERE", contentLanguage: "CONTENT_LANGU
     NSLog(@"JSONResponse: %@", jsonResponse);
 } ];
 ```
+#### Delete All Enrollments
 
-#### Delete Voice Enrollment
-
-Delete voice enrollment for user with given userId(begins with 'usr_') and voiceEnrollmentId(integer)
+Delete all enrollments for user with given userId(begins with 'usr_')
 
 ##### *Swift*
 ```swift
-myVoiceIt?.deleteVoiceEnrollment("USER_ID_HERE", voiceEnrollmentId: "VOICE_ENROLLMENT_ID_HERE", callback: {
+myVoiceIt?.deleteAllEnrollments("USER_ID_HERE", callback: {
     jsonResponse in
     print("JSON RESPONSE: \(jsonResponse!)")
 })
@@ -725,101 +719,7 @@ myVoiceIt?.deleteVoiceEnrollment("USER_ID_HERE", voiceEnrollmentId: "VOICE_ENROL
 
 ##### *Objective-C*
 ```objc
-[self.myVoiceIt deleteVoiceEnrollment:@"USER_ID_HERE" voiceEnrollmentId:@"VOICE_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
-    NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete Face Enrollment
-
-Delete face enrollment for user with given userId(begins with 'usr_') and faceEnrollmentId(integer)
-##### *Swift*
-```swift
-myVoiceIt?.deleteFaceEnrollment("USER_ID_HERE", faceEnrollmentId: "FACE_ENROLLMENT_ID_HERE", callback: {
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteFaceEnrollment:@"USER_ID_HERE" faceEnrollmentId:@"FACE_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
-    NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete Video Enrollment
-
-Delete video enrollment for user with given userId(begins with 'usr_') and videoEnrollmentId(integer)
-
-##### *Swift*
-```swift
-myVoiceIt?.deleteVideoEnrollment("USER_ID_HERE", videoEnrollmentId: "VIDEO_ENROLLMENT_ID_HERE", callback: {
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteVideoEnrollment:@"USER_ID_HERE" videoEnrollmentId:@"VIDEO_ENROLLMENT_ID_HERE" callback:^(NSString * jsonResponse){
-    NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete All Voice Enrollments
-
-Delete all voice enrollment for user with given userId(begins with 'usr_').
-
-##### *Swift*
-```swift
-myVoiceIt?.deleteAllVoiceEnrollments("USER_ID_HERE", callback: {
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteAllVoiceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
-    NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete All Face Enrollments
-
-Delete all face enrollment for user with given userId(begins with 'usr_').
-
-##### *Swift*
-```swift
-myVoiceIt?.deleteAllFaceEnrollments("USER_ID_HERE", callback: {
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteAllFaceEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
-    NSLog(@"JSONResponse: %@", jsonResponse);
-}];
-```
-
-#### Delete All Video Enrollments
-
-Delete all video enrollment for user with given userId(begins with 'usr_').
-
-##### *Swift*
-```swift
-myVoiceIt?.deleteAllVideoEnrollments("USER_ID_HERE", callback: {
-    jsonResponse in
-    print("JSON RESPONSE: \(jsonResponse!)")
-})
-```
-
-##### *Objective-C*
-```objc
-[self.myVoiceIt deleteAllVideoEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
+[self.myVoiceIt deleteAllEnrollments:@"USER_ID_HERE" callback:^(NSString * jsonResponse){
     NSLog(@"JSONResponse: %@", jsonResponse);
 }];
 ```

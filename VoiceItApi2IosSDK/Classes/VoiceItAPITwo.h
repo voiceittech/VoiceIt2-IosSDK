@@ -54,12 +54,6 @@
 - (void)getAllVoiceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)getAllFaceEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)getAllVideoEnrollments:(NSString *)userId callback:(void (^)(NSString *))callback;
-- (void)deleteVoiceEnrollment:(NSString *)userId voiceEnrollmentId:(NSInteger)voiceEnrollmentId callback:(void (^)(NSString *))callback;
-- (void)deleteFaceEnrollment:(NSString *)userId faceEnrollmentId:(NSInteger)faceEnrollmentId callback:(void (^)(NSString *))callback;
-- (void)deleteVideoEnrollment:(NSString *)userId videoEnrollmentId:(NSInteger)videoEnrollmentId callback:(void (^)(NSString *))callback;
-- (void)deleteAllVoiceEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
-- (void)deleteAllFaceEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
-- (void)deleteAllVideoEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)deleteAllEnrollments: (NSString *)userId callback:(void (^)(NSString *))callback;
 - (void)createVoiceEnrollment:(NSString *)userId
               contentLanguage:(NSString*)contentLanguage
