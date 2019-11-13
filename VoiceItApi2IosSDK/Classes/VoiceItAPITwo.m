@@ -3,7 +3,7 @@
 //  VoiceItApi2IosSDK
 //
 //  Created by Armaan Bindra on 3/7/17.
-//  Copyright © 2017 Armaan Bindra. All rights reserved.
+//  Copyright © 2020 VoiceIt Technologies, LLC. All rights reserved.
 //
 
 #import "VoiceItAPITwo.h"
