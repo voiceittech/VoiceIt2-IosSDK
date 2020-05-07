@@ -9,6 +9,8 @@
 #import "VoiceItAPITwo.h"
 #import "Styles.h"
 NSString * const host = @"https://api.voiceit.io/";
+NSString * const platformVersion = @"2.0.8";
+NSString * const platformId = @"41";
 @implementation VoiceItAPITwo
 
 #pragma mark - Constructor
@@ -37,7 +39,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -63,7 +66,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -95,7 +99,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -126,7 +131,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -148,7 +154,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[self buildURL:@"users"]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"POST"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -177,7 +184,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"users"], userId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -204,7 +212,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -236,7 +245,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -268,7 +278,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"GET"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -298,7 +309,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"description" : description};
@@ -339,7 +351,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"PUT"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"userId" : userId, @"groupId": groupId};
@@ -379,7 +392,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"PUT"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"userId" : userId, @"groupId": groupId};
@@ -410,7 +424,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"groups"], groupId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -442,7 +457,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"enrollments/voice"], userId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"GET"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -473,7 +489,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"enrollments/face"], userId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"GET"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -504,7 +521,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@",[self buildURL:@"enrollments/video"], userId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"GET"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -534,7 +552,8 @@ NSString * const host = @"https://api.voiceit.io/";
                                     initWithURL:[[NSURL alloc] initWithString:[[NSString alloc] initWithFormat:@"%@/%@/all",[self buildURL:@"enrollments"], userId]]];
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"DELETE"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSURLSessionDataTask *task =
@@ -571,7 +590,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
@@ -613,7 +633,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"userId": userId};
@@ -654,7 +675,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
@@ -697,7 +719,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
@@ -1118,7 +1141,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
@@ -1160,7 +1184,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"userId": userId};
@@ -1200,7 +1225,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"userId": userId};
@@ -1243,7 +1269,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
@@ -1285,7 +1312,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"userId": userId, @"phrase" : phrase };
@@ -1327,7 +1355,8 @@ NSString * const host = @"https://api.voiceit.io/";
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"POST"];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"phrase" : phrase };
@@ -1367,7 +1396,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"groupId": groupId};
@@ -1406,7 +1436,8 @@ NSString * const host = @"https://api.voiceit.io/";
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"POST"];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"groupId": groupId};
@@ -1448,7 +1479,8 @@ NSString * const host = @"https://api.voiceit.io/";
     NSURLSession *session = [NSURLSession sharedSession];
     [request setHTTPMethod:@"POST"];
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"phrase" : phrase };
@@ -1491,7 +1523,8 @@ NSString * const host = @"https://api.voiceit.io/";
     [request setHTTPMethod:@"POST"];
 
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
-    [request addValue:@"41" forHTTPHeaderField:@"platformId"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
     [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
 
     NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"groupId": groupId, @"phrase" : phrase };
