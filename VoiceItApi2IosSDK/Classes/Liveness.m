@@ -207,17 +207,17 @@
         // TODO: Successfully Finished Liveness Detection Call Success Callback
         return;
     }
-    
+
     self.currentChallenge = [self pickChallenge];
     NSLog(@"Current Challenge is %d", self.currentChallenge);
     [self setupLivenessDetection];
-    
+
     // TODO: Continue putting more logic here.
     switch (self.currentChallenge) {
         case 0:
             //SMILE
             [self setMessage:[ResponseManager getMessage:@"SMILE"]];
-            
+
             //Play SMILE.wav
             if (self.audioPromptsIsHappening) {
                 NSBundle * podBundle = [NSBundle bundleForClass: self.classForCoder];
@@ -225,7 +225,7 @@
                 NSString *soundFilePath = [NSString stringWithFormat:@"%@/SMILE.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath]];
                 NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
                 NSError *error;
-                
+
                 AVAudioSession *session = [AVAudioSession sharedInstance];
                 [session setCategory:AVAudioSessionCategoryPlayback error:nil];
                 self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:&error];
@@ -238,7 +238,7 @@
         case 1:
             //Blink
             [self setMessage:[ResponseManager getMessage:@"BLINK"]];
-            
+
             //Play BLINK.wav
             if (self.audioPromptsIsHappening) {
                 NSBundle * podBundle = [NSBundle bundleForClass: self.classForCoder];
@@ -246,7 +246,7 @@
                 NSString *soundFilePath = [NSString stringWithFormat:@"%@/BLINK.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath]];
                 NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
                 NSError *error;
-                
+
                 AVAudioSession *session = [AVAudioSession sharedInstance];
                 [session setCategory:AVAudioSessionCategoryPlayback error:nil];
                 self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:&error];
@@ -267,7 +267,7 @@
                 NSString *soundFilePath = [NSString stringWithFormat:@"%@/FACE_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath]];
                 NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
                 NSError *error;
-                
+
                 AVAudioSession *session = [AVAudioSession sharedInstance];
                 [session setCategory:AVAudioSessionCategoryPlayback error:nil];
                 self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:&error];
@@ -288,7 +288,7 @@
                 NSString *soundFilePath = [NSString stringWithFormat:@"%@/FACE_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath]];
                 NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
                 NSError *error;
-                
+
                 AVAudioSession *session = [AVAudioSession sharedInstance];
                 [session setCategory:AVAudioSessionCategoryPlayback error:nil];
                 self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:&error];
@@ -301,6 +301,16 @@
         default:
             break;
     }
+}
+
+-(void)doLivenessDetection: (NSString *) challengeString
+                        challengeTime: (NSNumber *) challengeTime{
+    [self setMessage:challengeString];
+    [self startTimer:[challengeTime floatValue]];
+
+    
+    //API Call to face/voice endpoints
+    
 }
 
 -(void)livenessChallengePassed {
@@ -330,11 +340,11 @@
 
 -(void)doSmileDetection:(CIFaceFeature *)face image:(CIImage *) image {
     NSLog(@"Face hasSmile %d", face.hasSmile);
-    
+
     if(face.hasSmile){
        self.smileCounter++;
     }
-    
+
     if (self.smileCounter > 3){
         [self saveImageData:image];
         [self livenessChallengePassed];
@@ -442,22 +452,22 @@
     // Convert to CIPixelBuffer for faceDetector
     CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     if (pixelBuffer == NULL) { return; }
-    
+
     // Create CIImage for faceDetector
     CIImage *image = [CIImage imageWithCVImageBuffer:pixelBuffer];
     // Used for Portrait
     int exifOrientation = 0;
-    
+
     // Establish the image orientation CI Detectors
     NSDictionary *options = @{CIDetectorSmile: @(YES), CIDetectorEyeBlink: @(YES), CIDetectorImageOrientation: [NSNumber numberWithInt:exifOrientation], CIDetectorNumberOfAngles: @(11), CIDetectorTracking: @(YES), CIDetectorMinFeatureSize: @(0.10),};
-    
+
     // Detect features using CIFaceFeatures
     NSArray<CIFeature *> *faces = [self.faceDetector featuresInImage:image options:options];
     dispatch_sync(dispatch_get_main_queue(), ^{
-        
+
         // Display detected features in overlay.
         for (CIFaceFeature *face in faces) {
-            
+
             switch (self.currentChallenge) {
                 case 0:
                     // SMILE

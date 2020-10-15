@@ -13,20 +13,27 @@
 @interface FaceVerificationViewController ()
 @property(nonatomic, strong)  VoiceItAPITwo * myVoiceIt;
 @property(nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
-@property(nonatomic, strong)  AVAssetWriter *assetWriterMyData;
-@property(nonatomic, strong)  NSString *videoPath;
-@property(nonatomic, strong)  AVAssetWriterInput *assetWriterInput;
+@property(nonatomic, strong) AVAssetWriter *assetWriterMyData;
+@property(nonatomic, strong) NSString *videoPath;
+@property(nonatomic, strong) AVAssetWriterInput *assetWriterInput;
 @property CGFloat circleWidth;
 @property CGFloat backgroundWidthHeight;
-@property NSTimer * timer;
+@property NSTimer *timer;
 @property int currentChallenge;
-@property Liveness * livenessDetector;
+@property NSNumber *livenessChallengeTime;
+@property NSString *challengeString;
+@property BOOL isChallengeRetrieved;
+@property NSString *lcoId;
+@property Liveness *livenessDetector;
+@property BOOL didLivenessSucceed;
+@property BOOL canLivenessRetry;
+
 @end
 
 @implementation FaceVerificationViewController
 
 #pragma mark - Life Cycle Methods
-    
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -48,14 +55,17 @@
     
     self.isReadyToWrite = NO;
     self.enoughRecordingTimePassed = NO;
-
+    
     // Do any additional setup after loading the view.
     [self.progressView setHidden:YES];
+    
+    //Get LCOID, challenge string and liveness time
+    [self getLivenessData];
     
     // Set up the AVCapture Session
     [self setupCaptureSession];
     [self setupVideoProcessing];
-
+    
     [self setupScreen];
 }
 
@@ -77,6 +87,20 @@
             [self userVerificationFailed](0.0, jsonResponse);
         }];
     });
+}
+#pragma mark - Liveness Data
+
+-(void)getLivenessData{
+    if(!self.doLivenessDetection) return;
+    
+    [[self myVoiceIt] getLivenessID:self.userToVerifyUserId countryCode:
+     @"en-US" callback:^(NSString *response) {
+        NSDictionary *data = [Utilities getJSONObject:response];
+        self.challengeString = [data valueForKey:@"challenges"];
+        self.isChallengeRetrieved = [data valueForKey:@"success"];
+        self.lcoId = [data valueForKey:@"lcoId"];
+        self.livenessChallengeTime = [data valueForKey:@"livenessChallengeTime"];
+    }];
 }
 
 #pragma mark - Setup Methods
@@ -104,8 +128,8 @@
 - (void)setupVideoProcessing {
     self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
     NSDictionary *rgbOutputSettings = @{
-                                        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
-                                        };
+        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
+    };
     [self.videoDataOutput setVideoSettings:rgbOutputSettings];
     
     if (![self.captureSession canAddOutput:self.videoDataOutput]) {
@@ -179,16 +203,6 @@
     [Utilities setupFaceRectangle:self.faceRectangleLayer];
     
     [self.rootLayer addSublayer:self.cameraBorderLayer];
-    if(self.doLivenessDetection){
-        self.livenessDetector = [[Liveness alloc] init:self cCP:self.cameraCenterPoint bgWH:self.backgroundWidthHeight cW:self.circleWidth rL:self.rootLayer mL:self.messageLabel doAudio:self.doAudioPrompts lFA:self.numberOfLivenessFailsAllowed livenessPassed:^(NSData * imageData) {
-            self.finalCapturedPhotoData = imageData;
-            [self stopRecording];
-        } livenessFailed:^{
-            self.continueRunning = NO;
-            self.livenessDetector.continueRunning = NO;
-            [self livenessFailedAction];
-        }];
-    }
     [self.rootLayer addSublayer:self.progressCircle];
     [self.rootLayer addSublayer:self.previewLayer];
     [self.previewLayer addSublayer:self.faceRectangleLayer];
@@ -197,33 +211,6 @@
 }
 
 #pragma mark - Action Methods
-
--(void)livenessFailedAction{
-    self.continueRunning = NO;
-    if(self.doLivenessDetection){
-        self.livenessDetector.continueRunning = NO;
-    }
-    self.continueRunning = NO;
-    self.lookingIntoCam = NO;
-    [self setMessage: [ResponseManager getMessage:@"VERIFY_FACE_FAILED"]];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated: YES completion:^{
-            NSError *error;
-            NSMutableDictionary * jsonResponse = [[NSMutableDictionary alloc] init];
-            [jsonResponse setObject:@"LDFA" forKey:@"responseCode"];
-            [jsonResponse setObject:@0.0 forKey:@"faceConfidence"];
-            [jsonResponse setObject:@"Liveness detection failed" forKey:@"message"];
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject: jsonResponse options:0 error:&error];
-            if (!jsonData) {
-                NSLog(@"Got an error: %@", error);
-            } else {
-                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                 [self userVerificationFailed]( 0.0, jsonString);
-            }
-        }];
-    });
-}
 
 -(void)startWritingToVideoFile{
     NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -241,17 +228,23 @@
     
     self.videoPath = [Utilities pathForTemporaryFileWithSuffix:@"mp4"];
     NSURL *videoURL = [NSURL fileURLWithPath:self.videoPath];
-    
     /* Asset writer with MPEG4 format*/
     self.assetWriterMyData = [[AVAssetWriter alloc]
-                                        initWithURL: videoURL
-                                        fileType:AVFileTypeMPEG4
-                                        error:nil];
+                              initWithURL: videoURL
+                              fileType:AVFileTypeMPEG4
+                              error:nil];
     [self.assetWriterMyData addInput:self.assetWriterInput];
     self.assetWriterInput.expectsMediaDataInRealTime = YES;
     [self.assetWriterMyData startWriting];
     [self.assetWriterMyData startSessionAtSourceTime:kCMTimeZero];
     self.isReadyToWrite = YES;
+}
+
+-(void)finishVerificationWithLiveness:(NSString *)jsonResponse {
+    [self removeLoading];
+    [Utilities deleteFile:self.videoPath];
+    NSLog(@"FaceVerification JSON Response : %@", jsonResponse);
+    //Continue ..... Akshay
 }
 
 -(void)finishVerification:(NSString *)jsonResponse{
@@ -306,9 +299,12 @@
     if(!self.continueRunning){
         return;
     }
-    [self.myVoiceIt faceVerification:self.userToVerifyUserId imageData:self.finalCapturedPhotoData callback:^(NSString * jsonResponse){
-        [self finishVerification:jsonResponse];
-    }];
+    [self.myVoiceIt faceVerificationWithLiveness:self.userToVerifyUserId videoPath:self.videoPath callback:^(NSString *jsonResponse){
+        NSDictionary *data = [Utilities getJSONObject:jsonResponse];
+        [self setDidLivenessSucceed:[data valueForKey:@"success"]];
+        [self setCanLivenessRetry:[data valueForKey:@"retry"]];
+        [self finishVerificationWithLiveness:jsonResponse];
+    } lcoId: self.lcoId];
 }
 
 -(void)stopWritingToVideoFile {
@@ -318,10 +314,15 @@
         if(!self.continueRunning){
             return;
         }
-        [self.myVoiceIt faceVerification:self.userToVerifyUserId videoPath:self.videoPath callback:^(NSString * jsonResponse){
-            [Utilities deleteFile:self.videoPath];
-            [self finishVerification:jsonResponse];
-        }];
+        if(self.doLivenessDetection){
+            [self sendPhoto];
+        }
+        else{
+            [self.myVoiceIt faceVerification:self.userToVerifyUserId videoPath:self.videoPath callback:^(NSString * jsonResponse){
+                [Utilities deleteFile:self.videoPath];
+                [self finishVerification:jsonResponse];
+            }];
+        }
     }];
 }
 
@@ -356,25 +357,33 @@
 -(void)startRecording {
     self.isRecording = YES;
     
-    if(self.doLivenessDetection){
-        [self.livenessDetector doLivenessDetection];
+    if(self.doLivenessDetection && self.isChallengeRetrieved){
+        [self startWritingToVideoFile];
+        [self setMessage: self.challengeString];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, [self.livenessChallengeTime floatValue] * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self setMessage:[ResponseManager getMessage:@"CHECKING"]];
+            [self setEnoughRecordingTimePassed:YES];
+            [self stopRecording];
+        });
     }
+    
     else {
         [self startWritingToVideoFile];
         [self setMessage:[ResponseManager getMessage:@"WAIT_FOR_FACE_VERIFICATION"]];
-    }
-    
-    // Start Progress Circle Around Face Animation
-    [self animateProgressCircle];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if(self.continueRunning){
-            [self setEnoughRecordingTimePassed:YES];
-            if (!self.doLivenessDetection) {
-                [self stopRecording];
+        
+        
+        // Start Progress Circle Around Face Animation
+        [self animateProgressCircle];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.4 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if(self.continueRunning){
+                [self setEnoughRecordingTimePassed:YES];
+                if (!self.doLivenessDetection) {
+                    [self stopRecording];
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 -(void)startDelayedRecording:(NSTimeInterval)delayTime{
@@ -405,11 +414,7 @@
 -(void)stopRecording{
     self.isRecording = NO;
     [self setEnoughRecordingTimePassed:NO];
-    if([self doLivenessDetection]){
-        [self sendPhoto];
-    } else {
-        [self stopWritingToVideoFile];
-    }
+    [self stopWritingToVideoFile];
 }
 
 -(void)showLoading{
@@ -434,18 +439,18 @@
 #pragma mark - Camera Delegate Methods
 
 // Code to Capture Face Rectangle and other cool metadata stuff
--(void)    captureOutput:(AVCaptureOutput *)output
+-(void)captureOutput:(AVCaptureOutput *)output
 didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects
-          fromConnection:(AVCaptureConnection *)connection{
-        BOOL faceFound = NO;
-        for(AVMetadataObject *metadataObject in metadataObjects) {
+      fromConnection:(AVCaptureConnection *)connection{
+    BOOL faceFound = NO;
+    for(AVMetadataObject *metadataObject in metadataObjects) {
         if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
             faceFound = YES;
             AVMetadataObject * face = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
             [Utilities showFaceRectangle:self.faceRectangleLayer face:face];
         }
     }
-
+    
     if(faceFound) {
         self.lookingIntoCamCounter += 1;
         self.lookingIntoCam = self.lookingIntoCamCounter > MAX_TIME_TO_WAIT_TILL_FACE_FOUND;
@@ -453,7 +458,7 @@ didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects
             self.verificationStarted = YES;
             [self startVerificationProcess];
         }
-    } else {  
+    } else {
         self.lookingIntoCam = NO;
         self.lookingIntoCamCounter = 0;
         [self.faceRectangleLayer setHidden:YES];
@@ -468,11 +473,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if(!self.lookingIntoCam){
         return;
     }
-    
-    if(self.doLivenessDetection){
-        [self.livenessDetector processFrame:sampleBuffer];
-    } else {
-        if (self.isRecording && !self.enoughRecordingTimePassed && self.isReadyToWrite && !self.doLivenessDetection){
+        if (self.isRecording && !self.enoughRecordingTimePassed && self.isReadyToWrite){
             CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
             // a very dense way to keep track of the time at which this frame
             // occurs relative to the output stream, but it's just an example!
@@ -485,7 +486,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
             }
         }
-    }
 }
 
 #pragma mark - Cleanup Methods
@@ -496,14 +496,14 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     self.captureSession = nil;
     [self.previewLayer removeFromSuperlayer];
 }
-    
+
 - (void)cleanupVideoProcessing {
     if (self.videoDataOutput) {
         [self.captureSession removeOutput:self.videoDataOutput];
     }
     self.videoDataOutput = nil;
 }
-    
+
 -(void)cleanupEverything {
     [self cleanupCaptureSession];
     self.continueRunning = NO;

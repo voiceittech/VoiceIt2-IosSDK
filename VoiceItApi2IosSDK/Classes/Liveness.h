@@ -16,6 +16,8 @@
 -(void)doLivenessDetection;
 -(void)setupLivenessCircles;
 -(void)resetVariables;
+-(void)doLivenessDetection: (NSString *) challengeString
+    challengeTime: (NSNumber *) challengeTime;
 
 @property NSTimer * timer;
 @property int currentChallenge;

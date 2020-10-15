@@ -17,6 +17,15 @@
 @property CGFloat backgroundWidthHeight;
 @property NSTimer * timer;
 @property int currentChallenge;
+@property NSNumber *livenessChallengeTime;
+@property NSString *challengeString;
+@property(nonatomic, strong) AVAssetWriterInput *assetWriterInput;
+@property(nonatomic, strong) AVAssetWriter *assetWriterMyData;
+@property(nonatomic, strong) AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor;
+@property BOOL isChallengeRetrieved;
+@property NSString *instructionString;
+@property NSString *lcoId;
+@property NSString *savedVideoPath;
 @property Liveness * livenessDetector;
 @end
 
@@ -44,15 +53,21 @@
     self.failCounter = 0;
     
     self.imageNotSaved = YES;
-
+    self.isReadyToWrite = NO;
+    
     // Do any additional setup after loading the view.
     [self.progressView setHidden:YES];
     
-    // Set up the AVCapture Session
-    [self setupCaptureSession];
-    [self setupVideoProcessing];
-    
-    [self setupScreen];
+    if([self doLivenessDetection]){
+        //Get LCOID, challenge string and liveness time
+        [self setLivenessData];
+    } else{
+        // Set up the AVCapture Session
+        [self setupCaptureSession];
+        [self setupVideoProcessing];
+        
+        [self setupScreen];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -64,6 +79,27 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self cleanupEverything];
+}
+
+#pragma mark - Liveness Data
+
+-(void)setLivenessData{
+    if(!self.doLivenessDetection) return;
+    
+    [[self myVoiceIt] getLivenessID:self.userToVerifyUserId countryCode:
+     @"en-US" callback:^(NSString *response) {
+        NSDictionary *data = [Utilities getJSONObject:response];
+        self.challengeString = [[data valueForKey:@"challenges"] componentsJoinedByString: @" "];
+        self.isChallengeRetrieved = [data valueForKey:@"success"];
+        self.lcoId = [data valueForKey:@"lcoId"];
+        self.livenessChallengeTime = [data valueForKey:@"livenessChallengeTime"];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self setupCaptureSession];
+            [self setupVideoProcessing];
+            [self setupScreen];
+        });
+    }];
 }
 
 #pragma mark - Setup Methods
@@ -91,8 +127,8 @@
 - (void)setupVideoProcessing {
     self.videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
     NSDictionary *rgbOutputSettings = @{
-                                        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
-                                        };
+        (__bridge NSString*)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
+    };
     [self.videoDataOutput setVideoSettings:rgbOutputSettings];
     
     if (![self.captureSession canAddOutput:self.videoDataOutput]) {
@@ -166,22 +202,13 @@
     [Utilities setupFaceRectangle:self.faceRectangleLayer];
     
     [self.rootLayer addSublayer:self.cameraBorderLayer];
-    if(self.doLivenessDetection){
-        self.livenessDetector = [[Liveness alloc] init:self cCP:self.cameraCenterPoint bgWH:self.backgroundWidthHeight cW:self.circleWidth rL:self.rootLayer mL:self.messageLabel doAudio:self.doAudioPrompts lFA:self.numberOfLivenessFailsAllowed livenessPassed:^(NSData * imageData) {
-            self.finalCapturedPhotoData = imageData;
-            [self startVerificationProcess];
-        } livenessFailed:^{
-            self.continueRunning = NO;
-            self.livenessDetector.continueRunning = NO;
-            [self livenessFailedAction];
-        }];
-    }
     [self.rootLayer addSublayer:self.progressCircle];
     [self.rootLayer addSublayer:self.previewLayer];
     [self.previewLayer addSublayer:self.faceRectangleLayer];
     [self.captureSession commitConfiguration];
     [self.captureSession startRunning];
 }
+
 
 #pragma mark - Action Methods
 
@@ -203,11 +230,7 @@
             if(enrollmentsCount < 3){
                 [self notEnoughEnrollments:@"{\"responseCode\":\"TVER\",\"message\":\"Not enough video enrollments\"}"];
             } else {
-                if(doLiveness){
-                    [self.livenessDetector doLivenessDetection];
-                } else {
-                    [self startVerificationProcess];
-                }
+                [self startVerificationProcess];
             }
         } else {
             [self notEnoughEnrollments:@"{\"responseCode\":\"TVER\",\"message\":\"Not enough video enrollments\"}"];
@@ -219,56 +242,32 @@
     [self startDelayedRecording:0.4];
 }
 
--(void)startDelayedLiveness:(NSTimeInterval)delayTime{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if(self.continueRunning){
-            [self.livenessDetector doLivenessDetection];
-        }
-    });
-}
-
 -(void)startDelayedRecording:(NSTimeInterval)delayTime{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if(self.continueRunning){
-            [self setMessage:[ResponseManager getMessage:@"VERIFY" variable:self.thePhrase]];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                if(self.continueRunning){
-                    [self startRecording];
-                }
-            });
-        }
-    });
-}
-
--(void)livenessFailedAction{
-    if(self.doLivenessDetection){
-        self.livenessDetector.continueRunning = NO;
+    
+    if(self.doLivenessDetection && self.isChallengeRetrieved) {
+        [self setMessage:self.challengeString];
+        [self startRecordingWithLiveness];
     }
-    self.continueRunning = NO;
-    self.lookingIntoCam = NO;
-    [self setMessage: [ResponseManager getMessage:@"VIDEO_VERIFY_FAILED"]];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated: YES completion:^{
-            NSError *error;
-            NSMutableDictionary * jsonResponse = [[NSMutableDictionary alloc] init];
-            [jsonResponse setObject:@"LDFA" forKey:@"responseCode"];
-            [jsonResponse setObject:@0.0 forKey:@"voiceConfidence"];
-            [jsonResponse setObject:@0.0 forKey:@"faceConfidence"];
-            [jsonResponse setObject:@"Liveness detection failed" forKey:@"message"];
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject: jsonResponse options:0 error:&error];
-            if (!jsonData) {
-                NSLog(@"Got an error: %@", error);
-            } else {
-                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                [self userVerificationFailed]( 0.0, 0.0, jsonString);
+    else{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            if(self.continueRunning){
+                [self setMessage:[ResponseManager getMessage:@"VERIFY" variable:self.thePhrase]];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    if(self.continueRunning){
+                        [self startRecording];
+                    }
+                });
             }
-        }];
-    });
+        });
+    }
 }
 
--(void)timerDone{
-    [self livenessFailedAction];
+-(void) startRecordingWithLiveness{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, [self.livenessChallengeTime floatValue] * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self setMessage:[ResponseManager getMessage:@"VERIFY" variable:self.thePhrase]];
+    });
+    [self startWritingToVideoFile];
+    [self startRecording];
 }
 
 - (UIImage *)imageFromCIImage:(CIImage *)ciImage {
@@ -299,7 +298,6 @@
         [self.progressView setHidden:YES];
     });
 }
-
 
 -(void)setAudioSessionInactive{
     [self.audioRecorder stop];
@@ -352,11 +350,15 @@
         NSLog(@"recorder: %@ %ld %@", [err domain], (long)[err code], [[err userInfo] description]);
         return;
     }
+    
     [self.audioRecorder setDelegate:self];
     [self.audioRecorder prepareToRecord];
     [self.audioRecorder setMeteringEnabled:YES];
-    [self.audioRecorder recordForDuration:4.8];
-    
+    if(!self.doLivenessDetection){
+        [self.audioRecorder recordForDuration:4.8];
+    } else{
+        [self.audioRecorder recordForDuration:[self.livenessChallengeTime floatValue] + 5];
+    }
     // Start Progress Circle Around Face Animation
     [self animateProgressCircle];
 }
@@ -377,8 +379,8 @@
 -(void)    captureOutput:(AVCaptureOutput *)output
 didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects
           fromConnection:(AVCaptureConnection *)connection{
-        BOOL faceFound = NO;
-        for(AVMetadataObject *metadataObject in metadataObjects) {
+    BOOL faceFound = NO;
+    for(AVMetadataObject *metadataObject in metadataObjects) {
         if([metadataObject.type isEqualToString:AVMetadataObjectTypeFace]) {
             faceFound = YES;
             AVMetadataObject * face = [self.previewLayer transformedMetadataObjectForMetadataObject:metadataObject];
@@ -408,23 +410,59 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if(!self.lookingIntoCam){
         return;
     }
-    
-    if(self.doLivenessDetection){
-        [self.livenessDetector processFrame:sampleBuffer];
-    } else {
-        if(self.lookingIntoCamCounter > 5 && self.imageNotSaved){
-            // Convert to CIPixelBuffer for faceDetector
-            CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-            if (pixelBuffer == NULL) { return; }
-            
-            // Create CIImage for faceDetector
-            CIImage *image = [CIImage imageWithCVImageBuffer:pixelBuffer];
-            [self saveImageData:image];
+    if(self.lookingIntoCamCounter > 5 && self.imageNotSaved && !self.doLivenessDetection){
+        // Convert to CIPixelBuffer for faceDetector
+        CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        if (pixelBuffer == NULL) { return; }
+        
+        // Create CIImage for faceDetector
+        CIImage *image = [CIImage imageWithCVImageBuffer:pixelBuffer];
+        [self saveImageData:image];
+    }
+    if (self.isReadyToWrite && self.doLivenessDetection){
+        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        // a very dense way to keep track of the time at which this frame
+        // occurs relative to the output stream, but it's just an example!
+        static int64_t frameNumber = 0;
+        if(self.assetWriterInput.readyForMoreMediaData){
+            if(self.pixelBufferAdaptor != nil){
+                [self.pixelBufferAdaptor appendPixelBuffer:imageBuffer
+                                      withPresentationTime:CMTimeMake(frameNumber, 25)];
+                frameNumber++;
+            }
         }
     }
 }
 
 #pragma mark - AVAudioRecorderDelegate Methods
+
+-(void)startWritingToVideoFile{
+    NSDictionary *outputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithInt:640], AVVideoWidthKey, [NSNumber numberWithInt:480], AVVideoHeightKey, AVVideoCodecTypeH264, AVVideoCodecKey,nil];
+    self.assetWriterInput = [AVAssetWriterInput  assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:outputSettings];
+    [self.assetWriterInput setTransform: CGAffineTransformMakeRotation( ( 90 * M_PI ) / 180 )];
+    self.pixelBufferAdaptor =
+    [[AVAssetWriterInputPixelBufferAdaptor alloc]
+     initWithAssetWriterInput:self.assetWriterInput
+     sourcePixelBufferAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [NSNumber numberWithInt:kCVPixelFormatType_32BGRA],
+      kCVPixelBufferPixelFormatTypeKey,
+      nil]];
+    
+    self.videoPath = [Utilities pathForTemporaryFileWithSuffix:@"mp4"];
+    NSURL *videoURL = [NSURL fileURLWithPath:self.videoPath];
+    /* Asset writer with MPEG4 format*/
+    self.assetWriterMyData = [[AVAssetWriter alloc]
+                              initWithURL: videoURL
+                              fileType:AVFileTypeMPEG4
+                              error:nil];
+    [self.assetWriterMyData addInput:self.assetWriterInput];
+    self.assetWriterInput.expectsMediaDataInRealTime = YES;
+    [self.assetWriterMyData startWriting];
+    [self.assetWriterMyData startSessionAtSourceTime:kCMTimeZero];
+    self.isReadyToWrite = YES;
+}
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
     if(!self.continueRunning){
@@ -432,15 +470,33 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
     [self setAudioSessionInactive];
     [self stopRecording];
+    [self stopWritingToVideoFile];
     [self showLoading];
-    [self.myVoiceIt videoVerification:self.userToVerifyUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath phrase:self.thePhrase callback:^(NSString * jsonResponse){
+    
+    self.savedVideoPath = [Utilities pathForTemporaryMergedFileWithSuffix:@"mp4"];
+    
+    if(self.doLivenessDetection){
+        [Utilities mergeAudio:self.audioPath withVideo:self.videoPath andSaveToPathUrl:self.savedVideoPath completion:^ {
+            
+            [self.myVoiceIt videoVerificationWithLiveness:self.lcoId userId: self.userToVerifyUserId contentLanguage:self.contentLanguage videoPath:self.savedVideoPath phrase:self.thePhrase callback:^(NSString * result) {
+                NSLog(@"%@", result);
+            }];
+            
+            // send file to api
+            // handle response
+            // delete file from saved path
+        }];
+    }
+    
+    else{
+        [self.myVoiceIt videoVerification:self.userToVerifyUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath phrase:self.thePhrase callback:^(NSString * jsonResponse){
             [Utilities deleteFile:self.audioPath];
             self.imageNotSaved = YES;
             [self removeLoading];
             NSLog(@"Video Verification JSON Response : %@", jsonResponse);
             NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
             NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
-        
+            
             if([responseCode isEqualToString:@"SUCC"]){
                 [self setMessage:[ResponseManager getMessage:@"SUCCESS"]];
                 float faceConfidence = [[jsonObj objectForKey:@"faceConfidence"] floatValue];
@@ -451,16 +507,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                     }];
                 });
             }
-        
+            
             else if([responseCode isEqualToString:@"FNFD"]){
                 [self setMessage:[ResponseManager getMessage: responseCode]];
-                if(self.doLivenessDetection){
-                    [self.livenessDetector resetVariables];
-                    [self startDelayedLiveness:3.0];
-                } else {
-                    [self startDelayedRecording:3.0];
-                }
-                
+                [self startDelayedRecording:3.0];
             } else {
                 self.failCounter += 1;
                 
@@ -495,6 +545,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
             }
         }];
+    }
+}
+
+-(void)stopWritingToVideoFile {
+    self.isReadyToWrite = NO;
+    [self.assetWriterMyData finishWritingWithCompletionHandler:^{
+        if(!self.continueRunning){
+            return;
+        }
+    }];
 }
 
 -(void)audioRecorderEncodeErrorDidOccur:(AVAudioRecorder *)recorder error:(NSError *)error

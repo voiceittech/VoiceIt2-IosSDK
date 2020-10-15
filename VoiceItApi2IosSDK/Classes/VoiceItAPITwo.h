@@ -94,6 +94,11 @@
                imageData:(NSData*)imageData
                 callback:(void (^)(NSString *))callback;
 
+- (void)faceVerificationWithLiveness:(NSString *)userId
+               videoPath:(NSString*)videoPath
+                callback:(void (^)(NSString *))callback
+                               lcoId: (NSString *) lcoId;
+
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 videoPath:(NSString*)videoPath
@@ -106,6 +111,13 @@
                 audioPath:(NSString*)audioPath
                    phrase:(NSString*)phrase
                  callback:(void (^)(NSString *))callback;
+
+- (void)videoVerificationWithLiveness:(NSString *)lcoId
+                               userId:(NSString*)userId
+          contentLanguage:(NSString*)contentLanguage
+                videoPath:(NSString*)videoPath
+                   phrase:(NSString*)phrase
+                             callback:(void (^)(NSString *))callback;
 
 #pragma mark - Identification API Calls
 - (void)voiceIdentification:(NSString *)groupId
@@ -259,4 +271,8 @@
            userIdentificationSuccessful:(void (^)(float, float, NSString *, NSString *))userIdentificationSuccessful
                userIdentificationFailed:(void (^)(float, float, NSString *))userIdentificationFailed;
 
+#pragma mark - Liveness API Calls
+- (void)getLivenessID:(NSString *)userId
+                      countryCode: (NSString *) countryCode
+                      callback:(void (^)(NSString *))callback;
 @end

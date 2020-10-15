@@ -115,6 +115,27 @@
     return result;
 }
 
++(NSString *)pathForTemporaryMergedFileWithSuffix:(NSString *)suffix
+{
+    NSString *  result;
+    CFUUIDRef   uuid;
+    CFStringRef uuidStr;
+    
+    uuid = CFUUIDCreate(NULL);
+    assert(uuid != NULL);
+    
+    uuidStr = CFUUIDCreateString(NULL, uuid);
+    assert(uuidStr != NULL);
+    
+    result = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuidStr, suffix]];
+    assert(result != nil);
+    
+    CFRelease(uuidStr);
+    CFRelease(uuid);
+    
+    return result;
+}
+
 +(void)deleteFile:(NSString *)filePath{
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {
@@ -122,7 +143,7 @@
                                                    error:nil];
     }
 }
-    
+
 +(void)setupFaceRectangle:(CALayer *)faceRectangleLayer{
     faceRectangleLayer = [[CALayer alloc] init];
     faceRectangleLayer.zPosition = 1;
@@ -131,7 +152,7 @@
     faceRectangleLayer.opacity = 0.5;
     [faceRectangleLayer setHidden:YES];
 }
-    
+
 +(void)showFaceRectangle:(CALayer *)faceRectangleLayer face:(AVMetadataObject *)face {
     [faceRectangleLayer setHidden:NO];
     CGFloat padding = 20.0;
@@ -165,4 +186,53 @@
     }
     return powf((powf(10.0f, 0.05f * decibels) - powf(10.0f, 0.05f * -60.0f)) * (1.0f / (1.0f - powf(10.0f, 0.05f * -60.0f))), 1.0f / 2.0f);
 }
+
++(void) mergeAudio:(NSString *) audURL withVideo:(NSString *) vidURL andSaveToPathUrl:(NSString *) savePath completion:(void (^)(void))completionBlock{
+    //Create AVMutableComposition Object which will hold our multiple       AVMutableCompositionTrack or we can say it will hold our video and audio files.
+    AVMutableComposition* mixComposition = [AVMutableComposition composition];
+
+    //Now first load your audio file using AVURLAsset. Make sure you give the correct path of your videos.
+    NSURL *audio_url = [NSURL fileURLWithPath: audURL];
+    AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:audio_url options:nil];
+    CMTimeRange audio_timeRange = CMTimeRangeMake(kCMTimeZero, audioAsset.duration);
+
+    //Now we are creating the first AVMutableCompositionTrack containing our audio and add it to our AVMutableComposition object.
+    AVMutableCompositionTrack *b_compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+    [b_compositionAudioTrack insertTimeRange:audio_timeRange ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:kCMTimeZero error:nil];
+
+    //Now we will load video file.
+    NSURL *video_url = [NSURL fileURLWithPath: vidURL];;
+    AVURLAsset* videoAsset = [[AVURLAsset alloc]initWithURL:video_url options:nil];
+    CMTimeRange video_timeRange = CMTimeRangeMake(kCMTimeZero,audioAsset.duration);
+
+    AVAssetTrack *assetVideoTrack = [videoAsset tracksWithMediaType:AVMediaTypeVideo].lastObject;
+    
+    
+    //Now we are creating the second AVMutableCompositionTrack containing our video and add it to our AVMutableComposition object.
+    AVMutableCompositionTrack *a_compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+    [a_compositionVideoTrack insertTimeRange:video_timeRange ofTrack:[[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] atTime:kCMTimeZero error:nil];
+    
+    if (assetVideoTrack && a_compositionVideoTrack) {
+       [a_compositionVideoTrack setPreferredTransform:assetVideoTrack.preferredTransform];
+    }
+
+    //decide the path where you want to store the final video created with audio and video merge.ß
+    NSURL *outputFileUrl = [NSURL fileURLWithPath:savePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:savePath])
+        [[NSFileManager defaultManager] removeItemAtPath:savePath error:nil];
+
+    //Now create an AVAssetExportSession object that will save your final video at specified path.
+    AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
+    _assetExport.outputFileType = @"com.apple.quicktime-movie";
+    _assetExport.outputURL = outputFileUrl;
+
+    [_assetExport exportAsynchronouslyWithCompletionHandler:
+     ^(void ) {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             completionBlock();
+         });
+     }
+     ];
+}
+
 @end

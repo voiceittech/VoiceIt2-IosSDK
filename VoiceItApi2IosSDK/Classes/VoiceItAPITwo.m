@@ -9,6 +9,7 @@
 #import "VoiceItAPITwo.h"
 #import "Styles.h"
 NSString * const host = @"https://api.voiceit.io/";
+NSString * const livenessHost = @"https://liveness.voiceit.io/";
 NSString * const platformVersion = @"2.0.9";
 NSString * const platformId = @"41";
 @implementation VoiceItAPITwo
@@ -1247,6 +1248,48 @@ NSString * const platformId = @"41";
     [task resume];
 }
 
+- (void)faceVerificationWithLiveness:(NSString *)userId
+               videoPath:(NSString*)videoPath
+                callback:(void (^)(NSString *))callback
+                lcoId: (NSString *) lcoId
+{
+
+    if([userId isEqualToString:@""] || ![[self getFirst:userId numChars:4] isEqualToString:@"usr_"] || lcoId == nil){
+        @throw [NSException exceptionWithName:@"Cannot Call Face Verification"
+                                       reason:@"Invalid userId passed"
+                                     userInfo:nil];
+        return;
+    }
+
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[self buildLivenessURL:@"face"]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"POST"];
+
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+
+    NSDictionary *params = @{@"userId": userId, @"lcoId": lcoId};
+    NSMutableData *body = [NSMutableData data];
+    [self addParamsToBody:body parameters:params];
+    [self addFileToBody:body filePath: videoPath fieldName:@"file"];
+    [self endBody:body];
+
+    NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *result =
+        [[NSString alloc] initWithData:data
+                              encoding:NSUTF8StringEncoding];
+        if(callback){
+            callback(result);
+        }
+    }];
+
+    [task resume];
+}
+
 - (void)videoVerification:(NSString *)userId
           contentLanguage:(NSString*)contentLanguage
                 imageData:(NSData*)imageData
@@ -1333,6 +1376,43 @@ NSString * const platformId = @"41";
     }];
     [task resume];
 }
+
+- (void)videoVerificationWithLiveness:(NSString *)lcoId
+                               userId:(NSString*)userId
+          contentLanguage:(NSString*)contentLanguage
+                videoPath:(NSString*)videoPath
+                   phrase:(NSString*)phrase
+                 callback:(void (^)(NSString *))callback {
+
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; charset=utf-8; boundary=%@", self.boundary];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL:[[NSURL alloc] initWithString:[self buildLivenessURL:@"video"]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"POST"];
+
+    [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+
+    NSDictionary *params = @{@"contentLanguage" : contentLanguage, @"lcoId": lcoId, @"phrase" : phrase, @"userId":userId };
+    NSMutableData *body = [NSMutableData data];
+
+    [self addParamsToBody:body parameters:params];
+    [self addFileToBody:body filePath:videoPath fieldName:@"file"];
+    [self endBody:body];
+
+    NSURLSessionDataTask *task =  [session uploadTaskWithRequest:request fromData:body completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSString *result =
+        [[NSString alloc] initWithData:data
+                              encoding:NSUTF8StringEncoding];
+        if(callback){
+            callback(result);
+        }
+    }];
+    [task resume];
+}
+
 
 #pragma mark - Identification API Calls
 - (void)voiceIdentification:(NSString *)groupId
@@ -1556,6 +1636,17 @@ NSString * const platformId = @"41";
     return [[NSString alloc] initWithFormat:@"%@%@", host, endpoint];
 }
 
+-(NSString*)buildLivenessURLForCountry:(NSString*)countryCode withUserID: (NSString *) userID
+{
+    return [[NSString alloc] initWithFormat:@"%@%@/%@",livenessHost, userID, countryCode];
+}
+
+-(NSString*)buildLivenessURL: (NSString*)type
+{
+    NSString* liveness = [[NSString alloc] initWithFormat:@"%@%@", livenessHost, type];
+    return liveness;
+}
+
 -(NSString*)createAuthHeader
 {
     // Create NSData object
@@ -1651,4 +1742,33 @@ NSString * const platformId = @"41";
     CFRelease(UTI);
     return mimetype;
 }
+
+#pragma mark - Liveness API calls
+- (void)getLivenessID:(NSString *)userId
+                countryCode: (NSString *) countryCode
+                callback:(void (^)(NSString *))callback
+{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                    initWithURL: [[NSURL alloc] initWithString:[self buildLivenessURLForCountry:countryCode withUserID:userId]]];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [request setHTTPMethod:@"GET"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request addValue:platformId forHTTPHeaderField:@"platformId"];
+    [request addValue:platformVersion forHTTPHeaderField:@"platformVersion"];
+    [request addValue:self.authHeader forHTTPHeaderField:@"Authorization"];
+
+    NSURLSessionDataTask *task =
+    [session dataTaskWithRequest:request
+               completionHandler:^(NSData *data, NSURLResponse *response,
+                                   NSError *error) {
+
+                   NSString *result =
+                   [[NSString alloc] initWithData:data
+                                         encoding:NSUTF8StringEncoding];
+                   callback(result);
+               }];
+    [task resume];
+}
+
 @end

@@ -22,6 +22,7 @@
 "VOICE_SETUP_SUBTITLE" = "This lets you log in by verifying your voice";
 "VOICE_READY" = "Voice Verification is Ready";
 "VOICE_READY_SUBTITLE" = "You can now use your voice instead of a password to securely log in anytime";
+"CHECKING" = "Checking";
 
 /* Prompts for Enrollment, Verification & Identification Flow */
 "LOOK_INTO_CAM" = "Please look into the camera";
