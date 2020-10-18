@@ -288,7 +288,7 @@
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
         NSError *error;
         AVAudioSession *session = [AVAudioSession sharedInstance];
-        [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
         self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:&error];
         self.player.numberOfLoops = 0; //Infinite
         [self.player play];
