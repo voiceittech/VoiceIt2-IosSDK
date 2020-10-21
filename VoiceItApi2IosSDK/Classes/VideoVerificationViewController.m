@@ -513,12 +513,12 @@
         }
         if(self.verificationStarted == NO || [self.cancelButton.titleLabel.text isEqual:@"Cancel"]){
             [self dismissViewControllerAnimated:YES completion:^{
-
+                [self userVerificationCancelled]();
             }];
         }
         if([self.cancelButton.titleLabel.text isEqual:@"Done"]){
             [self dismissViewControllerAnimated:YES completion:^{
-
+                [self userVerificationSuccessful](0,0,self.result);
             }];
         }
     }
@@ -676,7 +676,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self showLoading];
     self.hasSessionEnded = YES;
     // reset this flag to NO when finished processing the response
-    self.savedVideoPath = [Utilities pathForTemporaryMergedFileWithSuffix:@"mp4"];
+    self.savedVideoPath = [Utilities pathForTemporaryMergedFileWithSuffix:@"mov"];
     
     if(self.doLivenessDetection){
         [Utilities mergeAudio:self.audioPath withVideo:self.videoPath andSaveToPathUrl:self.savedVideoPath completion:^ {

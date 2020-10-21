@@ -135,12 +135,12 @@
 
 -(void)setLivenessChallengeMessages{
     
-    float time = [self.livenessChallengeTime floatValue] + 0.5;
+    float time = [self.livenessChallengeTime floatValue];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, time * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self stopRecording];
         [self clearCircleForAnimation];
         [self.messageLabel setText:@""];
         [self showLoading];
-        [self stopRecording];
     });
     
     [self setMessage:[self.lcoStrings firstObject]];
@@ -369,7 +369,7 @@
       kCVPixelBufferPixelFormatTypeKey,
       nil]];
     
-    self.videoPath = [Utilities pathForTemporaryFileWithSuffix:@"mp4"];
+    self.videoPath = [Utilities pathForTemporaryFileWithSuffix:@"mov"];
     NSURL *videoURL = [NSURL fileURLWithPath:self.videoPath];
     /* Asset writer with MPEG4 format*/
     self.assetWriterMyData = [[AVAssetWriter alloc]
@@ -432,7 +432,6 @@
 
 -(void)sendPhoto{
     [self showLoading];
-    self.isProcessing = YES;
     if(!self.continueRunning){
         return;
     }
@@ -485,11 +484,8 @@
                         [self startRecording];
                     } else{
                         if(!self.isProcessing){
-                            [self setMessage: self.livenessInstruction];
+                           [self setMessage: self.livenessInstruction];
                         }
-                        dispatch_async(dispatch_get_main_queue(),^{
-                            [self.cancelButton setTitle: [ResponseManager getMessage:@"Continue"] forState:UIControlStateNormal];
-                        });
                     }
                 }
             }];
@@ -501,7 +497,8 @@
 
 -(void)startRecording {
     self.isRecording = YES;
-    
+    self.isProcessing = YES;
+
     if(self.doLivenessDetection && self.isChallengeRetrieved){
         [self startWritingToVideoFile];
         [self setLivenessChallengeMessages];
@@ -561,7 +558,11 @@
 
 -(void)stopRecording{
     self.isRecording = NO;
+    if(self.doLivenessDetection){
+        [self setEnoughRecordingTimePassed:YES];
+    }else{
     [self setEnoughRecordingTimePassed:NO];
+    }
     [self stopWritingToVideoFile];
 }
 
@@ -589,10 +590,12 @@
         }
         if(self.verificationStarted == NO || [self.cancelButton.titleLabel.text isEqual:@"Cancel"]){
             [self dismissViewControllerAnimated:YES completion:^{
+                [self userVerificationCancelled]();
             }];
         }
         if([self.cancelButton.titleLabel.text isEqual:@"Done"]){
             [self dismissViewControllerAnimated:YES completion:^{
+                [self userVerificationSuccessful](0,self.result);
             }];
         }
     }
@@ -682,7 +685,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         if(self.assetWriterInput.readyForMoreMediaData){
             if(self.pixelBufferAdaptor != nil){
                 [self.pixelBufferAdaptor appendPixelBuffer:imageBuffer
-                                      withPresentationTime:CMTimeMake(frameNumber, 30)];
+                                      withPresentationTime:CMTimeMake(frameNumber, 25)];
                 frameNumber++;
             }
         }
