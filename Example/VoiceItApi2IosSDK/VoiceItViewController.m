@@ -131,6 +131,7 @@
     [self.myVoiceIt encapsulatedFaceVerification:self.TEST_USER_ID
                              doLivenessDetection:self.livenessToggle.isOn
                                   doAudioPrompts:self.audioPromptsToggle.isOn
+                                 contentLanguage:self.TEST_CONTENT_LANGUAGE
     userVerificationCancelled:^{
         NSLog(@"User Face Verification Cancelled");
     } userVerificationSuccessful:^(float faceConfidence , NSString * jsonResponse){

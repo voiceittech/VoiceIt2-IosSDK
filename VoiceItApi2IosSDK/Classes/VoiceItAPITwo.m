@@ -864,6 +864,7 @@ NSString * const platformId = @"41";
 - (void)encapsulatedFaceVerification:(NSString *)userId
                  doLivenessDetection:(bool)doLivenessDetection
                       doAudioPrompts:(bool)doAudioPrompts
+                     contentLanguage:(NSString *) contentLanguage
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed
@@ -872,6 +873,7 @@ NSString * const platformId = @"41";
                    doLivenessDetection:(bool)doLivenessDetection
                         doAudioPrompts:(bool)doAudioPrompts
                        numFailsAllowed:3
+                       contentLanguage:contentLanguage
          livenessChallengeFailsAllowed:0
              userVerificationCancelled:userVerificationCancelled
             userVerificationSuccessful:userVerificationSuccessful userVerificationFailed:userVerificationFailed
@@ -882,6 +884,7 @@ NSString * const platformId = @"41";
                  doLivenessDetection:(bool)doLivenessDetection
                       doAudioPrompts:(bool)doAudioPrompts
                      numFailsAllowed:(int)numFailsAllowed
+                     contentLanguage:(NSString *)contentLanguage
        livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
@@ -900,6 +903,7 @@ NSString * const platformId = @"41";
     faceVerificationVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     faceVerificationVC.userToVerifyUserId = userId;
     faceVerificationVC.userVerificationCancelled = userVerificationCancelled;
+    faceVerificationVC.contentLanguage = contentLanguage;
     faceVerificationVC.userVerificationSuccessful = userVerificationSuccessful;
     faceVerificationVC.userVerificationFailed = userVerificationFailed;
     faceVerificationVC.voiceItMaster = self;

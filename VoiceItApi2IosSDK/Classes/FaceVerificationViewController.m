@@ -26,7 +26,6 @@
 @property BOOL isChallengeRetrieved;
 @property NSString *lcoId;
 @property NSString *result;
-@property NSString *countryCode;
 @property NSString *uiMessage;
 @property NSString *livenessInstruction;
 @property NSString *audioPromptType;
@@ -66,7 +65,6 @@
     self.isProcessing = NO;
     self.isReadyToWrite = NO;
     self.enoughRecordingTimePassed = NO;
-    self.countryCode = @"en-US";
     
     // Do any additional setup after loading the view.
     [self.progressView setHidden:YES];
@@ -167,7 +165,7 @@
     if(!self.doLivenessDetection) return;
     
     [[self myVoiceIt] getLivenessID:self.userToVerifyUserId countryCode:
-     @"en-US" callback:^(NSString *response) {
+     self.contentLanguage callback:^(NSString *response) {
         
         NSDictionary *data = [Utilities getJSONObject:response];
         self.lcoStrings = [data valueForKey:@"lcoStrings"];
@@ -304,37 +302,37 @@
         NSURL * bundleURL = [[podBundle resourceURL] URLByAppendingPathComponent:@"VoiceItApi2IosSDK.bundle"];
         NSString* soundFilePath;
         if([lco isEqualToString:@"FACE_LEFT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"FACE_RIGHT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"SMILE"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/SMILE.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/SMILE.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"FACE_NEUTRAL"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_NEUTRAL.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_NEUTRAL.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"FACE_TILT_RIGHT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_TILT_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_TILT_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"FACE_TILT_LEFT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_TILT_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_TILT_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"FACE_UP"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_UP.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_UP.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"FACE_DOWN"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_DOWN.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_DOWN.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"LIVENESS_FAILED"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_FAILED.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_FAILED.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"LIVENESS_SUCCESS"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_SUCCESS.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_SUCCESS.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         else if([lco isEqualToString:@"LIVENESS_TRY_AGAIN"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_TRY_AGAIN.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.countryCode];
+            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_TRY_AGAIN.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
         }
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
         NSError *error;

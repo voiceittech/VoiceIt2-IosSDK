@@ -185,20 +185,22 @@
 - (void)encapsulatedFaceVerification:(NSString *)userId
                  doLivenessDetection:(bool)doLivenessDetection
                       doAudioPrompts:(bool)doAudioPrompts
+                      contentLanguage:(NSString *)contentLanguage
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
 
-- (void)encapsulatedFaceVerification:(NSString *)userId
+- (void)encapsulatedFaceVerification:(NSString*)userId
                  doLivenessDetection:(bool)doLivenessDetection
                       doAudioPrompts:(bool)doAudioPrompts
                      numFailsAllowed:(int)numFailsAllowed
+                     contentLanguage:(NSString*)contentLanguage
        livenessChallengeFailsAllowed:(int)livenessChallengeFailsAllowed
            userVerificationCancelled:(void (^)(void))userVerificationCancelled
           userVerificationSuccessful:(void (^)(float, NSString *))userVerificationSuccessful
               userVerificationFailed:(void (^)(float, NSString *))userVerificationFailed;
 
-- (void)encapsulatedVideoVerification:(NSString *)userId
+- (void)encapsulatedVideoVerification:(NSString*)userId
                       contentLanguage:(NSString*)contentLanguage
                      voicePrintPhrase:(NSString*)voicePrintPhrase
                   doLivenessDetection:(bool)doLivenessDetection
