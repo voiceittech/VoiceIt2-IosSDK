@@ -111,9 +111,12 @@
     self.result = result;
     
     if(!self.success && retry){
-        [self.myVoiceIt faceVerificationWithLiveness:self.userToVerifyUserId videoPath:self.videoPath callback:^(NSString *jsonResponse){
-            [self handleLivenessResponse: jsonResponse];
-        } lcoId: self.lcoId];
+        [self removeLoading];
+        [Utilities deleteFile:self.videoPath];
+        [self playSound:self.audioPromptType];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self startRecording];
+        });
     }
     
     if(!self.success && !retry){
@@ -300,40 +303,7 @@
         });
         NSBundle * podBundle = [NSBundle bundleForClass: self.classForCoder];
         NSURL * bundleURL = [[podBundle resourceURL] URLByAppendingPathComponent:@"VoiceItApi2IosSDK.bundle"];
-        NSString* soundFilePath;
-        if([lco isEqualToString:@"FACE_LEFT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"FACE_RIGHT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"SMILE"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/SMILE.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"FACE_NEUTRAL"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_NEUTRAL.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"FACE_TILT_RIGHT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_TILT_RIGHT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"FACE_TILT_LEFT"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_TILT_LEFT.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"FACE_UP"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_UP.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"FACE_DOWN"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/FACE_DOWN.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"LIVENESS_FAILED"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_FAILED.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"LIVENESS_SUCCESS"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_SUCCESS.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
-        else if([lco isEqualToString:@"LIVENESS_TRY_AGAIN"]){
-            soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/LIVENESS_TRY_AGAIN.wav",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage];
-        }
+        NSString* soundFilePath = [NSString stringWithFormat:@"%@/wav/%@/%@",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath],self.contentLanguage, lco];
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
         NSError *error;
         AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -345,7 +315,7 @@
 }
 
 -(void) illuminateCircles:(NSString*) lcoSignal{
-    [self playSound:lcoSignal];
+    [self playSound: [NSString stringWithFormat:@"%@.wav",lcoSignal]];
     if ([lcoSignal isEqualToString:@"FACE_UP"]) {
         self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 1.2 * M_PI endAngle: 1.8 * M_PI clockwise:YES].CGPath;
         self.progressCircle.drawsAsynchronously = YES;
@@ -508,7 +478,7 @@
                         [self startRecording];
                     } else{
                         if(!self.isProcessing){
-                           [self setMessage: self.livenessInstruction];
+                            [self setMessage: self.livenessInstruction];
                         }
                     }
                 }
@@ -522,7 +492,7 @@
 -(void)startRecording {
     self.isRecording = YES;
     self.isProcessing = YES;
-
+    
     if(self.doLivenessDetection && self.isChallengeRetrieved){
         [self startWritingToVideoFile];
         [self setLivenessChallengeMessages];
@@ -585,7 +555,7 @@
     if(self.doLivenessDetection){
         [self setEnoughRecordingTimePassed:YES];
     }else{
-    [self setEnoughRecordingTimePassed:NO];
+        [self setEnoughRecordingTimePassed:NO];
     }
     [self stopWritingToVideoFile];
 }
