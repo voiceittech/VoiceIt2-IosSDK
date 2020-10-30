@@ -782,6 +782,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if(self.doLivenessDetection){
         self.livenessDetector.continueRunning = NO;
         self.livenessDetector = nil;
+        [self.player stop];
+        self.player = nil;
     }
 }
 

@@ -26,6 +26,7 @@
 @property BOOL isChallengeRetrieved;
 @property NSString *lcoId;
 @property NSString *result;
+@property BOOL isSuccess;
 @property NSString *uiMessage;
 @property NSString *livenessInstruction;
 @property NSString *audioPromptType;
@@ -64,6 +65,7 @@
     self.failCounter = 0;
     self.isProcessing = NO;
     self.isReadyToWrite = NO;
+    self.isSuccess = NO;
     self.enoughRecordingTimePassed = NO;
     
     // Do any additional setup after loading the view.
@@ -120,7 +122,7 @@
             [self startRecording];
         });
     }
-    
+
     if(!self.success && !retry){
         [self removeLoading];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -131,9 +133,10 @@
     }
     
     if(self.success){
+        self.isProcessing = NO;
+        self.isSuccess = YES;
         [self removeLoading];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.cancelButton setTitle:[ResponseManager getMessage:@"Done"] forState:UIControlStateNormal];
             [self.messageLabel setText:self.uiMessage];
         });
         [self playSound:self.audioPromptType];
@@ -634,6 +637,9 @@ didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects
         if(self.isProcessing){
             [self.cancelButton setTitle:[ResponseManager getMessage:@"Cancel"] forState:UIControlStateNormal];
         }
+        if(self.isSuccess){
+            [self.cancelButton setTitle:[ResponseManager getMessage:@"Done"] forState:UIControlStateNormal];
+        }
     }
     
     else{
@@ -706,6 +712,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if(self.doLivenessDetection){
         self.livenessDetector.continueRunning = NO;
         self.livenessDetector = nil;
+        [self.player stop];
+        self.player = nil;
     }
 }
 @end
