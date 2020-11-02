@@ -28,7 +28,7 @@ s.static_framework = true
 s.source_files = 'VoiceItApi2IosSDK/Classes/**/*.{h,m}'
 
 s.resource_bundles = {
-  'VoiceItApi2IosSDK' => ['VoiceItApi2IosSDK/Classes/**/*.{lproj,storyboard,xib,xcassets,strings}','VoiceItApi2IosSDK/Resources/*.wav']
+  'VoiceItApi2IosSDK' => ['VoiceItApi2IosSDK/Classes/**/*.{lproj,storyboard,xib,xcassets,strings}','VoiceItApi2IosSDK/Resources/**/*.wav']
 }
 
 s.frameworks = 'UIKit', 'AVFoundation'
