@@ -1,4 +1,7 @@
 #
+#  Created by VoiceIt Technologies, LLC
+#  Copyright © 2020 VoiceIt Technologies LLC. All rights reserved.
+#
 # Be sure to run `pod lib lint VoiceItApi2IosSDK.podspec' to ensure this is a
 # valid spec before submitting.
 #
@@ -8,7 +11,7 @@
 
 Pod::Spec.new do |s|
 s.name             = 'VoiceItApi2IosSDK'
-s.version          = '2.1.5'
+s.version          = '2.1.6'
 s.summary          = 'A pod that lets you add voice and face verification and identification to your iOS apps, brought to you by VoiceIt.'
 
 # This description is used to generate tags and improve search results.
