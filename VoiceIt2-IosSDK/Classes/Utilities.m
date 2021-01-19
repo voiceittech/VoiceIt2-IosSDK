@@ -210,8 +210,7 @@
     NSLog(@"video_url: %@", video_url);
     NSLog(@"videoAsset: %@", videoAsset);
     NSLog(@"video_timeRange: %f", CMTimeGetSeconds(video_timeRange.duration));
-    NSLog(@"array count => %d",[videoAsset tracksWithMediaType:AVMediaTypeVideo].count);
-
+    
     AVAssetTrack *assetVideoTrack = [videoAsset tracksWithMediaType:AVMediaTypeVideo].lastObject;
         
     //Now we are creating the second AVMutableCompositionTrack containing our video and add it to our AVMutableComposition object.
