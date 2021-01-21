@@ -539,11 +539,6 @@
     }
 }
 
--(void)stopRecording{
-    self.isRecording = NO;
-    self.progressCircle.strokeColor = [UIColor clearColor].CGColor;
-}
-
 - (IBAction)cancelClicked:(id)sender{
     if(!self.doLivenessDetection){
         [self dismissViewControllerAnimated:YES completion:^{
@@ -713,24 +708,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         return;
     }
     [self setAudioSessionInactive];
-    [self stopRecording];
+    self.isRecording = NO;
+    self.progressCircle.strokeColor = [UIColor clearColor].CGColor;
     [self stopWritingToVideoFile];
     [self showLoading];
     self.hasSessionEnded = YES;
-    // reset this flag to NO when finished processing the response
-    self.savedVideoPath = [Utilities pathForTemporaryMergedFileWithSuffix:@"mov"];
     
-    if(self.doLivenessDetection){
-        [Utilities mergeAudio:self.audioPath withVideo:self.videoPath andSaveToPathUrl:self.savedVideoPath completion:^ {
-            
-            [self.myVoiceIt videoVerificationWithLiveness:self.lcoId userId: self.userToVerifyUserId contentLanguage:self.contentLanguage videoPath:self.savedVideoPath phrase:self.thePhrase pageCategory:@"verification" callback:^(NSString * result) {
-                [self handleLivenessResponse: result];
-            }];
-        }];
-
-    }
-    
-    else{
+    if(!self.doLivenessDetection){
         [self.myVoiceIt videoVerification:self.userToVerifyUserId contentLanguage: self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath phrase:self.thePhrase callback:^(NSString * jsonResponse){
             [Utilities deleteFile:self.audioPath];
             self.imageNotSaved = YES;
@@ -793,16 +777,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 -(void)stopWritingToVideoFile {
     self.isReadyToWrite = NO;
     [self.assetWriterMyData finishWritingWithCompletionHandler:^{
-        NSLog(@"Finished writing...checking completion status...");
-         if (self.assetWriterMyData.status != AVAssetWriterStatusFailed && self.assetWriterMyData.status == AVAssetWriterStatusCompleted)
-         {
-             NSLog(@"Video writing success");
-         } else
-         {
-             NSLog(@"Video writing failed: %@", self.assetWriterMyData.error);
-         }
         if(!self.continueRunning){
             return;
+        }
+        if(self.doLivenessDetection){
+            self.savedVideoPath = [Utilities pathForTemporaryMergedFileWithSuffix:@"mov"];
+            [Utilities mergeAudio:self.audioPath withVideo:self.videoPath andSaveToPathUrl:self.savedVideoPath completion:^ {
+                [self.myVoiceIt videoVerificationWithLiveness:self.lcoId userId: self.userToVerifyUserId contentLanguage:self.contentLanguage videoPath:self.savedVideoPath phrase:self.thePhrase pageCategory:@"verification" callback:^(NSString * result) {
+                    [self handleLivenessResponse: result];
+                }];
+            }];
         }
     }];
 }
