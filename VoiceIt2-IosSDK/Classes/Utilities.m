@@ -115,46 +115,6 @@
     return result;
 }
 
-+(NSString *)pathForTemporaryMergedFileWithSuffix:(NSString *)suffix
-{
-//    NSString *  result;
-    CFUUIDRef   uuid;
-    CFStringRef uuidStr;
-    
-    uuid = CFUUIDCreate(NULL);
-    assert(uuid != NULL);
-    
-    uuidStr = CFUUIDCreateString(NULL, uuid);
-    assert(uuidStr != NULL);
-    
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-        NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/Recorded"];
-        NSFileManager *fileManager  = [NSFileManager defaultManager];
-
-        NSError *error = nil;
-        if (![fileManager fileExistsAtPath:folderPath])
-            [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-
-    NSString *filePath = [folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuidStr, suffix]];
-    CFRelease(uuidStr);
-    CFRelease(uuid);
-
-        return filePath;
-    
-    
-    
-//
-//
-//    result = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", uuidStr, suffix]];
-//    assert(result != nil);
-//
-//    CFRelease(uuidStr);
-//    CFRelease(uuid);
-//
-//    return result;
-}
 
 +(void)deleteFile:(NSString *)filePath{
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])

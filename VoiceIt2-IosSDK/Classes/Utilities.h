@@ -23,12 +23,10 @@
 +(NSDictionary *)getRecordingSettings;
 +(UIStoryboard *)getVoiceItStoryBoard;
 +(NSString *)pathForTemporaryFileWithSuffix:(NSString *)suffix;
-+(NSString *)pathForTemporaryMergedFileWithSuffix:(NSString *)suffix;
 +(void)deleteFile:(NSString *)filePath;
 +(void)setupFaceRectangle:(CALayer *)faceRectangleLayer;
 +(void)showFaceRectangle:(CALayer *)faceRectangleLayer face:(AVMetadataObject *)face;
 +(void)setBottomCornersForCancelButton:(UIButton *)cancelButton;
 +(bool)isBadResponseCode:(NSString*) responseCode;
 +(CGFloat)normalizedPowerLevelFromDecibels:(AVAudioRecorder *)audioRecorder;
-+(void) mergeAudio:(NSString *) audURL withVideo:(NSString *) vidURL andSaveToPathUrl:(NSString *) savePath completion:(void (^)(void))completionBlock;
 @end
