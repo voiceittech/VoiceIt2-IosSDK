@@ -93,7 +93,7 @@
     self.success = [[jsonObj objectForKey:@"success"] boolValue];
     self.audioPromptType = [jsonObj objectForKey:@"audioPrompt"];
     self.result = result;
-        
+    
     if(!self.success && retry){
         [self removeLoading];
         [self playSound:self.audioPromptType];
@@ -152,7 +152,6 @@
             [self.cancelButton setTitle:[ResponseManager getMessage:@"Continue"] forState:UIControlStateNormal];
         });
     } onFailed:^(NSError * error) {
-        NSLog(@"%@",error);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.messageLabel setText: @"Liveness service failed. Please Try again Later."];
             [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
@@ -315,7 +314,9 @@
 
 -(void) stopRecordingVideoLiveness
 {
+    [self showLoading];
     [self.movieFileOutput stopRecording];
+    [self clearCircleForAnimation];
 }
 
 
@@ -500,13 +501,10 @@
 }
 
 -(void)animateProgressCircle{
+    if(self.doLivenessDetection){
+        [self clearCircleForAnimation];
+      }
     dispatch_async(dispatch_get_main_queue(), ^{
-        if(self.doLivenessDetection){
-            self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 1.5*M_PI endAngle: (2 * M_PI)+(1.5*M_PI) clockwise:YES].CGPath;
-            self.progressCircle.drawsAsynchronously = YES;
-            self.progressCircle.borderWidth = 20;
-            self.progressCircle.fillColor =  [UIColor clearColor].CGColor;
-        }
         self.progressCircle.strokeColor = [Styles getMainCGColor];
         self.progressCircle.strokeColor = [Styles getMainCGColor];
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
@@ -767,6 +765,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         [self.player stop];
         self.player = nil;
     }
+}
+
+-(void)clearCircleForAnimation {
+    self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 1.5*M_PI endAngle: (2 * M_PI)+(1.5*M_PI)  clockwise:YES].CGPath;
+    self.progressCircle.drawsAsynchronously = YES;
+    self.progressCircle.borderWidth = 20;
+    self.progressCircle.strokeColor =  [UIColor clearColor].CGColor;
+    self.progressCircle.strokeColor =  [UIColor clearColor].CGColor;
+    self.progressCircle.fillColor =  [UIColor clearColor].CGColor;
+    self.progressCircle.fillColor =  [UIColor clearColor].CGColor;
 }
 
 @end
