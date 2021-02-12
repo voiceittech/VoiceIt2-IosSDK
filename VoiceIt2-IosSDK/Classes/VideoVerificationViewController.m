@@ -97,6 +97,9 @@
     if(!self.success && retry){
         [self removeLoading];
         [self playSound:self.audioPromptType];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.messageLabel setText:self.uiMessage];
+        });
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [self startVerificationProcess];
         });
@@ -121,6 +124,7 @@
         [self playSound:self.audioPromptType];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.messageLabel setText:self.uiMessage];
+            [self.cancelButton setHidden:YES];
         });
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -169,12 +173,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self illuminateCircles:[self.lco firstObject]];
     });
-    
     float timeToStop = [self.livenessChallengeTime floatValue] + 5.0;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeToStop * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self stopRecordingVideoLiveness];
     });
-    
     for(int i=1;i<self.lco.count;i++){
         float time = [self.livenessChallengeTime floatValue]/(self.lco.count);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, time * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -190,12 +192,10 @@
     // Setup Awesome Transparent Background and radius for Verification Box
     if (!UIAccessibilityIsReduceTransparencyEnabled()) {
         self.view.backgroundColor = [UIColor clearColor];
-        
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         blurEffectView.frame = self.view.bounds;
         blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
         [self.view insertSubview:blurEffectView atIndex:0];
     } else {
         [[self view] setBackgroundColor:[UIColor colorWithRed:0.58 green:0.65 blue:0.65 alpha:0.6]];
@@ -394,8 +394,13 @@
         self.progressCircle.borderWidth = 20;
         self.progressCircle.drawsAsynchronously = YES;
         self.progressCircle.fillColor =  [UIColor greenColor].CGColor;
-    }else if([lcoSignal isEqualToString:@"FACE_TILT_RIGHT"]){
+    } else if([lcoSignal isEqualToString:@"FACE_TILT_RIGHT"]){
         self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 0 endAngle: -0.4 * M_PI clockwise:NO].CGPath;
+        self.progressCircle.borderWidth = 20;
+        self.progressCircle.drawsAsynchronously = YES;
+        self.progressCircle.fillColor =  [UIColor greenColor].CGColor;
+    }  else if([lcoSignal isEqualToString:@"SMILE"]){
+        self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 0 endAngle: 2*M_PI clockwise:NO].CGPath;
         self.progressCircle.borderWidth = 20;
         self.progressCircle.drawsAsynchronously = YES;
         self.progressCircle.fillColor =  [UIColor greenColor].CGColor;

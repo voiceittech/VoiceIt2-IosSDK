@@ -391,8 +391,13 @@
         self.progressCircle.borderWidth = 20;
         self.progressCircle.drawsAsynchronously = YES;
         self.progressCircle.fillColor =  [UIColor greenColor].CGColor;
-    }else if([lcoSignal isEqualToString:@"FACE_TILT_RIGHT"]){
+    } else if([lcoSignal isEqualToString:@"FACE_TILT_RIGHT"]){
         self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 0 endAngle: -0.4*M_PI clockwise:NO].CGPath;
+        self.progressCircle.borderWidth = 20;
+        self.progressCircle.drawsAsynchronously = YES;
+        self.progressCircle.fillColor =  [UIColor greenColor].CGColor;
+    } else if([lcoSignal isEqualToString:@"SMILE"]){
+        self.progressCircle.path = [UIBezierPath bezierPathWithArcCenter: self.cameraCenterPoint radius:(self.backgroundWidthHeight / 2) startAngle: 0 endAngle: 2*M_PI clockwise:NO].CGPath;
         self.progressCircle.borderWidth = 20;
         self.progressCircle.drawsAsynchronously = YES;
         self.progressCircle.fillColor =  [UIColor greenColor].CGColor;
