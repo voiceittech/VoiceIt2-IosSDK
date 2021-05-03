@@ -11,6 +11,8 @@
 @interface VideoEnrollmentViewController ()
 @end
 
+float initialBrightnessVE = 0.0;
+
 @implementation VideoEnrollmentViewController
 
 #pragma mark - Life Cycle Methods
@@ -25,6 +27,8 @@
 }
 
 - (void)viewDidLoad {
+    initialBrightnessVE = [UIScreen mainScreen].brightness;
+    [[UIScreen mainScreen] setBrightness: 1.0];
     [super viewDidLoad];
     self.messageLabel.textColor  = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setHidesBackButton: YES];
@@ -58,6 +62,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [[UIScreen mainScreen] setBrightness: initialBrightnessVE];
     [super viewWillDisappear:animated];
     [self cleanupEverything];
 }

@@ -38,6 +38,8 @@
 @property BOOL success;
 @end
 
+float initialBrightnessFV = 0.0;
+
 @implementation FaceVerificationViewController
 
 #pragma mark - Life Cycle Methods
@@ -60,6 +62,8 @@
 
 - (void) viewDidLoad {
     NSLog(@"View Did Load");
+    initialBrightnessFV = [UIScreen mainScreen].brightness;
+    [[UIScreen mainScreen] setBrightness: 1.0];
     [super viewDidLoad];
     self.myVoiceIt = (VoiceItAPITwo *) [self voiceItMaster];
     // Initialize Boolean and All
@@ -100,6 +104,7 @@
 
 -(void) viewWillDisappear:(BOOL)animated{
     NSLog(@"view Will Disappear");
+    [[UIScreen mainScreen] setBrightness: initialBrightnessFV];
     [super viewWillDisappear:animated];
     [self cleanupEverything];
 }

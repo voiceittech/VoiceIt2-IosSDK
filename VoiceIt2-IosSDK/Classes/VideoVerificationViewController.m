@@ -38,6 +38,8 @@
 @property BOOL success;
 @end
 
+float initialBrightnessVV = 0.0;
+
 @implementation VideoVerificationViewController
 
 #pragma mark - Life Cycle Methods
@@ -59,6 +61,8 @@
 }
 
 - (void) viewDidLoad {
+    initialBrightnessVV = [UIScreen mainScreen].brightness;
+    [[UIScreen mainScreen] setBrightness: 1.0];
     NSLog(@"View Did Load");
     [super viewDidLoad];
     self.myVoiceIt = (VoiceItAPITwo *) [self voiceItMaster];
@@ -100,6 +104,7 @@
 }
 
 -(void) viewWillDisappear:(BOOL)animated{
+    [[UIScreen mainScreen] setBrightness: initialBrightnessVV];
     NSLog(@"View Will Disappear");
     [super viewWillDisappear:animated];
     [self cleanupEverything];

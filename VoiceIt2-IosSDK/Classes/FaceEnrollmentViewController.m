@@ -14,6 +14,8 @@
 @property(nonatomic, strong)  AVAssetWriterInput *assetWriterInput;
 @end
 
+float initialBrightnessFE = 0.0;
+
 @implementation FaceEnrollmentViewController
 
 #pragma mark - Life Cycle Methods
@@ -28,6 +30,8 @@
 }
 
 - (void)viewDidLoad {
+    initialBrightnessFE = [UIScreen mainScreen].brightness;
+    [[UIScreen mainScreen] setBrightness: 1.0];
     [super viewDidLoad];
     self.messageLabel.textColor  = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setHidesBackButton: YES];
@@ -60,6 +64,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [[UIScreen mainScreen] setBrightness: initialBrightnessFE];
     [super viewWillDisappear:animated];
     [self cleanupEverything];
 }

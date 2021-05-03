@@ -18,11 +18,15 @@
 @property(nonatomic, strong) VoiceItAPITwo * myVoiceIt;
 @end
 
+float initialBrightnessVoiceI = 0.0;
+
 @implementation VoiceIdentificationViewController
 
 #pragma mark - Life Cycle Methods
 
 - (void)viewDidLoad {
+    initialBrightnessVoiceI = [UIScreen mainScreen].brightness;
+    [[UIScreen mainScreen] setBrightness: 1.0];
     [super viewDidLoad];
     self.myVoiceIt = (VoiceItAPITwo *) [self voiceItMaster];
     // Initialize Booleans and counters
@@ -43,6 +47,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [[UIScreen mainScreen] setBrightness: initialBrightnessVoiceI];
     [super viewWillDisappear:animated];
     [self cleanupEverything];
 }

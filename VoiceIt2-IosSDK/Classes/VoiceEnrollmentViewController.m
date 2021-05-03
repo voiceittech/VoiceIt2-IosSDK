@@ -13,11 +13,15 @@
 @property (weak, nonatomic) IBOutlet SCSiriWaveformView *waveformView;
 @end
 
+float initialBrightnessVoiceE = 0.0;
+
 @implementation VoiceEnrollmentViewController
 
 #pragma mark - Life Cycle Methods
 
 - (void)viewDidLoad {
+    initialBrightnessVoiceE = [UIScreen mainScreen].brightness;
+    [[UIScreen mainScreen] setBrightness: 1.0];
     [super viewDidLoad];
     self.messageLabel.textColor  = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setHidesBackButton: YES];
@@ -49,6 +53,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [[UIScreen mainScreen] setBrightness: initialBrightnessVoiceE];
     [super viewWillDisappear:animated];
     [self cleanupEverything];
 }
