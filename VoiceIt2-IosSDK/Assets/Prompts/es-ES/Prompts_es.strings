@@ -1,0 +1,87 @@
+
+//  Localizable.strings
+//  VoiceIt2-IosSDK
+//
+//  Created by VoiceIt Technologies, LLC
+//  Copyright (c) 2020 VoiceIt Technologies, LLC. All rights reserved.
+//
+
+/* General Label Text Spanish */
+"CONTINUE" = "Continuar";
+"CANCEL" = "Cancelar";
+"DONE" = "Hecho";
+"VOICE_FACE_SETUP" = "Configurar la verificación facial y por voz";
+"VOICE_FACE_SETUP_SUBTITLE" = "Esto le permite iniciar sesión verificando su rostro y voz";
+"VOICE_FACE_READY" = "La verificación de rostro y voz está lista para usar";
+"VOICE_FACE_READY_SUBTITLE" = "Ahora puede usar su rostro y voz en lugar de una contraseña para iniciar sesión de forma segura en cualquier momento";
+"FACE_SETUP" = "Configurar verificación facial";
+"FACE_SETUP_SUBTITLE" = "Esto le permite iniciar sesión verificando su rostro";
+"FACE_READY" = "La verificación facial está lista";
+"FACE_READY_SUBTITLE" = "Ahora puede usar su rostro en lugar de una contraseña para iniciar sesión de forma segura en cualquier momento";
+"VOICE_SETUP" = "Configurar la verificación de voz";
+"VOICE_SETUP_SUBTITLE" = "Esto le permite iniciar sesión verificando su voz";
+"VOICE_READY" = "La verificación por voz está lista";
+"VOICE_READY_SUBTITLE" = "Ahora puede usar su voz en lugar de una contraseña para iniciar sesión de forma segura en cualquier momento";
+"CHECKING" = "Comprobación";
+
+/* Prompts for Enrollment, Verification & Identification Flow */
+"LOOK_INTO_CAM" = "Por favor mira a la cámara";
+"GET_ENROLLED" = "Ahí lo tienes, vamos a inscribirte";
+"GET_VERIFIED" = "Ahí lo tienes, vamos a verificarte";
+"READY_FOR_VOICE_VERIFICATION" = "Prepárate para verificar tu voz";
+"READY_FOR_VOICE_IDENTIFICATION" = "Prepárese para la identificación por voz";
+"VERIFY" = "Decir\n\"%@\"";
+"IDENTIFY" = "Decir\n\"%@\"";
+"VIDEO_VERIFY_FAILED" = "Verificación de video fallida";
+"VIDEO_IDENTIFY_FAILED" = "Identificación de video fallida";
+"VERIFY_FACE" = "Espere mientras se verifica su rostro";
+"VERIFY_FACE_FAILED" = "Verificación facial fallida";
+"VERIFY_FACE_FAILED_TRY_AGAIN" = "Verificación facial fallida. Intentar otra vez.";
+"IDENTIFY_FACE" = "Espere mientras se identifica su rostro";
+"IDENTIFY_FACE_FAILED" = "Identificación de rostro fallida";
+"IDENTIFY_FACE_FAILED_TRY_AGAIN" = "Identificación de rostro fallida. Intentar otra vez.";
+"ENROLL_0"= "Decir \"%@\" en el iPhone";
+"ENROLL_1"= "Decir \"%@\" de nuevo";
+"ENROLL_2"= "Decir \"%@\" una vez más";
+"FACE_ENROLL"= "Espere a que se registre su rostro";
+"WAITING"= "Espere por favor";
+"WAIT_FOR_FACE_VERIFICATION" = "Espere mientras verificamos su rostro";
+"WAIT_FOR_FACE_IDENTIFICATION" = "Espere mientras identificamos su rostro";
+"TOO_MANY_ATTEMPTS" = "¡Perdón! ¡Fallaste demasiadas veces! Vuelve a intentarlo más tarde.";
+"SUCCESS" = "Has sido verificado exitosamente";
+"SUCCESS_IDENTIFIED" = "Has sido identificado exitosamente";
+
+/* Response Code Based Prompts */
+"FNFD" = "Lo siento, no pude ver tu cara.\nInténtalo de nuevo.";
+"DDNE" = "Perdón, algo salió mal.\nInténtalo de nuevo.";
+"FAIL" = "Fallido.\nInténtalo de nuevo.";
+"IFWD" = "Perdón, algo salió mal.\nInténtalo de nuevo.";
+"SRNR"= "Lo siento, no pude escucharte del todo.\nPor favor habla más alto.";
+"TVER"= "Lo sentimos, no se detectaron suficientes inscripciones de video.\nInscríbase antes de verificar.";
+"NFEF"= "Lo sentimos, no se han detectado suficientes inscripciones de rostros.\nInscríbase antes de verificar.";
+"NFEF_IDENTIFICATION"= "Lo sentimos, no se han detectado suficientes inscripciones de rostros.\nInscríbase antes de la identificación.";
+"NEHSD" = "Lo siento, no pude entender eso.\nPor favor habla más lento.";
+"NSPE" = "Matrícula no similar a matrículas anteriores";
+"STTF" = "Lo siento, no pude entenderte.\nPor favor, asegúrate de decir \"%@\"";
+"SSTQ" = "Lo siento, no pude escucharte del todo.\nPor favor habla más alto.";
+"SSTL" = "¡Oh! Se está volviendo un poco ruidoso aquí.\nIntentemos esto de nuevo, hablando a un volumen normal.";
+"STTF" = "Lo siento, no pude entenderte.\nPor favor, asegúrate de decir \"%@\"";
+"PDNM" = "Lo siento, esa es una frase no válida.\nPor favor, asegúrate de decir \"%@\"";
+"RWPU" = "No utilice grabaciones. Inténtelo de nuevo.";
+"FTMF"= "Asegúrate de que solo tu cara sea visible.\nInténtalo de nuevo.";
+"PNTE"= "Lo sentimos, no se han detectado suficientes inscripciones.\nInscríbase antes de verificar.";
+"PNTE_IDENTIFICATION"= "Lo sentimos, no se han detectado suficientes inscripciones.\nInscríbase antes de la identificación.";
+"GERR"= "Perdón, algo salió mal.\nInténtalo de nuevo.";
+"CONTACT_DEVELOPER" = "Error:\n Pcontrato de arrendamiento con el desarrollador de la aplicación con el código de respuesta \"%@\".";
+
+/* Liveness Prompts */
+"SMILE" = "Por favor sonríe a la cámara";
+"BLINK" = "Parpadea tres veces";
+"FACE_LEFT" = "Por favor, gire la cara hacia la izquierda y hacia atrás.";
+"FACE_RIGHT" = "Por favor, gire la cara hacia la derecha y hacia atrás.";
+"LIVENESS_SUCCESS" = "¡Desafío superado!";
+"LIVENESS_TRY_AGAIN" = "¡Vivacidad fallida! Inténtalo de nuevo";
+
+/* Error Handling */
+"NETWORK_ERROR" = "Asegúrate de estar conectado a Internet.";
+"CREDENTIAL_ERROR" = "Asegúrese de que su ID de usuario y sus credenciales sean correctas";

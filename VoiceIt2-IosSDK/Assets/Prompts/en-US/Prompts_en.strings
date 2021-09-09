@@ -6,7 +6,7 @@
 //  Copyright (c) 2020 VoiceIt Technologies, LLC. All rights reserved.
 //
 
-/* General Label Text */
+/* General Label Text English*/
 "CONTINUE" = "Continue";
 "CANCEL" = "Cancel";
 "DONE" = "Done";

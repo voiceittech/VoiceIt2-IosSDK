@@ -374,7 +374,7 @@ float initialBrightnessFV = 0.0;
         NSBundle * podBundle = [NSBundle bundleForClass: self.classForCoder];
         NSURL * bundleURL = [[podBundle resourceURL] URLByAppendingPathComponent:@"VoiceIt2-IosSDK.bundle"];
         NSString* soundFilePath = [self.contentLanguage isEqualToString:@"es-ES"] ?
-        [NSString stringWithFormat:@"%@/%@",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath], [self getSpanishPrompts:lco]] : [NSString stringWithFormat:@"%@/%@",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath], lco];
+        [NSString stringWithFormat:@"%@/%@",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath], [self getSpanishVoiceOvers:lco]] : [NSString stringWithFormat:@"%@/%@",[[[NSBundle alloc] initWithURL:bundleURL] resourcePath], lco];
         NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
         NSError *error;
         AVAudioSession *session = [AVAudioSession sharedInstance];
@@ -385,7 +385,7 @@ float initialBrightnessFV = 0.0;
     }
 }
 
--(NSString*) getSpanishPrompts: (NSString*)lco{
+-(NSString*) getSpanishVoiceOvers: (NSString*)lco{
     NSLog(@"Get Spanish Prompts");
     if([lco isEqualToString:@"FACE_DOWN.wav"])
         return @"FACE_DOWN_ES.wav";
