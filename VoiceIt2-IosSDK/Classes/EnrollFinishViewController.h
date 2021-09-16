@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *enrollmentFinishSubtitleLabel;
 @property (strong, nonatomic)  MainNavigationController * myNavController;
 @property (strong, nonatomic)  NSString * response;
+@property (strong, nonatomic)  NSString * contentLanguage;
 @end

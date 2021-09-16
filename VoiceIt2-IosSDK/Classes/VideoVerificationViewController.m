@@ -38,7 +38,7 @@
 @property BOOL success;
 @end
 
-float initialBrightnessVV = 0.0;
+float initialBrightnessVV = 0.5;
 
 @implementation VideoVerificationViewController
 
@@ -99,7 +99,7 @@ float initialBrightnessVV = 0.0;
 -(void) viewWillAppear:(BOOL)animated{
     NSLog(@"View Will Appear");
     [super viewWillAppear:animated];
-    [self.messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM"]];
+    [self.messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM" contentLanguage:self.contentLanguage]];
     [self.progressView startAnimation];
 }
 
@@ -112,7 +112,7 @@ float initialBrightnessVV = 0.0;
 
 - (void) notEnoughEnrollments:(NSString *) jsonResponse{
     NSLog(@"Display Not Enough Enrollements Message");
-    [self setMessage:[ResponseManager getMessage: @"TVER"]];
+    [self setMessage:[ResponseManager getMessage: @"TVER" contentLanguage:self.contentLanguage]];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated: YES completion:^{
             [self userVerificationFailed](0.0, 0.0, jsonResponse);
@@ -124,7 +124,7 @@ float initialBrightnessVV = 0.0;
     NSLog(@"%@", jsonResponse);
     NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
     NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
-    [self setMessage:[ResponseManager getMessage: responseCode]];
+    [self setMessage:[ResponseManager getMessage: responseCode contentLanguage:self.contentLanguage]];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated: YES completion:^{
             [self userVerificationFailed](0.0, 0.0, jsonResponse);
@@ -217,7 +217,7 @@ float initialBrightnessVV = 0.0;
         });
     } onFailed:^(NSError * error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.messageLabel setText: @"Liveness service failed. Please Try again Later."];
+            [self.messageLabel setText: [ResponseManager getMessage:@"LIVENESS_FAILED" contentLanguage:self.contentLanguage]];
             [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         });
     } pageCateory:@"verification"];
@@ -255,7 +255,7 @@ float initialBrightnessVV = 0.0;
 #pragma mark - Setup Methods
 -(void) setupScreen{
     NSLog(@"Setup Screen");
-    [self.cancelButton setTitle:[ResponseManager getMessage:@"CANCEL"] forState:UIControlStateNormal];
+    [self.cancelButton setTitle:[ResponseManager getMessage:@"CANCEL" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
     // Setup Awesome Transparent Background and radius for Verification Box
     if (!UIAccessibilityIsReduceTransparencyEnabled()) {
         self.view.backgroundColor = [UIColor clearColor];
@@ -495,7 +495,7 @@ float initialBrightnessVV = 0.0;
     } else {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             if(self.continueRunning){
-                [self setMessage:[ResponseManager getMessage:@"VERIFY" variable:self.thePhrase]];
+                [self setMessage:[ResponseManager getMessage:@"VERIFY" contentLanguage:self.contentLanguage variable:self.thePhrase]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     if(self.continueRunning){
                         [self startRecordingAudio];
@@ -568,7 +568,7 @@ float initialBrightnessVV = 0.0;
     } else {
         // No Livness
         [self startWritingToVideoFile];
-        [self setMessage:[ResponseManager getMessage:@"VERIFY" variable:self.thePhrase]];
+        [self setMessage:[ResponseManager getMessage:@"VERIFY" contentLanguage:self.contentLanguage variable:self.thePhrase]];
         
         // Start Progress Circle Around Face Animation
         [self animateProgressCircleForAudioRecording];
@@ -587,7 +587,7 @@ float initialBrightnessVV = 0.0;
 -(void) startRecordingVideoWithLivenessChallenges{
     NSLog(@"Start Recording Video With Liveness Challenges");
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, [self.livenessChallengeTime floatValue] * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self setMessage:[ResponseManager getMessage:@"VERIFY" variable:self.thePhrase]];
+        [self setMessage:[ResponseManager getMessage:@"VERIFY" contentLanguage:self.contentLanguage variable:self.thePhrase]];
         [self animateProgressCircleForAudioRecording];
     });
     [self setLivenessChallengeMessages];
@@ -772,15 +772,15 @@ didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects
         }
         
         if(self.doLivenessDetection && !self.isRecording && !self.lookingIntoCam && !self.isProcessing && [self.progressView isHidden] && !self.isSuccess){
-            [self setMessage:[ResponseManager getMessage:@"LOOK_INTO_CAM"]];
+            [self setMessage:[ResponseManager getMessage:@"LOOK_INTO_CAM" contentLanguage:self.contentLanguage]];
             self.verificationStarted = NO;
-            [self.cancelButton setTitle:[ResponseManager getMessage:@"Cancel"] forState:UIControlStateNormal];
+            [self.cancelButton setTitle:[ResponseManager getMessage:@"Cancel" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
         }
         
         if(self.doLivenessDetection && !self.isRecording && self.lookingIntoCam && !self.isProcessing){
             if (!self.isSuccess) {
                 [self setMessage:self.livenessInstruction];
-                [self.cancelButton setTitle:[ResponseManager getMessage:@"Continue"] forState:UIControlStateNormal];
+                [self.cancelButton setTitle:[ResponseManager getMessage:@"Continue" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
             } else {
                 [self.cancelButton setHidden:YES];
             }
@@ -788,11 +788,11 @@ didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects
         }
         
         if(self.isProcessing){
-            [self.cancelButton setTitle:[ResponseManager getMessage:@"Cancel"] forState:UIControlStateNormal];
+            [self.cancelButton setTitle:[ResponseManager getMessage:@"Cancel" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
         }
         
         if(self.isSuccess){
-            [self.cancelButton setTitle:[ResponseManager getMessage:@"Done"] forState:UIControlStateNormal];
+            [self.cancelButton setTitle:[ResponseManager getMessage:@"Done" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
         }
     } else {
         // No Liveness
@@ -852,7 +852,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     // Don't do any analysis when not looking into the camera with no liveness test enabled
     if(!self.lookingIntoCam && !self.doLivenessDetection && !self.isProcessing){
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM"]];
+            [self.messageLabel setText: [ResponseManager getMessage:@"LOOK_INTO_CAM" contentLanguage:self.contentLanguage]];
             self.verificationStarted = NO;
         });
         return;
@@ -931,7 +931,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
         
         if([responseCode isEqualToString:@"SUCC"]){
-            [self setMessage:[ResponseManager getMessage:@"SUCCESS"]];
+            [self setMessage:[ResponseManager getMessage:@"SUCCESS" contentLanguage:self.contentLanguage]];
             float faceConfidence = [[jsonObj objectForKey:@"faceConfidence"] floatValue];
             float voiceConfidence = [[jsonObj objectForKey:@"voiceConfidence"] floatValue];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -940,12 +940,12 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
                 }];
             });
         } else if([responseCode isEqualToString:@"FNFD"]){
-            [self setMessage:[ResponseManager getMessage: responseCode]];
+            [self setMessage:[ResponseManager getMessage: responseCode contentLanguage:self.contentLanguage]];
             [self startDelayedAudioRecording:3.0];
         } else {
             self.failCounter += 1;
             if([Utilities isBadResponseCode:responseCode]){
-                [self setMessage:[ResponseManager getMessage: @"CONTACT_DEVELOPER" variable: responseCode]];
+                [self setMessage:[ResponseManager getMessage: @"CONTACT_DEVELOPER" contentLanguage:self.contentLanguage variable: responseCode]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated: YES completion:^{
                         [self userVerificationFailed](0.0, 0.0, jsonResponse);
@@ -954,16 +954,16 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
             }
             else if(self.failCounter < self.failsAllowed){
                 if([responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
-                    [self setMessage:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
+                    [self setMessage:[ResponseManager getMessage: responseCode contentLanguage:self.contentLanguage variable:self.thePhrase]];
                     [self startDelayedAudioRecording:3.0];
                 } else if ([responseCode isEqualToString:@"TVER"]){
                     [self notEnoughEnrollments:jsonResponse];
                 } else {
-                    [self setMessage:[ResponseManager getMessage: responseCode]];
+                    [self setMessage:[ResponseManager getMessage: responseCode contentLanguage:self.contentLanguage]];
                     [self startDelayedAudioRecording:3.0];
                 }
             } else {
-                [self setMessage:[ResponseManager getMessage: @"TOO_MANY_ATTEMPTS"]];
+                [self setMessage:[ResponseManager getMessage: @"TOO_MANY_ATTEMPTS" contentLanguage:self.contentLanguage]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     float faceConfidence = [responseCode isEqualToString:@"FAIL"] ? [[jsonObj objectForKey:@"faceConfidence"] floatValue] : 0.0;
                     float voiceConfidence = [responseCode isEqualToString:@"FAIL"] ? [[jsonObj objectForKey:@"voiceConfidence"] floatValue] : 0.0;

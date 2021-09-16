@@ -724,6 +724,7 @@ NSString * notificationURL = @"";
 }
 
 - (void)encapsulatedFaceEnrollUser:(NSString *)userId
+                   contentLanguage:(NSString*)contentLanguage
           userEnrollmentsCancelled:(void (^)(void))userEnrollmentsCancelled
              userEnrollmentsPassed:(void (^)(NSString *))userEnrollmentsPassed
 {
@@ -731,6 +732,7 @@ NSString * notificationURL = @"";
     MainNavigationController * controller = (MainNavigationController *) [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"mainNavController"];
     controller.enrollmentType = face;
     controller.uniqueId = userId;
+    controller.contentLanguage = contentLanguage;
     controller.userEnrollmentsCancelled = userEnrollmentsCancelled;
     controller.userEnrollmentsPassed = userEnrollmentsPassed;
     controller.myVoiceIt = self;

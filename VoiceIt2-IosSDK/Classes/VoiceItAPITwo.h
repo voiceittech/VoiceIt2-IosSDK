@@ -142,6 +142,7 @@
               userEnrollmentsPassed:(void (^)(NSString *))userEnrollmentsPassed;
 
 - (void)encapsulatedFaceEnrollUser:(NSString *)userId
+          contentLanguage: (NSString *)contentLanguage
           userEnrollmentsCancelled:(void (^)(void))userEnrollmentsCancelled
              userEnrollmentsPassed:(void (^)(NSString *))userEnrollmentsPassed;
 

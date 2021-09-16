@@ -11,7 +11,7 @@
 @interface VideoEnrollmentViewController ()
 @end
 
-float initialBrightnessVE = 0.0;
+float initialBrightnessVE = 0.5;
 
 @implementation VideoEnrollmentViewController
 
@@ -38,7 +38,7 @@ float initialBrightnessVE = 0.0;
     self.contentLanguage =  self.myNavController.contentLanguage;
     self.userToEnrollUserId = self.myNavController.uniqueId;
     // Setup Cancel Button on top left of navigation controller
-    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:[ResponseManager getMessage:@"CANCEL"] style:UIBarButtonItemStylePlain target:self action:@selector(cancelClicked)];
+    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:[ResponseManager getMessage:@"CANCEL" contentLanguage:self.contentLanguage] style:UIBarButtonItemStylePlain target:self action:@selector(cancelClicked)];
     leftBarButton.tintColor = [Utilities uiColorFromHexString:@"#FFFFFF"];
     [self.navigationItem setLeftBarButtonItem:leftBarButton];
 
@@ -58,7 +58,7 @@ float initialBrightnessVE = 0.0;
 
 -(void)viewWillAppear:(BOOL)animated{
     self.originalMessageLeftConstraintContstant = self.messageleftConstraint.constant;
-    [[self messageLabel] setText:[ResponseManager getMessage:@"LOOK_INTO_CAM"]];
+    [[self messageLabel] setText:[ResponseManager getMessage:@"LOOK_INTO_CAM" contentLanguage:self.contentLanguage]];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -180,7 +180,8 @@ float initialBrightnessVE = 0.0;
     NSLog(@"Starting Delayed RECORDING with delayTime %f ", delayTime);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if(self.continueRunning){
-            [self makeLabelFlyIn:[ResponseManager getMessage:[[NSString alloc] initWithFormat:@"ENROLL_%d", self.enrollmentDoneCounter] variable:self.thePhrase]];
+            [self makeLabelFlyIn:[ResponseManager getMessage:[[NSString alloc] initWithFormat:@"ENROLL_%d", self.enrollmentDoneCounter] contentLanguage:self.contentLanguage
+                variable:self.thePhrase]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.8 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 if(self.continueRunning){
                     [self startRecording];
@@ -248,7 +249,7 @@ float initialBrightnessVE = 0.0;
     }
     
     [self.myVoiceIt deleteAllEnrollments:self.userToEnrollUserId callback:^(NSString * deleteEnrollmentsJSONResponse){
-        [self makeLabelFlyIn: [ResponseManager getMessage:@"GET_ENROLLED"]];
+        [self makeLabelFlyIn: [ResponseManager getMessage:@"GET_ENROLLED" contentLanguage:self.contentLanguage]];
         [self startDelayedRecording:2.0];
     }];
 }
@@ -312,6 +313,7 @@ float initialBrightnessVE = 0.0;
     dispatch_async(dispatch_get_main_queue(), ^{
         EnrollFinishViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"enrollFinishedVC"];
         enrollVC.response = response;
+        enrollVC.contentLanguage = self.contentLanguage;
         [[self navigationController] pushViewController:enrollVC animated: YES];
     });
 }
@@ -330,7 +332,7 @@ float initialBrightnessVE = 0.0;
     NSDictionary *jsonObj = [Utilities getJSONObject:jsonResponse];
     NSString * responseCode = [jsonObj objectForKey:@"responseCode"];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.messageLabel setText: [ResponseManager getMessage: responseCode]];
+        [self.messageLabel setText: [ResponseManager getMessage: responseCode contentLanguage:self.contentLanguage]];
         [self.messageLabel setAdjustsFontSizeToFitWidth:YES];
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -420,7 +422,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     [self stopRecording];
     if(self.imageNotSaved){
         [self startDelayedRecording:3.0];
-        [self makeLabelFlyIn: [ResponseManager getMessage:@"FNFD"]];
+        [self makeLabelFlyIn: [ResponseManager getMessage:@"FNFD" contentLanguage:self.contentLanguage]];
     } else {
         [self showLoading];
         [self.myVoiceIt createVideoEnrollment:self.userToEnrollUserId contentLanguage:self.contentLanguage imageData:self.finalCapturedPhotoData audioPath:self.audioPath phrase:self.thePhrase callback:^(NSString * jsonResponse){
@@ -441,7 +443,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
             } else {
                 if([Utilities isBadResponseCode:responseCode]){
-                    [self makeLabelFlyIn:[ResponseManager getMessage: @"CONTACT_DEVELOPER" variable: responseCode]];
+                    [self makeLabelFlyIn:[ResponseManager getMessage: @"CONTACT_DEVELOPER" contentLanguage:self.contentLanguage variable: responseCode ]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                         [[self navigationController] dismissViewControllerAnimated:YES completion:^{
                             [[self myNavController] userEnrollmentsCancelled];
@@ -450,10 +452,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 }
                 else if([responseCode isEqualToString:@"NSPE"] || [responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
                     [self startDelayedRecording:3.0];
-                    [self makeLabelFlyIn:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
+                    [self makeLabelFlyIn:[ResponseManager getMessage: responseCode contentLanguage:self.contentLanguage variable:self.thePhrase]];
                 } else {
                     [self startDelayedRecording:3.0];
-                    [self makeLabelFlyIn:[ResponseManager getMessage:responseCode]];
+                    [self makeLabelFlyIn:[ResponseManager getMessage:responseCode contentLanguage:self.contentLanguage]];
                 }
             }
         }];

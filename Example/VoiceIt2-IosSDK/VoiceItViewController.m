@@ -18,9 +18,9 @@
 {
     [super viewDidLoad];
 
-    self.API_KEY = @"KEY_HERE";
-    self.API_TOKEN = @"TOKEN_HERE";
-    self.TEST_USER_ID_ONE = @"USER_ID_HERE";
+    self.API_KEY = @"";
+    self.API_TOKEN = @"";
+    self.TEST_USER_ID_ONE = @"";
     self.TEST_USER_ID_TWO = @"USER_ID_HERE";
     self.TEST_USER_ID = self.TEST_USER_ID_ONE;
     self.TEST_GROUP_ID = @"GROUP_ID_HERE";
@@ -50,7 +50,9 @@
 }
 
 - (IBAction)faceEnrollmentClicked:(id)sender {
-    [self.myVoiceIt encapsulatedFaceEnrollUser: self.TEST_USER_ID userEnrollmentsCancelled:^{
+    [self.myVoiceIt encapsulatedFaceEnrollUser: self.TEST_USER_ID
+                    contentLanguage:self.TEST_CONTENT_LANGUAGE
+                      userEnrollmentsCancelled:^{
         NSLog(@"User Face Enrollments Cancelled");
     } userEnrollmentsPassed:^(NSString * response){
         NSLog(@"User Face Enrollments Completed with response: %@",response);

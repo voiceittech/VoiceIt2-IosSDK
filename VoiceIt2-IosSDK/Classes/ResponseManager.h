@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface ResponseManager : NSObject
-+(NSString *)getMessage:(NSString*) name;
-+(NSString *)getMessage:(NSString*) name variable:(NSString*)variable;
++(NSString *)getMessage:(NSString*) name contentLanguage:(NSString*)contentLanguage;
+
++(NSString *)getMessage:(NSString*) name
+    contentLanguage:(NSString*)contentLanguage
+    variable:(NSString*)variable;
 @end

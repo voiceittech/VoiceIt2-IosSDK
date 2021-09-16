@@ -51,6 +51,7 @@
 
 #pragma mark -  Developer Passed Options
 @property (strong, nonatomic)  NSString * userToEnrollUserId;
+@property (strong, nonatomic)  NSString * contentLanguage;
 @property (strong, nonatomic)  VoiceItAPITwo * myVoiceIt;
 @property (strong, nonatomic)  MainNavigationController * myNavController;
 @end

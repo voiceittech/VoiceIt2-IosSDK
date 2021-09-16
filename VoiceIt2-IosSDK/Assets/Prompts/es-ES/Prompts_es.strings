@@ -81,6 +81,7 @@
 "FACE_RIGHT" = "Por favor, gire la cara hacia la derecha y hacia atrás.";
 "LIVENESS_SUCCESS" = "¡Desafío superado!";
 "LIVENESS_TRY_AGAIN" = "¡Vivacidad fallida! Inténtalo de nuevo";
+"LIVENESS_FAILED" = "El servicio de lividad falló. Por favor, inténtelo de nuevo más tarde";
 
 /* Error Handling */
 "NETWORK_ERROR" = "Asegúrate de estar conectado a Internet.";

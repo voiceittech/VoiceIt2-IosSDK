@@ -24,20 +24,20 @@
     [self.navigationItem setHidesBackButton: YES];
     
     self.doneButton.layer.cornerRadius = 10.0;
-    [self.doneButton setTitle:[ResponseManager getMessage:@"DONE"] forState:UIControlStateNormal];
+    [self.doneButton setTitle:[ResponseManager getMessage:@"DONE" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
     
     switch (self.myNavController.enrollmentType) {
         case video:
-            [self.enrollmentFinishTitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_READY"]];
-            [self.enrollmentFinishSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_READY_SUBTITLE"]];
+            [self.enrollmentFinishTitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_READY" contentLanguage:self.contentLanguage]];
+            [self.enrollmentFinishSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_READY_SUBTITLE" contentLanguage:self.contentLanguage]];
             break;
         case face:
-            [self.enrollmentFinishTitleLabel setText:[ResponseManager getMessage:@"FACE_READY"]];
-            [self.enrollmentFinishSubtitleLabel setText:[ResponseManager getMessage:@"FACE_READY_SUBTITLE"]];
+            [self.enrollmentFinishTitleLabel setText:[ResponseManager getMessage:@"FACE_READY" contentLanguage:self.contentLanguage]];
+            [self.enrollmentFinishSubtitleLabel setText:[ResponseManager getMessage:@"FACE_READY_SUBTITLE" contentLanguage:self.contentLanguage]];
             break;
         case voice:
-            [self.enrollmentFinishTitleLabel setText:[ResponseManager getMessage:@"VOICE_READY"]];
-            [self.enrollmentFinishSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_READY_SUBTITLE"]];
+            [self.enrollmentFinishTitleLabel setText:[ResponseManager getMessage:@"VOICE_READY" contentLanguage:self.contentLanguage]];
+            [self.enrollmentFinishSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_READY_SUBTITLE" contentLanguage:self.contentLanguage]];
             break;
         default:
             break;

@@ -20,23 +20,24 @@
     // Do any additional setup after loading the view.
     [super viewDidLoad];
     self.myNavController = (MainNavigationController*) [self navigationController];
+    self.contentLanguage = self.myNavController.contentLanguage;
     
     self.continueButton.layer.cornerRadius = 10.0;
     [self.continueButton setBackgroundColor:[Styles getMainUIColor]];
-    [self.continueButton setTitle:[ResponseManager getMessage:@"CONTINUE"] forState:UIControlStateNormal];
+    [self.continueButton setTitle:[ResponseManager getMessage:@"CONTINUE" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
     
     switch (self.myNavController.enrollmentType) {
         case video:
-            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_SETUP"]];
-            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_SETUP_SUBTITLE"]];
+            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_SETUP" contentLanguage:self.contentLanguage]];
+            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_FACE_SETUP_SUBTITLE" contentLanguage:self.contentLanguage]];
             break;
         case face:
-            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"FACE_SETUP"]];
-            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"FACE_SETUP_SUBTITLE"]];
+            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"FACE_SETUP" contentLanguage:self.contentLanguage]];
+            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"FACE_SETUP_SUBTITLE" contentLanguage:self.contentLanguage]];
             break;
         case voice:
-            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"VOICE_SETUP"]];
-            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_SETUP_SUBTITLE"]];
+            [self.enrollmentSetupTitleLabel setText:[ResponseManager getMessage:@"VOICE_SETUP" contentLanguage:self.contentLanguage]];
+            [self.enrollmentSetupSubtitleLabel setText:[ResponseManager getMessage:@"VOICE_SETUP_SUBTITLE" contentLanguage:self.contentLanguage]];
             break;
         default:
             break;
@@ -94,6 +95,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if(self.myNavController.enrollmentType == face){
             FaceEnrollmentViewController * enrollVC = [[Utilities getVoiceItStoryBoard] instantiateViewControllerWithIdentifier:@"faceEnrollVC"];
+            enrollVC.contentLanguage = self.contentLanguage;
+            
             [[self navigationController] pushViewController:enrollVC animated: YES];
         }
         else if(self.myNavController.enrollmentType == voice){

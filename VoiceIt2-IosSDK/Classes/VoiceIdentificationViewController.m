@@ -18,7 +18,7 @@
 @property(nonatomic, strong) VoiceItAPITwo * myVoiceIt;
 @end
 
-float initialBrightnessVoiceI = 0.0;
+float initialBrightnessVoiceI = 0.5;
 
 @implementation VoiceIdentificationViewController
 
@@ -35,7 +35,7 @@ float initialBrightnessVoiceI = 0.0;
     
     // Do any additional setup after loading the view.
     [self.progressView setHidden:YES];
-    [self setMessage:[ResponseManager getMessage:@"READY_FOR_VOICE_IDENTIFICATION"]];
+    [self setMessage:[ResponseManager getMessage:@"READY_FOR_VOICE_IDENTIFICATION" contentLanguage:self.contentLanguage]];
     [self setupScreen];
     [self setupWaveform];
 }
@@ -55,7 +55,7 @@ float initialBrightnessVoiceI = 0.0;
 #pragma mark - Setup Methods
 
 -(void)setupScreen {
-    [self.cancelButton setTitle:[ResponseManager getMessage:@"CANCEL"] forState:UIControlStateNormal];
+    [self.cancelButton setTitle:[ResponseManager getMessage:@"CANCEL" contentLanguage:self.contentLanguage] forState:UIControlStateNormal];
     // Setup Awesome Transparent Background and radius for Verification Box
     if (!UIAccessibilityIsReduceTransparencyEnabled()) {
         self.view.backgroundColor = [UIColor clearColor];
@@ -93,7 +93,8 @@ float initialBrightnessVoiceI = 0.0;
 -(void)startDelayedRecording:(NSTimeInterval)delayTime{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if(self.continueRunning){
-            [self setMessage:[ResponseManager getMessage:@"IDENTIFY" variable:self.thePhrase]];
+            [self setMessage:[ResponseManager getMessage:@"IDENTIFY" contentLanguage:self.contentLanguage
+                variable:self.thePhrase]];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 if(self.continueRunning){
                     [self startRecording];
@@ -182,7 +183,8 @@ float initialBrightnessVoiceI = 0.0;
         
         if([responseCode isEqualToString:@"SUCC"]){
             
-            [self setMessage:[ResponseManager getMessage:@"SUCCESS_IDENTIFIED"]];
+            [self setMessage:[ResponseManager getMessage:@"SUCCESS_IDENTIFIED"
+                contentLanguage:self.contentLanguage]];
             float voiceConfidence = [[jsonObj objectForKey:@"confidence"] floatValue];
             NSString * foundUserId = [jsonObj objectForKey:@"userId"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -193,7 +195,9 @@ float initialBrightnessVoiceI = 0.0;
         } else {
             self.failCounter += 1;
             if([Utilities isBadResponseCode:responseCode]){
-                [self setMessage:[ResponseManager getMessage: @"CONTACT_DEVELOPER" variable: responseCode]];
+                [self setMessage:[ResponseManager getMessage: @"CONTACT_DEVELOPER"
+                    contentLanguage:self.contentLanguage
+                    variable: responseCode]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated: YES completion:^{
                         [self userIdentificationFailed](0.0, jsonResponse);
@@ -202,23 +206,28 @@ float initialBrightnessVoiceI = 0.0;
             }
             else if(self.failCounter < self.failsAllowed){
                 if([responseCode isEqualToString:@"STTF"] || [responseCode isEqualToString:@"PDNM"]){
-                    [self setMessage:[ResponseManager getMessage: responseCode variable:self.thePhrase]];
+                    [self setMessage:[ResponseManager getMessage: responseCode
+                        contentLanguage:self.contentLanguage
+                        variable:self.thePhrase]];
                     [self startDelayedRecording:3.0];
                 }
                 
                 else if ([responseCode isEqualToString:@"PNTE"]){
-                    [self setMessage:[ResponseManager getMessage: @"PNTE_IDENTIFICATION"]];
+                    [self setMessage:[ResponseManager getMessage: @"PNTE_IDENTIFICATION"
+                        contentLanguage:self.contentLanguage]];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                         [self dismissViewControllerAnimated: YES completion:^{
                             [self userIdentificationFailed](0.0, jsonResponse);
                         }];
                     });
                 } else{
-                    [self setMessage:[ResponseManager getMessage: responseCode]];
+                    [self setMessage:[ResponseManager getMessage: responseCode
+                        contentLanguage:self.contentLanguage]];
                     [self startDelayedRecording:3.0];
                 }
             } else {
-                [self setMessage:[ResponseManager getMessage: @"TOO_MANY_ATTEMPTS"]];
+                [self setMessage:[ResponseManager getMessage: @"TOO_MANY_ATTEMPTS"
+                    contentLanguage:self.contentLanguage]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                     float voiceConfidence = [responseCode isEqualToString:@"FAIL"] ? [[jsonObj objectForKey:@"confidence"] floatValue] : 0.0;
                     [self dismissViewControllerAnimated: YES completion:^{
