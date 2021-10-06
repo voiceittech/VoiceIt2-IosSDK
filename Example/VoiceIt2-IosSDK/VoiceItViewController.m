@@ -18,9 +18,9 @@
 {
     [super viewDidLoad];
 
-    self.API_KEY = @"";
-    self.API_TOKEN = @"";
-    self.TEST_USER_ID_ONE = @"";
+    self.API_KEY = @"API_KEY_HERE";
+    self.API_TOKEN = @"API_TOKEN_HERE";
+    self.TEST_USER_ID_ONE = @"USER_ID_HERE";
     self.TEST_USER_ID_TWO = @"USER_ID_HERE";
     self.TEST_USER_ID = self.TEST_USER_ID_ONE;
     self.TEST_GROUP_ID = @"GROUP_ID_HERE";
@@ -49,7 +49,7 @@
     }];
 }
 
-- (IBAction)faceEnrollmentClicked:(id)sender {
+- (IBAction) faceEnrollmentClicked:(id)sender {
     [self.myVoiceIt encapsulatedFaceEnrollUser: self.TEST_USER_ID
                     contentLanguage:self.TEST_CONTENT_LANGUAGE
                       userEnrollmentsCancelled:^{
