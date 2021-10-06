@@ -596,7 +596,7 @@
 				GCC_PREFIX_HEADER = "VoiceIt2-IosSDK/VoiceIt2-IosSDK-Prefix.pch";
 				INFOPLIST_FILE = "VoiceIt2-IosSDK/VoiceIt2-IosSDK-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.2.7;
+				MARKETING_VERSION = 2.3.0;
 				MODULE_NAME = ExampleApp;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -629,7 +629,7 @@
 				GCC_PREFIX_HEADER = "VoiceIt2-IosSDK/VoiceIt2-IosSDK-Prefix.pch";
 				INFOPLIST_FILE = "VoiceIt2-IosSDK/VoiceIt2-IosSDK-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 2.2.7;
+				MARKETING_VERSION = 2.3.0;
 				MODULE_NAME = ExampleApp;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
