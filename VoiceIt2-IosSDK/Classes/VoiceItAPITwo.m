@@ -12,7 +12,7 @@
 
 NSString * const host = @"https://api.voiceit.io/";
 NSString * const livenessHost = @"https://liveness.voiceit.io/v1/";
-NSString * const platformVersion = @"2.3.0";
+NSString * const platformVersion = @"2.3.1";
 NSString * const platformId = @"41";
 NSString * notificationURL = @"";
 @implementation VoiceItAPITwo

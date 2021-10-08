@@ -18,14 +18,14 @@
 {
     [super viewDidLoad];
 
-    self.API_KEY = @"API_KEY_HERE";
-    self.API_TOKEN = @"API_TOKEN_HERE";
-    self.TEST_USER_ID_ONE = @"USER_ID_HERE";
+    self.API_KEY = @"key_204413831ca34dc7a692338260eb41ea";
+    self.API_TOKEN = @"tok_b855f16643e74b88b2dc50d8b681d4e2";
+    self.TEST_USER_ID_ONE = @"usr_9cbc25ed62404792b5d496fe2a1b01d6";
     self.TEST_USER_ID_TWO = @"USER_ID_HERE";
     self.TEST_USER_ID = self.TEST_USER_ID_ONE;
     self.TEST_GROUP_ID = @"GROUP_ID_HERE";
     self.TEST_PHRASE = @"never forget tomorrow is a new day";
-    self.TEST_CONTENT_LANGUAGE = @"en-US";
+    self.TEST_CONTENT_LANGUAGE = @"es-MX";
 
     NSMutableDictionary * styles = [[NSMutableDictionary alloc] init];
     [styles setObject:@"#FBC132" forKey:@"kThemeColor"];
