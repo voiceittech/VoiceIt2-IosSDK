@@ -107,7 +107,7 @@ Contact us at <a href="mailto:support@voiceit.io" target="_blank">support@voicei
 
 #### Voicprint Phrases
 
-Make sure you review your Voiceprint Phrases by navigating to: https://dashboard.voiceit.io/phrase_manager/request_new_phrase in order to know what to pass for voicePrintPhrase parameter
+Make sure you review your Voiceprint Phrases by navigating to <a href="https://dashboard.voiceit.io/phrase_manager/phrase_list" target="_blank">Dashboard</a> in order to know what to pass for voicePrintPhrase parameter.
 
 ## Strings and Prompts
 
